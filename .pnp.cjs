@@ -29,6 +29,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@babel/core", "npm:7.21.0"],\
+            ["@expo/vector-icons", "npm:13.0.0"],\
             ["expo", "npm:48.0.4"],\
             ["expo-status-bar", "npm:1.4.4"],\
             ["react", "npm:18.2.0"],\
@@ -7186,6 +7187,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["grupologis-app", "workspace:."],\
             ["@babel/core", "npm:7.21.0"],\
+            ["@expo/vector-icons", "npm:13.0.0"],\
             ["expo", "npm:48.0.4"],\
             ["expo-status-bar", "npm:1.4.4"],\
             ["react", "npm:18.2.0"],\
