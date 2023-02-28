@@ -1,7 +1,13 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import { colors, getButtonsStyles, getFontStyles, images } from "../utils";
+import {
+  colors,
+  getFontStyles,
+  images,
+  windowHeight,
+  windowWidth,
+} from "../utils";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -22,14 +28,19 @@ const LoginScreen = () => {
               <Text style={{ color: colors.white }}>SOY EMPLEADO</Text>
             </View>
           </Pressable>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate("BusinessLogin")}>
             <View style={styles.asBusinessButton}>
               <Text style={{ color: colors.white }}>SOY EMPRESA</Text>
             </View>
           </Pressable>
         </View>
       </View>
-      <View style={styles.imageContainer}></View>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.loginBackgroundImages}
+          source={{ uri: images.loginImage }}
+        />
+      </View>
     </View>
   );
 };
@@ -39,19 +50,24 @@ const styles = StyleSheet.create({
     backgroundColor: colors.loginBackgroundColor,
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
     height: "100%",
   },
   topContainer: {
     display: "flex",
     alignItems: "center",
-    height: "60%",
+    height: "55%",
     width: "75%",
   },
+  imageContainer: {
+    height: "40%",
+    width: "100%",
+  },
   logoImage: {
-    width: 162,
-    height: 81,
-    marginTop: 85,
-    marginBottom: 85,
+    width: windowWidth * 0.3,
+    height: windowHeight * 0.09,
+    marginTop: 50,
+    marginBottom: 50,
   },
   welcomeText: {
     fontFamily: "Poppins-Bold",
@@ -98,6 +114,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+  },
+  loginBackgroundImages: {
+    width: "100%",
+    height: "100%",
   },
 });
 

@@ -6,12 +6,13 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 // Import Views
 
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
+import BusinessLogin from "./components/LoginScreen/BusinessLogin";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,20 +23,14 @@ export default function App() {
     "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
   });
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  //   console.log(error);
-  // }, [fontsLoaded]);
-
   if (!fontsLoaded) {
     return null;
   }
+  console.log("🚀 ~ reloading");
 
   return (
     <NavigationContainer>
-      {/* <StatusBar style="auto" /> */}
+      <StatusBar style="auto" hidden={true} />
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -44,6 +39,7 @@ export default function App() {
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="BusinessLogin" component={BusinessLogin} />
       </Stack.Navigator>
     </NavigationContainer>
   );
