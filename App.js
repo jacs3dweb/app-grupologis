@@ -12,7 +12,7 @@ import * as SplashScreen from "expo-splash-screen";
 
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
-import BusinessLogin from "./components/LoginScreen/BusinessLogin";
+import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +39,10 @@ export default function App() {
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="BusinessLogin" component={BusinessLogin} />
+        <Stack.Screen
+          name="BusinessEmployeeLogin"
+          component={BusinessEmployeeLogin}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

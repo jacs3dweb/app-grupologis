@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import {
   colors,
   getFontStyles,
+  heightPercentageToPx,
   images,
-  windowHeight,
-  windowWidth,
+  widthPercentageToPx,
 } from "../utils";
 
 const LoginScreen = ({ navigation }) => {
@@ -23,12 +23,20 @@ const LoginScreen = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonsContainer}>
-          <Pressable>
+          <Pressable
+            onPress={() =>
+              navigation.navigate("BusinessEmployeeLogin", { type: "employee" })
+            }
+          >
             <View style={styles.asEmployeeButton}>
               <Text style={{ color: colors.white }}>SOY EMPLEADO</Text>
             </View>
           </Pressable>
-          <Pressable onPress={() => navigation.navigate("BusinessLogin")}>
+          <Pressable
+            onPress={() =>
+              navigation.navigate("BusinessEmployeeLogin", { type: "business" })
+            }
+          >
             <View style={styles.asBusinessButton}>
               <Text style={{ color: colors.white }}>SOY EMPRESA</Text>
             </View>
@@ -51,23 +59,24 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    height: "100%",
+    height: heightPercentageToPx(100),
   },
   topContainer: {
     display: "flex",
     alignItems: "center",
-    height: "55%",
-    width: "75%",
+    height: heightPercentageToPx(55),
+    width: widthPercentageToPx(75),
   },
   imageContainer: {
-    height: "40%",
-    width: "100%",
+    height: heightPercentageToPx(40),
+    width: widthPercentageToPx(100),
   },
   logoImage: {
-    width: windowWidth * 0.3,
-    height: windowHeight * 0.09,
+    width: widthPercentageToPx(30),
+    height: heightPercentageToPx(9),
     marginTop: 50,
     marginBottom: 50,
+    overflow: "visible",
   },
   welcomeText: {
     fontFamily: "Poppins-Bold",
@@ -79,7 +88,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Bold",
   },
   descriptionContainer: {
-    width: "70%",
+    width: widthPercentageToPx(60),
   },
   welcomeDesc: {
     fontFamily: "Poppins-Regular",
@@ -92,14 +101,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    width: "100%",
+    width: widthPercentageToPx(100),
     marginTop: 30,
   },
   asEmployeeButton: {
-    backgroundColor: colors.workerButtonColor,
+    backgroundColor: colors.mainPink,
     fontFamily: "Poppins-Regular",
     height: 55,
-    width: 257,
+    width: widthPercentageToPx(65),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -109,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.mainBlue,
     fontFamily: "Poppins-Regular",
     height: 55,
-    width: 257,
+    width: widthPercentageToPx(65),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
