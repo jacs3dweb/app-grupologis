@@ -63,7 +63,9 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             placeholder="Celular"
             type="numeric"
           ></InputWithIcon>
-          <Pressable>
+          <Pressable onPress={() =>
+              navigation.navigate("CodeAuth", { type: "business" })
+            }>
             <View style={styles.asIngresaButton}>
               <Text style={{ color: colors.white }}>Ingresar</Text>
             </View>
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   logoImage: {
-    width: widthPercentageToPx(30),
+    width: widthPercentageToPx(35),
     height: heightPercentageToPx(9),
     overflow: "visible",
   },

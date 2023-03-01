@@ -1,47 +1,49 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable, TextInput } from "react-native";
 import {
   colors,
   getFontStyles,
   heightPercentageToPx,
   images,
   widthPercentageToPx,
-} from "../utils";
+} from "../../utils";
 
-const LoginScreen = ({ navigation }) => {
+import { Feather } from "@expo/vector-icons";
+
+const Code = ({ navigation }) => {
   return (
+    
     <View style={styles.container}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <View style={styles.goBackButton}>
+            <Feather name="x" size={24} color="black" />
+          </View>
+        </Pressable>
       <View style={styles.topContainer}>
         <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
         <View style={styles.title}>
-          <Text style={styles.welcomeText}>Bienvenidos!</Text>
-          <Text style={styles.toApp}>a la Aplicación</Text>
+          <Text style={styles.toApp}>Ingrese</Text>
+          <Text style={styles.toApp}>el codigo</Text>
 
           <View style={styles.descriptionContainer}>
             <Text style={styles.welcomeDesc}>
-              Trabajamos para mejorar tu experiencia como empleado o empresa.
+              Ingrese el codigo de 4 dijitos que fue enviado a su celular.
             </Text>
           </View>
         </View>
-        <View style={styles.buttonsContainer}>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("BusinessEmployeeLogin", { type: "employee" })
-            }
-          >
-            <View style={styles.asEmployeeButton}>
-              <Text style={{ color: colors.white }}>SOY EMPLEADO</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("BusinessEmployeeLogin", { type: "business" })
-            }
-          >
-            <View style={styles.asBusinessButton}>
-              <Text style={{ color: colors.white }}>SOY EMPRESA</Text>
-            </View>
-          </Pressable>
+        <View style={styles.textInputContainers}>
+            <TextInput 
+            placeholder=" 0  0  0  0"
+            keyboardType="numeric">
+            </TextInput>
         </View>
+        <Pressable 
+            onPress={() =>
+              navigation.navigate("BusinessEntry", { type: "business" })
+            }>
+            <View style={styles.asBusinessButton}>
+              <Text style={{ color: colors.white }}>Ingresar</Text>
+            </View>
+          </Pressable>
       </View>
       <View style={styles.imageContainer}>
         <Image
@@ -123,11 +125,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+    marginTop: 20,
   },
   loginBackgroundImages: {
     width: "100%",
     height: "100%",
   },
+  textInputContainers: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: widthPercentageToPx(40),
+    height: heightPercentageToPx(7),
+    marginTop: 10,
+    borderRadius: 7,
+    backgroundColor: colors.white
+  },
+  goBackButton: {
+    position: "relative",
+    top: 20,
+    left: -160,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.black,
+    opacity: 0.4,
+    borderRadius: 15,
+    height: 30,
+    width: 30,
+  },
 });
 
-export default LoginScreen;
+export default Code;

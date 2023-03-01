@@ -18,7 +18,7 @@ export const getFontStyles = (
 export const colors = {
   white: "#FFFFFF",
   mainBackgroundColor: "#f0f0fd",
-  loginBackgroundColor: "#f1f1fe",
+  loginBackgroundColor: "#F1F1FE",
   mainBlue: "#1A68FC",
   buttonsColor: "#999AF6",
   notificationsBackgroundColor: "#F1F1FE",

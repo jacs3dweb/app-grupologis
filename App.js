@@ -13,6 +13,8 @@ import * as SplashScreen from "expo-splash-screen";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
+import CodeAuth from "./components/LoginScreen/CodeAuth";
+import BusinessEntry from "./components/LoginScreen/BusinessEntry";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +45,8 @@ export default function App() {
           name="BusinessEmployeeLogin"
           component={BusinessEmployeeLogin}
         />
+        <Stack.Screen name="CodeAuth" component={CodeAuth} />
+        <Stack.Screen name="BusinessEntry" component={BusinessEntry}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
