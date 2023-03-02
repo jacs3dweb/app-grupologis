@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable, } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import {
   colors,
   getFontStyles,
@@ -7,9 +7,35 @@ import {
   widthPercentageToPx,
 } from "../../utils";
 
+import { Picker } from "@react-native-picker/picker";
+import { useRef, useState } from "react";
+import { Feather } from "@expo/vector-icons";
+
 const BusinessE = ({ navigation }) => {
+  const pickerRef = useRef(null);
+  const [selectedBusiness, setSelectedBusiness] = useState(null);
+  const businessOptions = [
+    {
+      label: "",
+      value: null,
+    },
+    {
+      label: "Empresa 1",
+      value: "1",
+    },
+    {
+      label: "Empresa 2",
+      value: "2",
+    },
+  ];
+
   return (
     <View style={styles.container}>
+      <Pressable onPress={() => navigation.goBack()}>
+        <View style={styles.goBackButton}>
+          <Feather name="x" size={24} color="black" />
+        </View>
+      </Pressable>
       <View style={styles.topContainer}>
         <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
         <View style={styles.title}>
@@ -22,16 +48,48 @@ const BusinessE = ({ navigation }) => {
             </Text>
           </View>
         </View>
-        <View style={styles.textInputContainers}>
-            
-
-            
-        </View>
-        <Pressable >
-            <View style={styles.asBusinessButton}>
-              <Text style={{ color: colors.white }}>Ingresar</Text>
+        <Picker
+          ref={pickerRef}
+          style={{
+            display: "none",
+            opacity: 0,
+          }}
+          prompt="Empresas disponibles"
+          selectedValue={selectedBusiness}
+          onValueChange={(itemValue) => {
+            const selected = businessOptions.find((e) => e.value === itemValue);
+            setSelectedBusiness(selected);
+          }}
+        >
+          {businessOptions.map((op, idx) => (
+            <Picker.Item
+              key={idx}
+              enabled={op.value !== null}
+              label={op.label}
+              value={op.value}
+            />
+          ))}
+        </Picker>
+        {
+          <Pressable
+            onPress={() => pickerRef.current.focus()}
+            style={styles.selectorContainer}
+          >
+            <View>
+              <Text style={styles.selectedBusiness}>
+                {selectedBusiness
+                  ? selectedBusiness.label
+                  : "Seleccione la empresa"}
+              </Text>
             </View>
           </Pressable>
+        }
+
+        <Pressable>
+          <View style={styles.asBusinessButton}>
+            <Text style={{ color: colors.white }}>Ingresar</Text>
+          </View>
+        </Pressable>
       </View>
       <View style={styles.imageContainer}>
         <Image
@@ -94,6 +152,11 @@ const styles = StyleSheet.create({
     width: widthPercentageToPx(100),
     marginTop: 30,
   },
+  selectedBusiness: {
+    fontFamily: "Poppins-Light",
+    color: colors.descriptionColors,
+    ...getFontStyles(18, 0.5, 0.9),
+  },
   asEmployeeButton: {
     backgroundColor: colors.mainPink,
     fontFamily: "Poppins-Regular",
@@ -119,20 +182,20 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  textInputContainers: {
+  selectorContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: widthPercentageToPx(40),
+    width: widthPercentageToPx(65),
     height: heightPercentageToPx(7),
     marginTop: 10,
     borderRadius: 7,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
   goBackButton: {
     position: "absolute",
     top: 20,
-    left: 0,
+    left: widthPercentageToPx(-45),
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

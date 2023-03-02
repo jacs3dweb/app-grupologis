@@ -34,7 +34,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" hidden={true} />
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Login"
         screenOptions={{
           headerShown: false,
         }}
@@ -46,7 +46,7 @@ export default function App() {
           component={BusinessEmployeeLogin}
         />
         <Stack.Screen name="CodeAuth" component={CodeAuth} />
-        <Stack.Screen name="BusinessEntry" component={BusinessEntry}/>
+        <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
       </Stack.Navigator>
     </NavigationContainer>
   );

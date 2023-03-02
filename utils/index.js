@@ -25,6 +25,7 @@ export const colors = {
   formInputsColorBackground: "#F1F1FE",
   mainPink: "#D6007F",
   descriptionColors: "#808080",
+  gray: "#CCCCCC",
 };
 
 export const images = {
