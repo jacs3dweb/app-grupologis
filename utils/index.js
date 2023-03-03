@@ -39,6 +39,9 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fworkers.png?alt=media&token=471853f4-fa12-4500-8113-45871c6829fd",
   employeeLoginImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fbusiness.png?alt=media&token=65d34ae8-2712-4304-ba00-232acdfad60f",
+   certificadoImage1: 
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FTrazado%20452.png?alt=media&token=dd81bb27-05ae-4bb3-81b9-6d8168b879ac",
+  
 };
 
 export const widthPercentageToPx = (percentage) => {

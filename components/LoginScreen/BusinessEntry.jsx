@@ -85,7 +85,10 @@ const BusinessE = ({ navigation }) => {
           </Pressable>
         }
 
-        <Pressable>
+        <Pressable
+          onPress={() =>
+            navigation.navigate("DownloadView")
+          }>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>
           </View>

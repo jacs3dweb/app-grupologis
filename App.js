@@ -15,6 +15,7 @@ import HomeScreen from "./screens/HomeScreen";
 import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
 import CodeAuth from "./components/LoginScreen/CodeAuth";
 import BusinessEntry from "./components/LoginScreen/BusinessEntry";
+import DownloadView from "./components/HomeScreen/DownloadView";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,7 @@ export default function App() {
         />
         <Stack.Screen name="CodeAuth" component={CodeAuth} />
         <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
+        <Stack.Screen name="DownloadView" component={DownloadView}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
