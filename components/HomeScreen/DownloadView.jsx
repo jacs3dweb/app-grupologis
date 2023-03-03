@@ -16,7 +16,7 @@ import {
     widthPercentageToPx,
 } from "../../utils";
 
-import { Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
 
 const Download = ({ navigation }) => {
@@ -27,9 +27,20 @@ const Download = ({ navigation }) => {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.notbar}>
-                        <Text style={styles.welcomeDesc}>
-                            Hola!
-                        </Text>
+                        <Image
+                            style={styles.userImg}
+                            source={{ uri: images.userImage }}
+                        />
+                        <Pressable
+                            onPress={() =>
+                                console.log("presion")
+                            }>
+                            <View style={styles.notbar2}>
+                                <Ionicons name="md-notifications-outline" size={30} color="white" />
+                            </View>
+                        </Pressable>
+
+
                     </View>
                     <View style={styles.down}>
 
@@ -67,7 +78,7 @@ const Download = ({ navigation }) => {
                             <View style={styles.scrollStyle}>
                                 <Image
                                     style={styles.certificadoImage}
-                                    source={{ uri: images.certificadoImage1 }}
+                                    source={{ uri: images.certificadoImage2 }}
                                 />
                                 <Text style={styles.toApp2}>Certificado laboral</Text>
                                 <Text style={styles.welcomeDesc2}>Descarga tu certificado laboral sin necesidad de pedirlo a Grupologis.</Text>
@@ -80,7 +91,7 @@ const Download = ({ navigation }) => {
                             <View style={styles.scrollStyle}>
                                 <Image
                                     style={styles.certificadoImage}
-                                    source={{ uri: images.certificadoImage1 }}
+                                    source={{ uri: images.certificadoImage3 }}
                                 />
                                 <Text style={styles.toApp2}>Certificado laboral</Text>
                                 <Text style={styles.welcomeDesc2}>Descarga tu certificado laboral sin necesidad de pedirlo a Grupologis.</Text>
@@ -93,7 +104,7 @@ const Download = ({ navigation }) => {
                             <View style={styles.scrollStyle}>
                                 <Image
                                     style={styles.certificadoImage}
-                                    source={{ uri: images.certificadoImage1 }}
+                                    source={{ uri: images.certificadoImage4 }}
                                 />
                                 <Text style={styles.toApp2}>Certificado laboral</Text>
                                 <Text style={styles.welcomeDesc2}>Descarga tu certificado laboral sin necesidad de pedirlo a Grupologis.</Text>
@@ -203,12 +214,24 @@ const styles = StyleSheet.create({
         left: 75,
         bottom: 65,
     },
+    userImg: {
+        height: heightPercentageToPx(10),
+        width: widthPercentageToPx(20),
+        height: 40,
+        width: 40,
+        marginTop: 17,
+        left: 20,
+
+    },
+
     certificadoImage: {
         height: heightPercentageToPx(12),
         width: widthPercentageToPx(25),
         left: 5,
         top: 10,
         marginBottom: 30,
+        height:90,
+        width:90,
     },
     textInputContainers: {
         display: "flex",
@@ -256,6 +279,18 @@ const styles = StyleSheet.create({
         overflow: "visible",
         backgroundColor: colors.mainBlue,
         borderRadius: 9,
+    },
+    notbar2: {
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+        width: widthPercentageToPx(10),
+        height: heightPercentageToPx(5),
+        overflow: "visible",
+        left: 290,
+        bottom: 35,
+
+
     },
     down: {
         width: widthPercentageToPx(90),

@@ -40,7 +40,15 @@ export const images = {
   employeeLoginImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fbusiness.png?alt=media&token=65d34ae8-2712-4304-ba00-232acdfad60f",
    certificadoImage1: 
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FTrazado%20452.png?alt=media&token=dd81bb27-05ae-4bb3-81b9-6d8168b879ac",
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-01.svg.png?alt=media&token=df573d80-b95e-439f-ade7-aa83939a00d4",
+  userImage: 
+  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3",
+  certificadoImage2:
+  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-02.svg.png?alt=media&token=faad7c32-b792-4417-8cd8-bca82cf81f0e",
+  certificadoImage3:
+  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-03.svg.png?alt=media&token=0e81171e-bf75-48a7-b321-542940756328",
+  certificadoImage4:
+  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FGrupo%2063.png?alt=media&token=0d6c5a70-2c24-42a3-aa79-46e8096b3ddc",
   
 };
 
