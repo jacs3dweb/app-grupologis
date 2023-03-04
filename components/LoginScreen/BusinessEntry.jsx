@@ -85,10 +85,7 @@ const BusinessE = ({ navigation }) => {
           </Pressable>
         }
 
-        <Pressable
-          onPress={() =>
-            navigation.navigate("DownloadView")
-          }>
+        <Pressable onPress={() => navigation.navigate("DownloadView")}>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>
           </View>
@@ -106,7 +103,7 @@ const BusinessE = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.loginBackgroundColor,
+    backgroundColor: colors.generalBackgroundColor,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",

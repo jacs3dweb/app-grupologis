@@ -18,7 +18,7 @@ export const getFontStyles = (
 export const colors = {
   white: "#FFFFFF",
   mainBackgroundColor: "#f0f0fd",
-  loginBackgroundColor: "#F1F1FE",
+  generalBackgroundColor: "#F1F1FE",
   mainBlue: "#1A68FC",
   buttonsColor: "#999AF6",
   notificationsBackgroundColor: "#F1F1FE",
@@ -39,17 +39,16 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fworkers.png?alt=media&token=471853f4-fa12-4500-8113-45871c6829fd",
   employeeLoginImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fbusiness.png?alt=media&token=65d34ae8-2712-4304-ba00-232acdfad60f",
-   certificadoImage1: 
+  certificadoImage1:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-01.svg.png?alt=media&token=df573d80-b95e-439f-ade7-aa83939a00d4",
-  userImage: 
-  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3",
-  certificadoImage2:
-  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-02.svg.png?alt=media&token=faad7c32-b792-4417-8cd8-bca82cf81f0e",
+  userImage:
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3",
+  payrollFlyer:
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-02.svg.png?alt=media&token=faad7c32-b792-4417-8cd8-bca82cf81f0e",
   certificadoImage3:
-  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-03.svg.png?alt=media&token=0e81171e-bf75-48a7-b321-542940756328",
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-03.svg.png?alt=media&token=0e81171e-bf75-48a7-b321-542940756328",
   certificadoImage4:
-  "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FGrupo%2063.png?alt=media&token=0d6c5a70-2c24-42a3-aa79-46e8096b3ddc",
-  
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FGrupo%2063.png?alt=media&token=0d6c5a70-2c24-42a3-aa79-46e8096b3ddc",
 };
 
 export const widthPercentageToPx = (percentage) => {
@@ -59,3 +58,34 @@ export const widthPercentageToPx = (percentage) => {
 export const heightPercentageToPx = (percentage) => {
   return (windowHeight * percentage) / 100;
 };
+
+export const employeeDownloadables = [
+  {
+    id: "laboralCertificate",
+    title: "Certificado laboral",
+    description:
+      "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
+    image: images.certificadoImage1,
+  },
+  {
+    id: "payrollFlyer",
+    title: "Volante de nómina",
+    description:
+      "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
+    image: images.payrollFlyer,
+  },
+  {
+    id: "laboralCertificate2",
+    title: "Certificado laboral",
+    description:
+      "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
+    image: images.certificadoImage3,
+  },
+  {
+    id: "laboralCertificate3",
+    title: "Certificado laboral",
+    description:
+      "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
+    image: images.certificadoImage4,
+  },
+];

@@ -91,7 +91,7 @@ const Code = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.loginBackgroundColor,
+    backgroundColor: colors.generalBackgroundColor,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
