@@ -1,5 +1,5 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Image, Modal, Pressable, StyleSheet, Text, View, Alert } from "react-native";
+import React, { useState } from "react";
 import {
   colors,
   getFontStyles,
@@ -8,17 +8,39 @@ import {
 } from "../../../utils";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.scrollStyle}>
       <Image style={styles.certificadoImage} source={{ uri: image }} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{desc}</Text>
-      <Pressable onPress={(e) => console.log(id)}>
+      <Pressable onPress={() => setModalVisible(!modalVisible)}>
         <View style={styles.downloadButton}>
           <Text style={{ color: colors.white }}>Descargar</Text>
         </View>
       </Pressable>
+      <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalView}>Descarga Completada</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
+
   );
 };
 
@@ -61,4 +83,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+},
+modalView: {
+    width: 350,
+    height: 5,
+    margin: 20,
+    top:300,
+    backgroundColor: colors.descarga ,
+    borderRadius: 20,
+    padding: 25,
+    alignItems: "flex-start",
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+},
+button: {
+    borderRadius: 20,
+    
+},
+buttonClose: {
+    backgroundColor: '#2196F3',
+},
+modalText: {
+  ...getFontStyles(12),
+    fontFamily: "Poppins-Bold",
+    color: colors.white
+},
 });

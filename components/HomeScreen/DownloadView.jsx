@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView, Pressable } from "react-native";
 import {
   colors,
   employeeDownloadables,
@@ -11,6 +11,7 @@ import {
 import { useRef, useState } from "react";
 import Layout from "../layout/Layout.jsx";
 import DownloadableCard from "./downloadView/DownloadableCard";
+
 
 const Download = ({ navigation }) => {
   const [role, setRole] = useState("employee");
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: 270,
+    height: 300,
     paddingTop: 10,
   },
   downloadableCardsContainer: {
