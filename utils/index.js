@@ -26,7 +26,9 @@ export const colors = {
   mainPink: "#D6007F",
   descriptionColors: "#808080",
   gray: "#CCCCCC",
-  descarga: "#67C9B9"
+  descarga: "#67C9B9",
+  black: "#000000",
+  yellow: "#FDA428",
 };
 
 export const images = {

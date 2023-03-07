@@ -1,58 +1,43 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
+import React from "react";
 import {
   colors,
-  employeeDownloadables,
   getFontStyles,
   heightPercentageToPx,
-  images,
   widthPercentageToPx,
-} from "../../utils";
+} from "../../../utils";
 
-import { useRef, useState } from "react";
-import Layout from "../layout/Layout.jsx";
-import MainCardInfo from "./homeView/MainCardInfo";
-import ViewTitleCard from "./homeView/ViewTitleCard";
-
-const Claim = (props) => {
+const MainCardInfo = ({ firstTitle, secondTitle, description, image }) => {
   return (
-    <Layout props={{ ...props }}>
-      <ScrollView>
-        <ViewTitleCard
-          title={"Quejas y reclamos"}
-          buttonText="+ Nueva"
-          onPressAction={() => console.log("nueva queja")}
-        />
-        <MainCardInfo
-          firstTitle={"Quejas"}
-          secondTitle="y reclamos"
-          description={
-            "Podrás conocer el estado o trazabilidad de tus novedades"
-          }
-          image={images.employeeNimage}
-        />
-      </ScrollView>
-    </Layout>
+    <View style={styles.cardContainer}>
+      <View style={styles.infoContainer}>
+        <View style={styles.title}>
+          <Text style={styles.firstTitleText}>{firstTitle}</Text>
+          <Text style={styles.secondTitleText}>{secondTitle}</Text>
+
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.welcomeDesc}>{description}</Text>
+          </View>
+        </View>
+        <Image style={styles.workersImage} source={{ uri: image }} />
+      </View>
+    </View>
   );
 };
 
+export default MainCardInfo;
+
 const styles = StyleSheet.create({
-  downloadContainer: {
+  cardContainer: {
     display: "flex",
     alignItems: "center",
   },
-  welcomeText: {
+  firstTitleText: {
     fontFamily: "Poppins-Bold",
     color: colors.mainBlue,
     ...getFontStyles(25),
   },
-  toApp: {
+  secondTitleText: {
     ...getFontStyles(17),
     fontFamily: "Poppins-Bold",
   },
@@ -108,5 +93,3 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
-
-export default Claim;

@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, ScrollView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import {
   colors,
   employeeDownloadables,
@@ -12,12 +19,10 @@ import { useRef, useState } from "react";
 import Layout from "../layout/Layout.jsx";
 import DownloadableCard from "./downloadView/DownloadableCard";
 
-
-const Download = ({ navigation }) => {
+const Download = (props) => {
   const [role, setRole] = useState("employee");
   return (
-    //style={styles.containerScroll}
-    <Layout>
+    <Layout props={{ ...props }}>
       <ScrollView>
         <View style={styles.downloadContainer}>
           <View style={styles.infoContainer}>

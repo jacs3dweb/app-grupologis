@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Header from "../common/Header";
+import Footer from "../common/Footer";
 import { colors, heightPercentageToPx } from "../../utils";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, props }) => {
   return (
     <View style={styles.mainContainer}>
       <Header />
       {children}
+      <Footer navigation={props.navigation} route={props.route} />
     </View>
   );
 };
