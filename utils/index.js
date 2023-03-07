@@ -3,6 +3,11 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+import iconCertificadoLaboral from "../assets/images/home/downloadView/iconCertificadoLaboral.svg";
+import iconVolanteDeNomina from "../assets/images/home/downloadView/iconVolanteDeNomina.svg";
+import iconIngresoYretencion from "../assets/images/home/downloadView/iconIngresoYretencion.svg";
+import iconHojaDeVida from "../assets/images/home/downloadView/iconHojadevida.svg";
+
 export const getFontStyles = (
   size,
   ptPercentage = 0.6,
@@ -16,6 +21,7 @@ export const getFontStyles = (
 };
 
 export const colors = {
+  light: "#ffff",
   white: "#FFFFFF",
   mainBackgroundColor: "#f0f0fd",
   generalBackgroundColor: "#F1F1FE",
@@ -42,8 +48,7 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fworkers.png?alt=media&token=471853f4-fa12-4500-8113-45871c6829fd",
   employeeLoginImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fbusiness.png?alt=media&token=65d34ae8-2712-4304-ba00-232acdfad60f",
-  certificadoImage1:
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-01.svg.png?alt=media&token=df573d80-b95e-439f-ade7-aa83939a00d4",
+
   userImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3",
   payrollFlyer:
@@ -54,6 +59,13 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FGrupo%2063.png?alt=media&token=0d6c5a70-2c24-42a3-aa79-46e8096b3ddc",
   employeeNimage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FEnmascarar_grupo_33x%201.png?alt=media&token=747c3d91-3780-4617-8482-ae8fe7d70fa5",
+};
+
+export const svg = {
+  certificadoLaboral: iconCertificadoLaboral,
+  volanteDeNomina: iconVolanteDeNomina,
+  ingresoYretencion: iconIngresoYretencion,
+  hojaDeVida: iconHojaDeVida,
 };
 
 export const widthPercentageToPx = (percentage) => {
@@ -70,27 +82,27 @@ export const employeeDownloadables = [
     title: "Certificado laboral",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: images.certificadoImage1,
+    image: svg.certificadoLaboral,
   },
   {
     id: "payrollFlyer",
     title: "Volante de nómina",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: images.payrollFlyer,
+    image: svg.volanteDeNomina,
   },
   {
     id: "laboralCertificate2",
-    title: "Certificado laboral",
+    title: "Ingreso y retención",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: images.certificadoImage3,
+    image: svg.ingresoYretencion,
   },
   {
     id: "laboralCertificate3",
-    title: "Certificado laboral",
+    title: "Hoja de vida laboral",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: images.certificadoImage4,
+    image: svg.hojaDeVida,
   },
 ];

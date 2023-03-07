@@ -27,6 +27,9 @@ export default function App() {
     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
     "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
+    "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
+    "Volks-Serial-Light": require("./assets/fonts/VolksSerialLight.ttf"),
+    "Volks-Bold": require("./assets/fonts/Volks-Serial-Bold.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -36,7 +39,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar style="auto" hidden={true} />
+      <StatusBar style="auto" hidden={false} />
       <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{
