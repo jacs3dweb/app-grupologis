@@ -6,7 +6,7 @@ import {
   images,
   widthPercentageToPx,
 } from "../../utils";
-
+// cambiar vista Download al terminar vista claim
 import { Picker } from "@react-native-picker/picker";
 import { useRef, useState } from "react";
 import { Feather } from "@expo/vector-icons";
@@ -84,7 +84,6 @@ const BusinessE = ({ navigation }) => {
             </View>
           </Pressable>
         }
-
         <Pressable onPress={() => navigation.navigate("DownloadView")}>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>

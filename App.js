@@ -3,8 +3,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 
+
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import Toast from 'react-native-toast-message';
 
 // SplashScreen.preventAutoHideAsync();
 
@@ -16,6 +18,7 @@ import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogi
 import CodeAuth from "./components/LoginScreen/CodeAuth";
 import BusinessEntry from "./components/LoginScreen/BusinessEntry";
 import DownloadView from "./components/HomeScreen/DownloadView";
+import ClaimsView from "./components/HomeScreen/ClaimsView";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,8 +52,11 @@ export default function App() {
         <Stack.Screen name="CodeAuth" component={CodeAuth} />
         <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
         <Stack.Screen name="DownloadView" component={DownloadView}/>
+        <Stack.Screen name="ClaimsView" component={ClaimsView}/>
       </Stack.Navigator>
+      <Toast/>
     </NavigationContainer>
+    
   );
 }
 

@@ -7,42 +7,34 @@ import {
   widthPercentageToPx,
 } from "../../../utils";
 
-const DownloadableCard = ({ title, desc, image, id }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  return (
-    <View style={styles.scrollStyle}>
-      <Image style={styles.certificadoImage} source={{ uri: image }} />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{desc}</Text>
-      <Pressable onPress={() => setModalVisible(!modalVisible)}>
-        <View style={styles.downloadButton}>
-          <Text style={{ color: colors.white }}>Descargar</Text>
-        </View>
-      </Pressable>
-      <View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalView}>Descarga Completada</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-      </View>
-    </View>
+import Toast from 'react-native-toast-message';
 
+const DownloadableCard = ({title, desc, image, id,}) => {
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text1: "Descarga Completada",
+      position: "bottom",
+      visibilityTime: 2000,
+
+    })
+  }
+  return (
+    
+      <View style={styles.scrollStyle}>
+        <Image style={styles.certificadoImage} source={{ uri: image }} />
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{desc}</Text>
+        <Pressable onPress={showToast}>
+          <View style={styles.downloadButton}>
+            <Text style={{ color: colors.white }}>Descargar</Text>
+          </View>
+        </Pressable>
+      </View>
   );
 };
+
+
 
 export default DownloadableCard;
 
@@ -83,40 +75,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 5,
-},
-modalView: {
-    width: 350,
-    height: 5,
-    margin: 20,
-    top:300,
-    backgroundColor: colors.descarga ,
-    borderRadius: 20,
-    padding: 25,
-    alignItems: "flex-start",
-    shadowColor: '#000',
-    shadowOffset: {
-        width: 0,
-        height: 10,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-},
-button: {
-    borderRadius: 20,
-    
-},
-buttonClose: {
-    backgroundColor: '#2196F3',
-},
-modalText: {
-  ...getFontStyles(12),
-    fontFamily: "Poppins-Bold",
-    color: colors.white
-},
 });
