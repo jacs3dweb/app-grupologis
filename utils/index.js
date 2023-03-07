@@ -35,6 +35,7 @@ export const colors = {
   descarga: "#67C9B9",
   black: "#000000",
   yellow: "#FDA428",
+  green: "#67C9B9",
 };
 
 export const images = {

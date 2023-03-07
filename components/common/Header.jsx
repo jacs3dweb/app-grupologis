@@ -20,7 +20,10 @@ const Header = ({}) => {
   return (
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
-        <Image style={styles.userImg} source={{ uri: images.userImage }} />
+        <View style={styles.userImgContainer}>
+          <Image style={styles.userImg} source={{ uri: images.userImage }} />
+          <View style={styles.onlineIndicator} />
+        </View>
         <View style={styles.infoUser}>
           <Text style={styles.hello}>Hola!</Text>
           <Text style={styles.nameUser}>Mary Quiñones</Text>
@@ -91,5 +94,17 @@ const styles = StyleSheet.create({
     width: widthPercentageToPx(20),
     height: 45,
     width: 45,
+  },
+  onlineIndicator: {
+    position: "absolute",
+    bottom: -3,
+    right: -3,
+    height: 16,
+    width: 16,
+    borderRadius: 50,
+    borderWidth: 2.5,
+    borderColor: colors.mainBlue,
+    backgroundColor: colors.green,
+    zIndex: 9,
   },
 });

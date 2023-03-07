@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, TabRouter } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 
 import { useFonts } from "expo-font";
@@ -21,6 +22,7 @@ import ClaimsView from "./components/HomeScreen/ClaimsView";
 import NewsView from "./components/HomeScreen/NewsView";
 
 const Stack = createNativeStackNavigator();
+// const BottomTab = createBottomTabNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -58,9 +60,18 @@ export default function App() {
         <Stack.Screen name="ClaimsView" component={ClaimsView} />
         <Stack.Screen name="NewsView" component={NewsView} />
       </Stack.Navigator>
+
       <Toast />
     </NavigationContainer>
   );
+}
+
+{
+  /* <BottomTab.Navigator>
+        <BottomTab.Screen name="Download" component={DownloadView} />
+        <BottomTab.Screen name="Claims" component={ClaimsView} />
+        <BottomTab.Screen name="News" component={NewsView} />
+      </BottomTab.Navigator> */
 }
 
 const styles = StyleSheet.create({
