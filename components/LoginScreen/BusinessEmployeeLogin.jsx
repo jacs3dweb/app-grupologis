@@ -63,9 +63,11 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             placeholder="Celular"
             type="numeric"
           ></InputWithIcon>
-          <Pressable onPress={() =>
+          <Pressable
+            onPress={() =>
               navigation.navigate("CodeAuth", { type: "business" })
-            }>
+            }
+          >
             <View style={styles.asIngresaButton}>
               <Text style={{ color: colors.white }}>Ingresar</Text>
             </View>
@@ -96,7 +98,8 @@ const styles = StyleSheet.create({
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      height: heightPercentageToPx(100),
+      paddingTop: heightPercentageToPx(4),
+      height: heightPercentageToPx(107),
     };
   },
   formContainer: {

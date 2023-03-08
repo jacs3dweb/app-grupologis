@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    height: heightPercentageToPx(100),
+    paddingTop: heightPercentageToPx(4),
+    height: heightPercentageToPx(107),
   },
   topContainer: {
     display: "flex",

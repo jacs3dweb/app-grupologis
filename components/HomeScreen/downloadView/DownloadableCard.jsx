@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
-import SvgUri from "react-native-svg-uri";
+// import SvgUri from "react-native-svg-uri";
 import {
   colors,
   getFontStyles,
@@ -30,12 +30,12 @@ const DownloadableCard = ({ title, desc, image, id }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
-        <SvgUri
+        {/* <SvgUri
           style={styles.certificadoImage}
           width={70}
           height={70}
           source={image}
-        ></SvgUri>
+        ></SvgUri> */}
 
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>

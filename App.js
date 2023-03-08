@@ -1,19 +1,11 @@
-import { StyleSheet, View } from "react-native";
-import { NavigationContainer, TabRouter } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StatusBar } from "expo-status-bar";
-
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import Toast from "react-native-toast-message";
-
-// SplashScreen.preventAutoHideAsync();
 
 // Import Views
 
 import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
 import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
 import CodeAuth from "./components/LoginScreen/CodeAuth";
 import BusinessEntry from "./components/LoginScreen/BusinessEntry";
@@ -21,8 +13,35 @@ import DownloadView from "./components/HomeScreen/DownloadView";
 import ClaimsView from "./components/HomeScreen/ClaimsView";
 import NewsView from "./components/HomeScreen/NewsView";
 
+// Import components
+
+import Footer from "./components/common/Footer";
+import Toast from "react-native-toast-message";
+import { StatusBar } from "expo-status-bar";
+import { SuccessToast, ErrorToast } from "./components/common/toast/Toasts";
+
 const Stack = createNativeStackNavigator();
-// const BottomTab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+
+const toastConfig = {
+  success: (props) => <SuccessToast {...props} />,
+  error: (props) => <ErrorToast {...props} />,
+};
+
+const HomeScreens = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={(props) => <Footer {...props} />}
+    >
+      <Tab.Screen name="DownloadView" component={DownloadView} />
+      <Tab.Screen name="ClaimsView" component={ClaimsView} />
+      <Tab.Screen name="NewsView" component={NewsView} />
+    </Tab.Navigator>
+  );
+};
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -43,7 +62,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" hidden={false} />
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
         }}
@@ -55,30 +74,10 @@ export default function App() {
         />
         <Stack.Screen name="CodeAuth" component={CodeAuth} />
         <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
-
-        <Stack.Screen name="DownloadView" component={DownloadView} />
-        <Stack.Screen name="ClaimsView" component={ClaimsView} />
-        <Stack.Screen name="NewsView" component={NewsView} />
+        <Stack.Screen name="Home" component={HomeScreens} />
       </Stack.Navigator>
 
-      <Toast />
+      <Toast config={toastConfig} />
     </NavigationContainer>
   );
 }
-
-{
-  /* <BottomTab.Navigator>
-        <BottomTab.Screen name="Download" component={DownloadView} />
-        <BottomTab.Screen name="Claims" component={ClaimsView} />
-        <BottomTab.Screen name="News" component={NewsView} />
-      </BottomTab.Navigator> */
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
