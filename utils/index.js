@@ -111,3 +111,40 @@ export const employeeDownloadables = [
     image: svg.hojaDeVida,
   },
 ];
+export const newsInfo = [
+  {
+    id: "manow1",
+    title: "Permisos",
+    description:
+      "Solicita tus permisos y conoce el estado del tramite",
+    
+  },
+  {
+    id: "medico1",
+    title: "Incapacidades",
+    description:
+      "Solicita tus permisos y conoce el estado del tramite",
+    
+  },
+  {
+    id: "vacacion21",
+    title: "Vacaciones",
+    description:
+      "Solicita tus permisos y conoce el estado del tramite",
+    
+  },
+  {
+    id: "retiros1",
+    title: "Retiros",
+    description:
+      "Solicita tus permisos y conoce el estado del tramite",
+    
+  },
+  {
+    id: "hlaboral1",
+    title: "Cambio historia laboral",
+    description:
+      "Solicita tus permisos y conoce el estado del tramite",
+    
+  },
+];
