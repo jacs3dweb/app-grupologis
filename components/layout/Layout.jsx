@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Header from "../common/Header";
-import Footer from "../common/Footer";
+// import Footer from "../common/Footer";
 import { colors, heightPercentageToPx } from "../../utils";
 
 const Layout = ({ children, props }) => {
@@ -9,7 +9,7 @@ const Layout = ({ children, props }) => {
     <View style={styles.mainContainer}>
       <Header />
       {children}
-      <Footer navigation={props.navigation} route={props.route} />
+      {/* <Footer navigation={props.navigation} route={props.route} /> */}
     </View>
   );
 };

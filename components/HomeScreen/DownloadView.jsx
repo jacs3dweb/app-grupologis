@@ -43,7 +43,10 @@ const Download = (props) => {
             />
           </View>
           <View style={styles.containerScroll}>
-            <ScrollView horizontal={true}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
               <View style={styles.downloadableCardsContainer}>
                 {role === "employee"
                   ? employeeDownloadables.map((e) => (
@@ -84,9 +87,9 @@ const styles = StyleSheet.create({
     width: widthPercentageToPx(60),
   },
   welcomeDesc: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Volks-Serial-Light",
     color: colors.descriptionColors,
-    ...getFontStyles(14, 0.5, 0.9),
+    ...getFontStyles(14, 0.5, 1.1),
   },
 
   workersImage: {
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: 300,
+    height: 310,
     paddingTop: 10,
   },
   downloadableCardsContainer: {

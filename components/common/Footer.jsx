@@ -3,14 +3,14 @@ import React from "react";
 import { colors, heightPercentageToPx, widthPercentageToPx } from "../../utils";
 import { Feather } from "@expo/vector-icons";
 
-const Footer = ({ navigation, route }) => {
+const Footer = (props) => {
+  const { navigation } = props;
   const tabsScreens = [
     {
       id: "downloads",
       icon: "download",
       screen: "DownloadView",
     },
-
     {
       id: "news",
       icon: "calendar",
@@ -30,12 +30,12 @@ const Footer = ({ navigation, route }) => {
   return (
     <View style={styles.footerContainer}>
       {tabsScreens.map((sc) => (
-        <Pressable key={sc.id} onPress={() => navigation.replace(sc.screen)}>
-          <View style={styles.navbarOption(route.name === sc.screen)}>
+        <Pressable key={sc.id} onPress={() => navigation.navigate(sc.screen)}>
+          <View style={styles.navbarOption(false)}>
             <Feather
               name={sc.icon}
               size={24}
-              color={route.name === sc.screen ? "white" : "#D9D9FE"}
+              color={false ? "white" : "#D9D9FE"}
             />
           </View>
         </Pressable>
@@ -48,10 +48,12 @@ export default Footer;
 
 const styles = StyleSheet.create({
   footerContainer: {
+    marginHorizontal: 20,
     position: "absolute",
-    top: heightPercentageToPx(91),
+    top: heightPercentageToPx(98),
     width: widthPercentageToPx(90),
     height: 52,
+
     backgroundColor: colors.white,
     display: "flex",
     flexDirection: "row",
