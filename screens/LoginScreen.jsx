@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
         <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
         <View style={styles.title}>
           <Text style={styles.welcomeText}>Bienvenidos!</Text>
-          <Text style={styles.toApp}>a la Aplicación</Text>
+          <Text style={styles.subtitle}>a la Aplicación</Text>
 
           <View style={styles.descriptionContainer}>
             <Text style={styles.welcomeDesc}>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     color: colors.mainBlue,
     ...getFontStyles(30),
   },
-  toApp: {
+  subtitle: {
     ...getFontStyles(22),
     fontFamily: "Poppins-Bold",
   },

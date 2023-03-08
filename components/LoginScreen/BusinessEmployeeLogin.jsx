@@ -37,7 +37,7 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
         <View style={styles.textsContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.welcomeText}>SOY</Text>
-            <Text style={styles.toApp}>
+            <Text style={styles.subtitle}>
               {type === "business" ? "EMPRESA" : "EMPLEADO"}
             </Text>
           </View>
@@ -63,9 +63,11 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             placeholder="Celular"
             type="numeric"
           ></InputWithIcon>
-          <Pressable onPress={() =>
+          <Pressable
+            onPress={() =>
               navigation.navigate("CodeAuth", { type: "business" })
-            }>
+            }
+          >
             <View style={styles.asIngresaButton}>
               <Text style={{ color: colors.white }}>Ingresar</Text>
             </View>
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     ...getFontStyles(28),
   },
-  toApp: {
+  subtitle: {
     ...getFontStyles(28),
     color: colors.white,
     fontFamily: "Poppins-Bold",

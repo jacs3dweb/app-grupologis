@@ -28,7 +28,9 @@ export const colors = {
   gray: "#CCCCCC",
   descarga: "#67C9B9",
   black: "#000000",
+  lightGray: "#F7F7F7",
   yellow: "#FDA428",
+  purpleIcons: "#9293F5",
 };
 
 export const images = {
@@ -54,6 +56,8 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FGrupo%2063.png?alt=media&token=0d6c5a70-2c24-42a3-aa79-46e8096b3ddc",
   employeeNimage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FEnmascarar_grupo_33x%201.png?alt=media&token=747c3d91-3780-4617-8482-ae8fe7d70fa5",
+  checkImage:
+    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FcheckImage.png?alt=media&token=66e7b9e5-9079-4dc8-829a-ebff3d983334",
 };
 
 export const widthPercentageToPx = (percentage) => {

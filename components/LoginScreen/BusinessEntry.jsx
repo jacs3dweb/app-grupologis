@@ -39,8 +39,8 @@ const BusinessE = ({ navigation }) => {
       <View style={styles.topContainer}>
         <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
         <View style={styles.title}>
-          <Text style={styles.toApp}>Elija</Text>
-          <Text style={styles.toApp}>la empresa.</Text>
+          <Text style={styles.subtitle}>Elija</Text>
+          <Text style={styles.subtitle}>la empresa.</Text>
 
           <View style={styles.descriptionContainer}>
             <Text style={styles.welcomeDesc}>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     color: colors.mainBlue,
     ...getFontStyles(30),
   },
-  toApp: {
+  subtitle: {
     ...getFontStyles(22),
     fontFamily: "Poppins-Bold",
   },

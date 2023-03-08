@@ -42,8 +42,8 @@ const Code = ({ navigation }) => {
       <View style={styles.topContainer}>
         <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
         <View style={styles.title}>
-          <Text style={styles.toApp}>Ingrese</Text>
-          <Text style={styles.toApp}>el codigo</Text>
+          <Text style={styles.subtitle}>Ingrese</Text>
+          <Text style={styles.subtitle}>el codigo</Text>
 
           <View style={styles.descriptionContainer}>
             <Text style={styles.welcomeDesc}>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     color: colors.mainBlue,
     ...getFontStyles(30),
   },
-  toApp: {
+  subtitle: {
     ...getFontStyles(22),
     fontFamily: "Poppins-Bold",
   },

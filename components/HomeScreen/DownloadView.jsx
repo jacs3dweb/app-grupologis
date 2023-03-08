@@ -28,7 +28,7 @@ const Download = (props) => {
           <View style={styles.infoContainer}>
             <View style={styles.title}>
               <Text style={styles.welcomeText}>Descarga!</Text>
-              <Text style={styles.toApp}>Certificados y documentos</Text>
+              <Text style={styles.subtitle}>Certificados y documentos</Text>
 
               <View style={styles.descriptionContainer}>
                 <Text style={styles.welcomeDesc}>
