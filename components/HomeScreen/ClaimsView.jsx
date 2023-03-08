@@ -9,6 +9,15 @@ import Form from "./claimsView/Form";
 import ConfirmActivity from "../common/ConfirmActivity";
 const Claim = (props) => {
   const [modal, setModal] = useState(false);
+  const [showForm, setShowForm] = useState(true);
+
+  const closeAfterConfirm = () => {
+    setShowForm(false);
+
+    setTimeout(() => {
+      setModal(false);
+    }, 3000);
+  };
   return (
     <Layout props={{ ...props }}>
       <ViewTitleCard
@@ -29,13 +38,19 @@ const Claim = (props) => {
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
           <View style={styles.modalContainer}>
-            {/* <Form closeModal={() => setModal(false)} /> */}
-            <ConfirmActivity
-              closeModal={() => setModal(false)}
-              title="Su queja o reclamo ha sido enviada"
-              description="Recuerde estar pendiente a su correo para recibir la respuesta"
-              image={images.ch}
-            />
+            {showForm ? (
+              <Form
+                closeModal={() => setModal(false)}
+                onConfirm={closeAfterConfirm}
+              />
+            ) : (
+              <ConfirmActivity
+                closeModal={() => setModal(false)}
+                title="Su queja o reclamo ha sido enviada"
+                description="Recuerde estar pendiente a su correo para recibir la respuesta"
+                image={images.checkImage}
+              />
+            )}
           </View>
         </Modal>
       )}

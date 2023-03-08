@@ -1,20 +1,7 @@
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  Image,
-} from "react-native";
-import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import React from "react";
 // import SvgUri from "react-native-svg-uri";
-import {
-  colors,
-  getFontStyles,
-  heightPercentageToPx,
-  widthPercentageToPx,
-} from "../../../utils";
+import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 
 import Toast from "react-native-toast-message";
 

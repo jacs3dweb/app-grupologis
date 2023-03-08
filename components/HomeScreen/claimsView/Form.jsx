@@ -8,7 +8,7 @@ import {
   widthPercentageToPx,
 } from "../../../utils";
 
-const Form = ({ closeModal }) => {
+const Form = ({ closeModal, onConfirm }) => {
   return (
     <View style={styles.modalForm}>
       <Pressable onPress={closeModal}>
@@ -34,7 +34,7 @@ const Form = ({ closeModal }) => {
           placeholder="Cuéntanos más..."
           multiline={true}
         ></TextInput>
-        <Pressable>
+        <Pressable onPress={onConfirm}>
           <View style={styles.sendButton}>
             <Text style={{ color: colors.white }}>Enviar</Text>
           </View>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     transform: [{ translateY: 50 }],
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(100),
+    height: heightPercentageToPx(70),
   },
   goBackButton: {
     position: "relative",
@@ -117,6 +117,8 @@ const styles = StyleSheet.create({
     height: heightPercentageToPx(20),
     borderRadius: 17,
     padding: 15,
+    display: "flex",
+    alignItems: "flex-start",
   },
   sendButton: {
     backgroundColor: colors.buttonsColor,

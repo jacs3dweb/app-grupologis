@@ -63,7 +63,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topContent: {
-    height: "70%",
+    height: "65%",
+    display: "flex",
+    alignItems: "center",
+    gap: 15,
   },
   iconImage: {
     width: 109,
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   titleText: {
-    fontFamily: "Poppins-Bold",
+    fontFamily: "Volks-Bold",
     marginTop: 2,
     color: colors.black,
     textAlign: "center",
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   closeButtonText: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Volks-Bold",
     color: colors.black,
   },
 });
