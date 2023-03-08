@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-// import SvgUri from "react-native-svg-uri";
+import SvgUri from "react-native-svg-uri";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 
 import Toast from "react-native-toast-message";
@@ -10,6 +10,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     Toast.show({
       type: "success",
       text1: "Descarga Completada",
+
       position: "bottom",
       visibilityTime: 2000,
     });
@@ -17,12 +18,12 @@ const DownloadableCard = ({ title, desc, image, id }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
-        {/* <SvgUri
+        <SvgUri
           style={styles.certificadoImage}
-          width={70}
-          height={70}
+          width={65}
+          height={65}
           source={image}
-        ></SvgUri> */}
+        ></SvgUri>
 
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>

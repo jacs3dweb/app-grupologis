@@ -38,6 +38,7 @@ export const colors = {
   yellow: "#FDA428",
   purpleIcons: "#9293F5",
   green: "#67C9B9",
+  red: "#FF6B86",
 };
 
 export const images = {

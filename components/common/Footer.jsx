@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     marginHorizontal: 20,
     position: "absolute",
-    top: heightPercentageToPx(98),
+    bottom: heightPercentageToPx(3),
     width: widthPercentageToPx(90),
     height: 52,
 

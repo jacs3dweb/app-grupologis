@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: 310,
+    height: heightPercentageToPx(32.5),
     paddingTop: 10,
   },
   downloadableCardsContainer: {
