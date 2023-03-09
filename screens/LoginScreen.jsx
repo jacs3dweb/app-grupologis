@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import authContext from "../context/auth/authContext";
 import {
   colors,
   getFontStyles,
@@ -8,6 +10,12 @@ import {
 } from "../utils";
 
 const LoginScreen = ({ navigation }) => {
+  const { setRole } = useContext(authContext);
+
+  const handleSelection = (type) => {
+    setRole(type);
+    navigation.navigate("BusinessEmployeeLogin", { type });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -23,20 +31,12 @@ const LoginScreen = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonsContainer}>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("BusinessEmployeeLogin", { type: "employee" })
-            }
-          >
+          <Pressable onPress={() => handleSelection("employee")}>
             <View style={styles.asEmployeeButton}>
               <Text style={{ color: colors.white }}>SOY EMPLEADO</Text>
             </View>
           </Pressable>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("BusinessEmployeeLogin", { type: "business" })
-            }
-          >
+          <Pressable onPress={() => handleSelection("business")}>
             <View style={styles.asBusinessButton}>
               <Text style={{ color: colors.white }}>SOY EMPRESA</Text>
             </View>

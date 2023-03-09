@@ -112,6 +112,33 @@ export const employeeDownloadables = [
     image: svg.hojaDeVida,
   },
 ];
+export const businessDownloadables = [
+  {
+    id: "humanResourcesIndicator",
+    title: "Indicador de gestion humana",
+    description:
+      "Descarga tus indicadores de gestión humana indica la fecha inicial y final",
+    image: svg.certificadoLaboral,
+  },
+  {
+    id: "generalPayroll",
+    title: "Volante de nómina general",
+    description: "Descarga tu volante de nómina desde la App",
+    image: svg.certificadoLaboral,
+  },
+  {
+    id: "capacitations",
+    title: "Capacitaciones",
+    description: "Ahora puedes descargar tus capacitaciones desde la App",
+    image: svg.certificadoLaboral,
+  },
+  {
+    id: "ausentism",
+    title: "Ausentismos",
+    description: "Ahora puedes descargar tus certificados desde la App",
+    image: svg.certificadoLaboral,
+  },
+];
 export const newsInfo = [
   {
     id: "manow1",

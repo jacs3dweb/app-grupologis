@@ -21,7 +21,7 @@ import { StatusBar } from "expo-status-bar";
 import { SuccessToast, ErrorToast } from "./components/common/toast/Toasts";
 
 // Import States
-
+import AuthState from "./context/auth/authState";
 import NewsState from "./context/news/newsState";
 
 const Stack = createNativeStackNavigator();
@@ -63,27 +63,29 @@ export default function App() {
   console.log("🚀 ~ reloading");
 
   return (
-    <NewsState>
-      <NavigationContainer>
-        <StatusBar style="auto" hidden={false} />
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen
-            name="BusinessEmployeeLogin"
-            component={BusinessEmployeeLogin}
-          />
-          <Stack.Screen name="CodeAuth" component={CodeAuth} />
-          <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
-          <Stack.Screen name="Home" component={HomeScreens} />
-        </Stack.Navigator>
+    <AuthState>
+      <NewsState>
+        <NavigationContainer>
+          <StatusBar style="auto" hidden={false} />
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen
+              name="BusinessEmployeeLogin"
+              component={BusinessEmployeeLogin}
+            />
+            <Stack.Screen name="CodeAuth" component={CodeAuth} />
+            <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
+            <Stack.Screen name="Home" component={HomeScreens} />
+          </Stack.Navigator>
 
-        <Toast config={toastConfig} />
-      </NavigationContainer>
-    </NewsState>
+          <Toast config={toastConfig} />
+        </NavigationContainer>
+      </NewsState>
+    </AuthState>
   );
 }

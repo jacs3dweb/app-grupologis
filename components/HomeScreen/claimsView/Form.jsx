@@ -7,6 +7,7 @@ import {
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../../../utils";
+import GLButton from "../../common/buttons/GLButton";
 
 const Form = ({ closeModal, onConfirm }) => {
   return (
@@ -34,11 +35,12 @@ const Form = ({ closeModal, onConfirm }) => {
           placeholder="Cuéntanos más..."
           multiline={true}
         ></TextInput>
-        <Pressable onPress={onConfirm}>
-          <View style={styles.sendButton}>
-            <Text style={{ color: colors.white }}>Enviar</Text>
-          </View>
-        </Pressable>
+        <GLButton
+          onPressAction={onConfirm}
+          type="default"
+          placeholder={"Enviar"}
+          width={widthPercentageToPx(70)}
+        />
       </View>
     </View>
   );

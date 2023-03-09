@@ -8,15 +8,17 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import React from "react";
+import React, { useContext } from "react";
 import {
   colors,
   heightPercentageToPx,
   images,
   widthPercentageToPx,
 } from "../../utils";
+import authContext from "../../context/auth/authContext";
 
 const Header = ({}) => {
+  const { userData } = useContext(authContext);
   return (
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
@@ -26,11 +28,11 @@ const Header = ({}) => {
         </View>
         <View style={styles.infoUser}>
           <Text style={styles.hello}>Hola!</Text>
-          <Text style={styles.nameUser}>Mary Quiñones</Text>
+          <Text style={styles.nameUser}>{userData.name}</Text>
         </View>
       </View>
       <View>
-        <Pressable onPress={() => console.log("presion")}>
+        <Pressable onPress={() => console.log("notificaciones")}>
           <Ionicons name="md-notifications-outline" size={30} color="white" />
         </Pressable>
       </View>

@@ -1,12 +1,6 @@
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  Pressable,
-} from "react-native";
-import {
+  businessDownloadables,
   colors,
   employeeDownloadables,
   getFontStyles,
@@ -15,12 +9,16 @@ import {
   widthPercentageToPx,
 } from "../../utils";
 
-import { useRef, useState } from "react";
+import { useContext, useState } from "react";
 import Layout from "../layout/Layout.jsx";
 import DownloadableCard from "./downloadView/DownloadableCard";
+import authContext from "../../context/auth/authContext";
 
 const Download = (props) => {
-  const [role, setRole] = useState("employee");
+  const { userData } = useContext(authContext);
+  const [dataCards, setDataCards] = useState(
+    userData.role === "employee" ? employeeDownloadables : businessDownloadables
+  );
   return (
     <Layout props={{ ...props }}>
       <ScrollView>
@@ -48,17 +46,15 @@ const Download = (props) => {
               showsHorizontalScrollIndicator={false}
             >
               <View style={styles.downloadableCardsContainer}>
-                {role === "employee"
-                  ? employeeDownloadables.map((e) => (
-                      <DownloadableCard
-                        key={e.id}
-                        desc={e.description}
-                        image={e.image}
-                        title={e.title}
-                        id={e.id}
-                      />
-                    ))
-                  : null}
+                {dataCards.map((e) => (
+                  <DownloadableCard
+                    key={e.id}
+                    desc={e.description}
+                    image={e.image}
+                    title={e.title}
+                    id={e.id}
+                  />
+                ))}
               </View>
             </ScrollView>
           </View>
