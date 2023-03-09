@@ -35,6 +35,7 @@ export const colors = {
   descarga: "#67C9B9",
   black: "#000000",
   lightGray: "#F7F7F7",
+  darkGray: "#606060",
   yellow: "#FDA428",
   purpleIcons: "#9293F5",
   green: "#67C9B9",
@@ -115,36 +116,26 @@ export const newsInfo = [
   {
     id: "manow1",
     title: "Permisos",
-    description:
-      "Solicita tus permisos y conoce el estado del tramite",
-    
+    description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
     id: "medico1",
     title: "Incapacidades",
-    description:
-      "Solicita tus permisos y conoce el estado del tramite",
-    
+    description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
     id: "vacacion21",
     title: "Vacaciones",
-    description:
-      "Solicita tus permisos y conoce el estado del tramite",
-    
+    description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
     id: "retiros1",
     title: "Retiros",
-    description:
-      "Solicita tus permisos y conoce el estado del tramite",
-    
+    description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
     id: "hlaboral1",
     title: "Cambio historia laboral",
-    description:
-      "Solicita tus permisos y conoce el estado del tramite",
-    
+    description: "Solicita tus permisos y conoce el estado del tramite",
   },
 ];

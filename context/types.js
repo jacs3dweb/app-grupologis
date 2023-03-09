@@ -1,0 +1,1 @@
+export const NUEVA_NOVEDAD = "NUEVA_NOVEDAD";

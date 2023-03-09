@@ -7,6 +7,7 @@ import MainCardInfo from "./homeView/MainCardInfo";
 import ViewTitleCard from "./homeView/ViewTitleCard";
 import ConfirmActivity from "../common/ConfirmActivity";
 import FormNew from "./newsView/FormNews";
+import NewsList from "./newsView/NewsList";
 
 const News = (props) => {
   const [modal, setModal] = useState(false);
@@ -19,12 +20,13 @@ const News = (props) => {
   };
   return (
     <Layout props={{ ...props }}>
+      <ViewTitleCard
+        title={"Novedades"}
+        buttonText="+ Nueva"
+        onPressAction={() => setModal(!modal)}
+      />
+
       <ScrollView>
-        <ViewTitleCard
-          title={"Novedades"}
-          buttonText="+ Nueva"
-          onPressAction={() => setModal(!modal)}
-        />
         <MainCardInfo
           firstTitle={"Sistema"}
           secondTitle="de novedades"
@@ -33,6 +35,7 @@ const News = (props) => {
           }
           image={images.employeeNimage}
         />
+        <NewsList />
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
