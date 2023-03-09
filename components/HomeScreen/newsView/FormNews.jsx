@@ -26,7 +26,6 @@ const FormNew = ({ closeModal }) => {
         {newsInfo.map((e) => (
           <Pressable onPress={() => console.log(e.id)}>
             <NewsCards
-              key={e.id}
               descNews={e.description}
               titleNews={e.title}
               id={e.id}

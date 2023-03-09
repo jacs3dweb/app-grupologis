@@ -5,10 +5,11 @@ import {
   Pressable,
   Platfor,
   Text,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   colors,
   heightPercentageToPx,
@@ -16,9 +17,12 @@ import {
   widthPercentageToPx,
 } from "../../utils";
 import authContext from "../../context/auth/authContext";
+import NotificationForm from "../HomeScreen/notificationForm/FormNotification";
 
-const Header = ({}) => {
+const Header = ({ }) => {
   const { userData } = useContext(authContext);
+  const [modal, setModal] = useState(false);
+
   return (
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
@@ -32,10 +36,26 @@ const Header = ({}) => {
         </View>
       </View>
       <View>
-        <Pressable onPress={() => console.log("notificaciones")}>
+        <Pressable onPress={() => setModal(!modal)}>
           <Ionicons name="md-notifications-outline" size={30} color="white" />
         </Pressable>
       </View>
+      {modal && (
+        <Modal
+          animationType="slide" transparent={false}
+        >
+          <View style={styles.modalContainer}>
+            <NotificationForm
+              closeM={()=> setModal(false)}
+            />
+          </View>
+
+        </Modal>
+
+
+
+
+      )}
     </View>
   );
 };
@@ -108,5 +128,9 @@ const styles = StyleSheet.create({
     borderColor: colors.mainBlue,
     backgroundColor: colors.green,
     zIndex: 9,
+  },
+  modalContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

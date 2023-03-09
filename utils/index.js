@@ -82,6 +82,33 @@ export const heightPercentageToPx = (percentage) => {
   return (windowHeight * percentage) / 100;
 };
 
+export const notificationInfo =[
+  {
+    id: "noti1",
+    title: "Su solicitud de permiso ha sido enviada",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+  {
+    id: "noti2",
+    title: "Su solicitud de permiso ha sido aprobada por empleador",
+    description:
+    "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+  {
+    id: "noti3",
+    title: "Su solicitud de permiso se está validando en Nómina",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+  {
+    id: "noti4",
+    title: "Su solicitud de permiso ha sido completada con éxito",
+    description:
+    "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+];
+
 export const employeeDownloadables = [
   {
     id: "laboralCertificate",
@@ -166,3 +193,5 @@ export const newsInfo = [
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
 ];
+
+
