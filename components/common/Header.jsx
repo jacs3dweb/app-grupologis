@@ -42,7 +42,9 @@ const Header = ({ }) => {
       </View>
       {modal && (
         <Modal
-          animationType="slide" transparent={false}
+          animationType="slide" 
+          transparent={true}
+
         >
           <View style={styles.modalContainer}>
             <NotificationForm
@@ -130,7 +132,15 @@ const styles = StyleSheet.create({
     zIndex: 9,
   },
   modalContainer: {
-    justifyContent: "center",
     alignItems: "center",
+    top: 55,
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    transform: [{ translateY: 55 }],
+    width: widthPercentageToPx(90),
+    height: heightPercentageToPx(90),
+    left: 20,
   },
 });
