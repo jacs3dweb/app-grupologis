@@ -35,6 +35,7 @@ export const colors = {
   descarga: "#67C9B9",
   black: "#000000",
   lightGray: "#F7F7F7",
+  darkGray: "#606060",
   yellow: "#FDA428",
   purpleIcons: "#9293F5",
   green: "#67C9B9",
@@ -82,6 +83,33 @@ export const heightPercentageToPx = (percentage) => {
   return (windowHeight * percentage) / 100;
 };
 
+export const notificationInfo =[
+  {
+    id: "noti1",
+    title: "Su solicitud de permiso ha sido enviada",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+  {
+    id: "noti2",
+    title: "Su solicitud de permiso ha sido aprobada por empleador",
+    description:
+    "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+  {
+    id: "noti3",
+    title: "Su solicitud de permiso se está validando en Nómina",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+  {
+    id: "noti4",
+    title: "Su solicitud de permiso ha sido completada con éxito",
+    description:
+    "Recuerde estar pendiente a su correo para recibir la respuesta.",
+  },
+];
+
 export const employeeDownloadables = [
   {
     id: "laboralCertificate",
@@ -112,3 +140,59 @@ export const employeeDownloadables = [
     image: svg.hojaDeVida,
   },
 ];
+export const businessDownloadables = [
+  {
+    id: "humanResourcesIndicator",
+    title: "Indicador de gestion humana",
+    description:
+      "Descarga tus indicadores de gestión humana indica la fecha inicial y final",
+    image: svg.certificadoLaboral,
+  },
+  {
+    id: "generalPayroll",
+    title: "Volante de nómina general",
+    description: "Descarga tu volante de nómina desde la App",
+    image: svg.certificadoLaboral,
+  },
+  {
+    id: "capacitations",
+    title: "Capacitaciones",
+    description: "Ahora puedes descargar tus capacitaciones desde la App",
+    image: svg.certificadoLaboral,
+  },
+  {
+    id: "ausentism",
+    title: "Ausentismos",
+    description: "Ahora puedes descargar tus certificados desde la App",
+    image: svg.certificadoLaboral,
+  },
+];
+export const newsInfo = [
+  {
+    id: "manow1",
+    title: "Permisos",
+    description: "Solicita tus permisos y conoce el estado del tramite",
+  },
+  {
+    id: "medico1",
+    title: "Incapacidades",
+    description: "Solicita tus permisos y conoce el estado del tramite",
+  },
+  {
+    id: "vacacion21",
+    title: "Vacaciones",
+    description: "Solicita tus permisos y conoce el estado del tramite",
+  },
+  {
+    id: "retiros1",
+    title: "Retiros",
+    description: "Solicita tus permisos y conoce el estado del tramite",
+  },
+  {
+    id: "hlaboral1",
+    title: "Cambio historia laboral",
+    description: "Solicita tus permisos y conoce el estado del tramite",
+  },
+];
+
+

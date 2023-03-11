@@ -7,6 +7,7 @@ import {
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../../utils";
+import GLButton from "./buttons/GLButton";
 
 const confirmActivity = ({ closeModal, image, title, description }) => {
   return (
@@ -25,11 +26,12 @@ const confirmActivity = ({ closeModal, image, title, description }) => {
           </View>
         </View>
 
-        <Pressable onPress={closeModal}>
-          <View style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>Cerrar</Text>
-          </View>
-        </Pressable>
+        <GLButton
+          onPressAction={closeModal}
+          type="second"
+          placeholder={"Cerrar"}
+          width={widthPercentageToPx(70)}
+        />
       </View>
     </View>
   );

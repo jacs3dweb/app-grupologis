@@ -5,18 +5,24 @@ import {
   Pressable,
   Platfor,
   Text,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   colors,
   heightPercentageToPx,
   images,
   widthPercentageToPx,
 } from "../../utils";
+import authContext from "../../context/auth/authContext";
+import NotificationForm from "../HomeScreen/notificationForm/FormNotification";
 
-const Header = ({}) => {
+const Header = ({ }) => {
+  const { userData } = useContext(authContext);
+  const [modal, setModal] = useState(false);
+
   return (
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
@@ -26,14 +32,32 @@ const Header = ({}) => {
         </View>
         <View style={styles.infoUser}>
           <Text style={styles.hello}>Hola!</Text>
-          <Text style={styles.nameUser}>Mary Quiñones</Text>
+          <Text style={styles.nameUser}>{userData.name}</Text>
         </View>
       </View>
       <View>
-        <Pressable onPress={() => console.log("presion")}>
+        <Pressable onPress={() => setModal(!modal)}>
           <Ionicons name="md-notifications-outline" size={30} color="white" />
         </Pressable>
       </View>
+      {modal && (
+        <Modal
+          animationType="slide" 
+          transparent={true}
+
+        >
+          <View style={styles.modalContainer}>
+            <NotificationForm
+              closeM={()=> setModal(false)}
+            />
+          </View>
+
+        </Modal>
+
+
+
+
+      )}
     </View>
   );
 };
@@ -106,5 +130,17 @@ const styles = StyleSheet.create({
     borderColor: colors.mainBlue,
     backgroundColor: colors.green,
     zIndex: 9,
+  },
+  modalContainer: {
+    alignItems: "center",
+    top: 55,
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    transform: [{ translateY: 55 }],
+    width: widthPercentageToPx(90),
+    height: heightPercentageToPx(90),
+    left: 20,
   },
 });

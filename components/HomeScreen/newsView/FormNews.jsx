@@ -3,14 +3,14 @@ import React from "react";
 import { Feather } from "@expo/vector-icons";
 import {
   colors,
+  newsInfo,
   getFontStyles,
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../../../utils";
-import GLButton from "../../common/buttons/GLButton";
-import FormTitle from "../../common/FormTitle";
+import NewsCards from "./SelectableNew";
 
-const Form = ({ closeModal, onConfirm }) => {
+const FormNew = ({ closeModal }) => {
   return (
     <View style={styles.modalForm}>
       <Pressable onPress={closeModal}>
@@ -18,36 +18,26 @@ const Form = ({ closeModal, onConfirm }) => {
           <Feather name="x" size={24} color={colors.purpleIcons} />
         </View>
       </Pressable>
-      <FormTitle
-        title={"Nueva Quejas"}
-        subtitle="y reclamos"
-        description={
-          "Puedes interponer una queja o reclamo por este medio o hacer seguimiento de las mismas"
-        }
-      />
-
+      <View style={styles.titlesContainer}>
+        <Text style={styles.welcomeText}>Seleccione</Text>
+        <Text style={styles.subtitle}>tipo de novedad</Text>
+      </View>
       <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.titleContainer}
-          placeholder="Asunto"
-        ></TextInput>
-        <TextInput
-          style={styles.descriptionContainer}
-          placeholder="Cuéntanos más..."
-          multiline={true}
-        ></TextInput>
-        <GLButton
-          onPressAction={onConfirm}
-          type="default"
-          placeholder={"Enviar"}
-          width={widthPercentageToPx(70)}
-        />
+        {newsInfo.map((e) => (
+          <Pressable onPress={() => console.log(e.id)}>
+            <NewsCards
+              descNews={e.description}
+              titleNews={e.title}
+              id={e.id}
+            />
+          </Pressable>
+        ))}
       </View>
     </View>
   );
 };
 
-export default Form;
+export default FormNew;
 
 const styles = StyleSheet.create({
   modalForm: {
@@ -58,7 +48,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     transform: [{ translateY: 50 }],
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(70),
+    height: heightPercentageToPx(90),
   },
   goBackButton: {
     position: "relative",
@@ -70,6 +60,30 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
+  titlesContainer: {
+    paddingHorizontal: 30,
+  },
+  welcomeText: {
+    fontFamily: "Poppins-Bold",
+    marginBottom: 2,
+    marginTop: 2,
+    color: colors.mainBlue,
+    ...getFontStyles(30),
+  },
+  subtitle: {
+    ...getFontStyles(17),
+    marginBottom: 2,
+    marginTop: 0,
+    fontFamily: "Poppins-Bold",
+  },
+  welcomeDesc: {
+    fontFamily: "Poppins-Regular",
+    color: colors.descriptionColors,
+    marginBottom: 15,
+    marginTop: 15,
+    ...getFontStyles(13, 0.5, 0.9),
+  },
+
   inputContainer: {
     display: "flex",
     justifyContent: "center",
