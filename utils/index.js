@@ -40,6 +40,7 @@ export const colors = {
   purpleIcons: "#9293F5",
   green: "#67C9B9",
   red: "#FF6B86",
+  inputBackground: "#EBEBFF",
 };
 
 export const images = {
@@ -53,9 +54,6 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fworkers.png?alt=media&token=471853f4-fa12-4500-8113-45871c6829fd",
   employeeLoginImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fbusiness.png?alt=media&token=65d34ae8-2712-4304-ba00-232acdfad60f",
-
-  userImage:
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3",
   payrollFlyer:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-02.svg.png?alt=media&token=faad7c32-b792-4417-8cd8-bca82cf81f0e",
   certificadoImage3:
@@ -83,7 +81,7 @@ export const heightPercentageToPx = (percentage) => {
   return (windowHeight * percentage) / 100;
 };
 
-export const notificationInfo =[
+export const notificationInfo = [
   {
     id: "noti1",
     title: "Su solicitud de permiso ha sido enviada",
@@ -94,7 +92,7 @@ export const notificationInfo =[
     id: "noti2",
     title: "Su solicitud de permiso ha sido aprobada por empleador",
     description:
-    "Recuerde estar pendiente a su correo para recibir la respuesta.",
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
   },
   {
     id: "noti3",
@@ -106,7 +104,7 @@ export const notificationInfo =[
     id: "noti4",
     title: "Su solicitud de permiso ha sido completada con éxito",
     description:
-    "Recuerde estar pendiente a su correo para recibir la respuesta.",
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
   },
 ];
 
@@ -194,5 +192,3 @@ export const newsInfo = [
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
 ];
-
-

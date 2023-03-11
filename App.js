@@ -11,6 +11,7 @@ import CodeAuth from "./components/LoginScreen/CodeAuth";
 import BusinessEntry from "./components/LoginScreen/BusinessEntry";
 import DownloadView from "./components/HomeScreen/DownloadView";
 import ClaimsView from "./components/HomeScreen/ClaimsView";
+import UserView from "./components/HomeScreen/UserView";
 import NewsView from "./components/HomeScreen/NewsView";
 
 // Import components
@@ -43,6 +44,7 @@ const HomeScreens = () => {
       <Tab.Screen name="DownloadView" component={DownloadView} />
       <Tab.Screen name="ClaimsView" component={ClaimsView} />
       <Tab.Screen name="NewsView" component={NewsView} />
+      <Tab.Screen name="ProfileView" component={UserView} />
     </Tab.Navigator>
   );
 };

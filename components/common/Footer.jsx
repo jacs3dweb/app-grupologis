@@ -1,10 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { colors, heightPercentageToPx, widthPercentageToPx } from "../../utils";
 import { Feather } from "@expo/vector-icons";
 
 const Footer = (props) => {
   const { navigation } = props;
+  const [screen, setScreen] = useState("DownloadView");
   const tabsScreens = [
     {
       id: "downloads",
@@ -27,15 +28,20 @@ const Footer = (props) => {
       screen: "ProfileView",
     },
   ];
+
+  const handleChangeScreen = (screen) => {
+    setScreen(screen);
+    navigation.navigate(screen);
+  };
   return (
     <View style={styles.footerContainer}>
       {tabsScreens.map((sc) => (
-        <Pressable key={sc.id} onPress={() => navigation.navigate(sc.screen)}>
-          <View style={styles.navbarOption(false)}>
+        <Pressable key={sc.id} onPress={() => handleChangeScreen(sc.screen)}>
+          <View style={styles.navbarOption(screen === sc.screen)}>
             <Feather
               name={sc.icon}
               size={24}
-              color={false ? "white" : "#D9D9FE"}
+              color={screen === sc.screen ? "white" : "#D9D9FE"}
             />
           </View>
         </Pressable>
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     marginHorizontal: 20,
     position: "absolute",
-    bottom: heightPercentageToPx(3),
+    bottom: heightPercentageToPx(2),
     width: widthPercentageToPx(90),
     height: 52,
 

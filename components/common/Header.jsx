@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
 import {
   colors,
+  getFontStyles,
   heightPercentageToPx,
   images,
   widthPercentageToPx,
@@ -19,7 +20,7 @@ import {
 import authContext from "../../context/auth/authContext";
 import NotificationForm from "../HomeScreen/notificationForm/FormNotification";
 
-const Header = ({ }) => {
+const Header = ({}) => {
   const { userData } = useContext(authContext);
   const [modal, setModal] = useState(false);
 
@@ -27,7 +28,7 @@ const Header = ({ }) => {
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
         <View style={styles.userImgContainer}>
-          <Image style={styles.userImg} source={{ uri: images.userImage }} />
+          <Image style={styles.userImg} source={{ uri: userData.image }} />
           <View style={styles.onlineIndicator} />
         </View>
         <View style={styles.infoUser}>
@@ -41,22 +42,11 @@ const Header = ({ }) => {
         </Pressable>
       </View>
       {modal && (
-        <Modal
-          animationType="slide" 
-          transparent={true}
-
-        >
+        <Modal animationType="slide" transparent={true}>
           <View style={styles.modalContainer}>
-            <NotificationForm
-              closeM={()=> setModal(false)}
-            />
+            <NotificationForm closeM={() => setModal(false)} />
           </View>
-
         </Modal>
-
-
-
-
       )}
     </View>
   );
@@ -99,14 +89,13 @@ const styles = StyleSheet.create({
   hello: {
     color: colors.light,
     fontFamily: "Poppins-Regular",
-    fontSize: 14,
+    ...getFontStyles(13, 0.5, 0.9),
   },
 
   nameUser: {
     color: colors.light,
     fontFamily: "Poppins-SemiBold",
-    fontSize: 15,
-    lineHeight: 17,
+    ...getFontStyles(14, 0.5, 0.9),
   },
 
   infoUser: {

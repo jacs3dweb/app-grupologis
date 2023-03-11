@@ -14,7 +14,7 @@ export const SuccessToast = (props) => {
           <Text style={styles.text}>{props.text1}</Text>
         </View>
 
-        <SvgUri width={45} height={45} source={iconSuccess}></SvgUri>
+        {/* <SvgUri width={45} height={45} source={iconSuccess}></SvgUri> */}
       </View>
     </View>
   );
@@ -28,7 +28,7 @@ export const ErrorToast = (props) => {
           <Text style={styles.text}>{props.text1}</Text>
         </View>
 
-        <SvgUri width={45} height={45} source={iconError}></SvgUri>
+        {/* <SvgUri width={45} height={45} source={iconError}></SvgUri> */}
       </View>
     </View>
   );

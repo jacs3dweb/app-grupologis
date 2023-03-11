@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 25,
     height: 50,
-    marginTop: 15,
+    marginTop: 10,
   }),
   secondButton: (width) => ({
     backgroundColor: colors.gray,
@@ -64,6 +64,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 25,
     height: 50,
-    marginTop: 15,
+    marginTop: 10,
   }),
 });

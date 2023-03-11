@@ -8,26 +8,19 @@ import {
 } from "../../utils";
 // cambiar vista Download al terminar vista claim
 import { Picker } from "@react-native-picker/picker";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Feather } from "@expo/vector-icons";
+import authContext from "../../context/auth/authContext";
 
 const BusinessE = ({ navigation }) => {
+  const { businessOptions, setBusiness } = useContext(authContext);
   const pickerRef = useRef(null);
   const [selectedBusiness, setSelectedBusiness] = useState(null);
-  const businessOptions = [
-    {
-      label: "",
-      value: null,
-    },
-    {
-      label: "Empresa 1",
-      value: "1",
-    },
-    {
-      label: "Empresa 2",
-      value: "2",
-    },
-  ];
+
+  const handleSelectBusiness = () => {
+    setBusiness(selectedBusiness);
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={styles.container}>
@@ -84,7 +77,7 @@ const BusinessE = ({ navigation }) => {
             </View>
           </Pressable>
         }
-        <Pressable onPress={() => navigation.navigate("Home")}>
+        <Pressable onPress={handleSelectBusiness}>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>
           </View>

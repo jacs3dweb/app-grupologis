@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
     height: heightPercentageToPx(100),
     backgroundColor: colors.generalBackgroundColor,
   },
