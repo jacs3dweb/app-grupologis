@@ -1,3 +1,5 @@
+import React from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
@@ -50,7 +52,7 @@ export default Form;
 
 const styles = StyleSheet.create({
   modalForm: {
-    top: 45,
+    top: widthPercentageToPx(25),
     backgroundColor: colors.white,
     borderRadius: 10,
     paddingVertical: 10,
