@@ -7,6 +7,7 @@ import MainCardInfo from "./homeView/MainCardInfo";
 import ViewTitleCard from "./homeView/ViewTitleCard";
 import Form from "./claimsView/Form";
 import ConfirmActivity from "../common/ConfirmActivity";
+import ClaimList from "./claimsView/ClaimList";
 const Claim = (props) => {
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState(true);
@@ -34,6 +35,7 @@ const Claim = (props) => {
           }
           image={images.employeeNimage}
         />
+        <ClaimList/>
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
