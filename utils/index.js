@@ -8,6 +8,12 @@ import iconVolanteDeNomina from "../assets/images/home/downloadView/iconVolanteD
 import iconIngresoYretencion from "../assets/images/home/downloadView/iconIngresoYretencion.svg";
 import iconHojaDeVida from "../assets/images/home/downloadView/iconHojadevida.svg";
 
+const permisosImage = require("../assets/images/home/newsView/mano.png");
+const incapacidadesImage = require("../assets/images/home/newsView/medico.png");
+const vacacionesImage = require("../assets/images/home/newsView/vacacones.png");
+const retirosImage = require("../assets/images/home/newsView/retiros.png");
+const historiaLaboralImage = require("../assets/images/home/newsView/hlaboral.png");
+
 export const getFontStyles = (
   size,
   ptPercentage = 0.6,
@@ -41,6 +47,7 @@ export const colors = {
   green: "#67C9B9",
   red: "#FF6B86",
   inputBackground: "#EBEBFF",
+  stepGray: "#D9D9D9",
 };
 
 export const images = {
@@ -167,28 +174,33 @@ export const businessDownloadables = [
 ];
 export const newsInfo = [
   {
-    id: "manow1",
+    id: "permisos",
     title: "Permisos",
+    image: permisosImage,
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
-    id: "medico1",
+    id: "incapacidades",
     title: "Incapacidades",
+    image: incapacidadesImage,
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
-    id: "vacacion21",
+    id: "vacaciones",
     title: "Vacaciones",
+    image: vacacionesImage,
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
-    id: "retiros1",
+    id: "retiros",
     title: "Retiros",
+    image: retirosImage,
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
   {
-    id: "hlaboral1",
+    id: "hlaboral",
     title: "Cambio historia laboral",
+    image: historiaLaboralImage,
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
 ];

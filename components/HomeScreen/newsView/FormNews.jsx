@@ -1,16 +1,24 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import {
   colors,
-  newsInfo,
   getFontStyles,
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../../../utils";
-import NewsCards from "./SelectableNew";
+import SelectType from "./components/SelectType";
+import NewInfoForm from "./components/NewInfoForm";
+import ConfirmActivity from "../../common/ConfirmActivity";
 
 const FormNew = ({ closeModal }) => {
+  const [formStep, setFormStep] = useState(1);
+
+  const handleConfirmForm = () => {
+    console.log(newForm);
+    setFormStep(3);
+  };
+
   return (
     <View style={styles.modalForm}>
       <Pressable onPress={closeModal}>
@@ -18,20 +26,14 @@ const FormNew = ({ closeModal }) => {
           <Feather name="x" size={24} color={colors.purpleIcons} />
         </View>
       </Pressable>
-      <View style={styles.titlesContainer}>
-        <Text style={styles.welcomeText}>Seleccione</Text>
-        <Text style={styles.subtitle}>tipo de novedad</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        {newsInfo.map((e) => (
-          <Pressable onPress={() => console.log(e.id)}>
-            <NewsCards
-              descNews={e.description}
-              titleNews={e.title}
-              id={e.id}
-            />
-          </Pressable>
-        ))}
+      <View style={{ height: heightPercentageToPx(75) }}>
+        {formStep === 1 ? (
+          <SelectType continueWithForm={setFormStep} />
+        ) : formStep === 2 ? (
+          <NewInfoForm confirmInformation={handleConfirmForm} />
+        ) : (
+          <ConfirmActivity />
+        )}
       </View>
     </View>
   );
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     transform: [{ translateY: 50 }],
     width: widthPercentageToPx(90),
     height: heightPercentageToPx(90),
@@ -60,35 +62,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
   },
-  titlesContainer: {
-    paddingHorizontal: 30,
-  },
-  welcomeText: {
-    fontFamily: "Poppins-Bold",
-    marginBottom: 2,
-    marginTop: 2,
-    color: colors.mainBlue,
-    ...getFontStyles(30),
-  },
-  subtitle: {
-    ...getFontStyles(17),
-    marginBottom: 2,
-    marginTop: 0,
-    fontFamily: "Poppins-Bold",
-  },
+
   welcomeDesc: {
     fontFamily: "Poppins-Regular",
     color: colors.descriptionColors,
     marginBottom: 15,
     marginTop: 15,
     ...getFontStyles(13, 0.5, 0.9),
-  },
-
-  inputContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 10,
   },
 
   titleContainer: {

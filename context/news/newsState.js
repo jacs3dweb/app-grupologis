@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import newsContext from "./newsContext";
 import { newsReducer } from "./newsReducer";
 
-import { NUEVA_NOVEDAD } from "../types";
+import { NUEVA_NOVEDAD, CAMBIAR_CAMPO_NOVEDAD } from "../types";
 
 const NewsState = (props) => {
   const initialState = {
@@ -26,6 +26,13 @@ const NewsState = (props) => {
         estado: 3,
       },
     ],
+    newForm: {
+      type: null,
+      startDate: null,
+      endDate: null,
+      remunerated: false,
+      comment: "",
+    },
   };
 
   const [state, dispatch] = useReducer(newsReducer, initialState);
@@ -37,8 +44,22 @@ const NewsState = (props) => {
     });
   };
 
+  const changeFormField = (data) => {
+    dispatch({
+      type: CAMBIAR_CAMPO_NOVEDAD,
+      payload: data,
+    });
+  };
+
   return (
-    <newsContext.Provider value={{ newsList: state.newsList, agregarNovedad }}>
+    <newsContext.Provider
+      value={{
+        newsList: state.newsList,
+        newForm: state.newForm,
+        agregarNovedad,
+        changeFormField,
+      }}
+    >
       {props.children}
     </newsContext.Provider>
   );

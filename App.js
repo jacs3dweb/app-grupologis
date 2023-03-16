@@ -26,6 +26,20 @@ import AuthState from "./context/auth/authState";
 import NewsState from "./context/news/newsState";
 import ClaimsState from "./context/claims/claimState";
 
+import moment from "moment";
+
+moment.locale("es", {
+  months:
+    "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
+      "_"
+    ),
+  monthsShort: "Enero_Feb_Mar_Abr_May_Jun_Jul_Ago_Sept_Oct_Nov_Dec".split("_"),
+  weekdays: "Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado".split("_"),
+  weekdaysShort: "Dom_Lun_Mar_Mier_Jue_Vier_Sab".split("_"),
+  weekdaysMin: "Do_Lu_Ma_Mi_Ju_Vi_Sa".split("_"),
+});
+moment().utcOffset("-05:00");
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
