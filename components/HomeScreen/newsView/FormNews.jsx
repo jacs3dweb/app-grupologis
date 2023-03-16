@@ -15,8 +15,7 @@ const FormNew = ({ closeModal }) => {
   const [formStep, setFormStep] = useState(1);
 
   const handleConfirmForm = () => {
-    console.log(newForm);
-    setFormStep(3);
+    setFormStep(1);
   };
 
   return (
