@@ -50,6 +50,7 @@ export const colors = {
   stepGray: "#D9D9D9",
   boldRed: "#FF002E",
   boldGreen: "#00FF38",
+  boldGray: "#989898",
 };
 
 export const images = {

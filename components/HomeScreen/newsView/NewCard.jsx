@@ -1,9 +1,10 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { colors } from "../../../utils";
 import CardElement from "./components/CardElement";
 
 import { AntDesign } from "@expo/vector-icons";
+import StatusLine from "../../common/StatusLine";
 
 const NewCard = (props) => {
   return (
@@ -15,7 +16,7 @@ const NewCard = (props) => {
           <CardElement head={"Tipo de Permiso"} content={props.newType} />
         </View>
         <View style={styles.leftBottomContent}>
-          <Text>TODO: Estado de la novedad</Text>
+          <StatusLine status={props.status} />
         </View>
       </View>
       <View style={styles.rightContent}>
@@ -76,8 +77,9 @@ const styles = StyleSheet.create({
   },
   leftBottomContent: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   actionButton: (type) => ({
     width: 36,

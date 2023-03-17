@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles } from "../../../../utils";
 
 const CardElement = ({ head, content }) => {
   return (
-    <View style={styles.elementItem}>
+    <View>
       <Text style={styles.textHead}>{head}</Text>
       <Text style={styles.textContent}>{content}</Text>
     </View>
