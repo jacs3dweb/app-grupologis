@@ -38,7 +38,7 @@ const Claim = (props) => {
           }
           image={images.employeeNimage}
         />
-        <ClaimList />
+        <ClaimList/>
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>

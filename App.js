@@ -27,6 +27,7 @@ import Footer from "./components/layout/Footer";
 import AuthState from "./context/auth/authState";
 import ClaimsState from "./context/claims/claimState";
 import NewsState from "./context/news/newsState";
+import BillsState from "./context/bills/billsState";
 
 import moment from "moment";
 
@@ -87,6 +88,7 @@ export default function App() {
     <AuthState>
       <NewsState>
         <ClaimsState>
+          <BillsState>
           <NavigationContainer>
             <StatusBar style="auto" hidden={false} />
             <Stack.Navigator
@@ -107,6 +109,7 @@ export default function App() {
 
             <Toast config={toastConfig} />
           </NavigationContainer>
+          </BillsState>
         </ClaimsState>
       </NewsState>
     </AuthState>

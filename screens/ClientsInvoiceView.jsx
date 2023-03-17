@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import BillsList from "../components/HomeScreen/billView/BillsList";
 import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
 import ViewTitleCard from "../components/HomeScreen/homeView/ViewTitleCard";
 import Layout from "../components/layout/Layout";
@@ -10,7 +11,7 @@ const ClientsInvoiceView = ({ props }) => {
     <Layout props={{ ...props }}>
       <ViewTitleCard
         title={"Facturas clientes"}
-        buttonText="+ Nueva"
+        buttonText="  Buscar"
         onPressAction={() => console.log("nueva factura")}
       />
       <ScrollView
@@ -25,6 +26,7 @@ const ClientsInvoiceView = ({ props }) => {
           }
           image={images.employeeNimage}
         />
+        <BillsList/>
       </ScrollView>
     </Layout>
   );

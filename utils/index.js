@@ -208,6 +208,30 @@ export const newsInfo = [
   },
 ];
 
+export const employeeManagement = [
+  {
+    id: "hvida",
+    title: "Hoja de vida",
+    description:
+      "Ahora puedes descargar las hojas de vida de tus empleados",
+    //image: svg.
+  },
+  {
+    id: "novedai",
+    title: "Novedad ingresos",
+    description:
+      "Ahora puedes generar una novedad de ingreso desde la App",
+   // image: svg.
+  },
+  {
+    id: "maestroe",
+    title: "Maestro empleado",
+    description:
+      "Ahora puedes descargar tu certificado de maestro empleado",
+    //image: svg.
+  },
+];
+
 export const validDates = () => {
   let actualDate = new Date();
   let currentYear = actualDate.getFullYear();
@@ -234,4 +258,5 @@ export const validDates = () => {
       "Dic.",
     ],
   };
+  
 };
