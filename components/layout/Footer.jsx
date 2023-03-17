@@ -1,9 +1,13 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { colors, heightPercentageToPx, widthPercentageToPx } from "../../utils";
 import { Feather } from "@expo/vector-icons";
+import React, { useContext, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import { colors, heightPercentageToPx, widthPercentageToPx } from "../../utils";
+
+import authContext from "../../context/auth/authContext";
 
 const Footer = (props) => {
+  const { userData } = useContext(authContext);
+  const { role } = userData;
   const { navigation } = props;
   const [screen, setScreen] = useState("DownloadView");
   const tabsScreens = [
@@ -11,21 +15,37 @@ const Footer = (props) => {
       id: "downloads",
       icon: "download",
       screen: "DownloadView",
+      show: true,
+    },
+    {
+      id: "employesManager",
+      icon: "briefcase",
+      screen: "EmployeeManagement",
+      show: role === "business",
+    },
+    {
+      id: "clientsInvoices",
+      icon: "book",
+      screen: "ClientsInvoices",
+      show: role === "business",
     },
     {
       id: "news",
       icon: "calendar",
       screen: "NewsView",
+      show: role === "employee",
     },
     {
       id: "pqr",
       icon: "message-square",
       screen: "ClaimsView",
+      show: true,
     },
     {
       id: "profile",
       icon: "user",
       screen: "ProfileView",
+      show: true,
     },
   ];
 
@@ -35,17 +55,19 @@ const Footer = (props) => {
   };
   return (
     <View style={styles.footerContainer}>
-      {tabsScreens.map((sc) => (
-        <Pressable key={sc.id} onPress={() => handleChangeScreen(sc.screen)}>
-          <View style={styles.navbarOption(screen === sc.screen)}>
-            <Feather
-              name={sc.icon}
-              size={24}
-              color={screen === sc.screen ? "white" : "#D9D9FE"}
-            />
-          </View>
-        </Pressable>
-      ))}
+      {tabsScreens
+        .filter((e) => e.show)
+        .map((sc) => (
+          <Pressable key={sc.id} onPress={() => handleChangeScreen(sc.screen)}>
+            <View style={styles.navbarOption(screen === sc.screen)}>
+              <Feather
+                name={sc.icon}
+                size={24}
+                color={screen === sc.screen ? "white" : "#D9D9FE"}
+              />
+            </View>
+          </Pressable>
+        ))}
     </View>
   );
 };

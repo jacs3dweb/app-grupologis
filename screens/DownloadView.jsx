@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   businessDownloadables,
   colors,
@@ -7,12 +7,12 @@ import {
   heightPercentageToPx,
   images,
   widthPercentageToPx,
-} from "../../utils";
+} from "../utils";
 
 import { useContext, useState } from "react";
-import Layout from "../layout/Layout.jsx";
-import DownloadableCard from "./downloadView/DownloadableCard";
-import authContext from "../../context/auth/authContext";
+import DownloadableCard from "../components/HomeScreen/downloadView/DownloadableCard";
+import Layout from "../components/layout/Layout.jsx";
+import authContext from "../context/auth/authContext";
 
 const Download = (props) => {
   const { userData } = useContext(authContext);
@@ -21,7 +21,10 @@ const Download = (props) => {
   );
   return (
     <Layout props={{ ...props }}>
-      <ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.downloadContainer}>
           <View style={styles.infoContainer}>
             <View style={styles.title}>
@@ -44,6 +47,7 @@ const Download = (props) => {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
             >
               <View style={styles.downloadableCardsContainer}>
                 {dataCards.map((e) => (

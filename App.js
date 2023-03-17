@@ -5,21 +5,23 @@ import { useFonts } from "expo-font";
 
 // Import Views
 
-import ClaimsView from "./components/HomeScreen/ClaimsView";
-import DownloadView from "./components/HomeScreen/DownloadView";
-import NewsView from "./components/HomeScreen/NewsView";
-import UserView from "./components/HomeScreen/UserView";
 import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
 import BusinessEntry from "./components/LoginScreen/BusinessEntry";
 import CodeAuth from "./components/LoginScreen/CodeAuth";
+import ClaimsView from "./screens/ClaimsView";
+import ClientsInvoiceView from "./screens/ClientsInvoiceView";
+import DownloadView from "./screens/DownloadView";
+import EmployeeManagement from "./screens/EmployeeManagement";
 import LoginScreen from "./screens/LoginScreen";
+import NewsView from "./screens/NewsView";
+import UserView from "./screens/UserView";
 
 // Import components
 
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
-import Footer from "./components/common/Footer";
 import { ErrorToast, SuccessToast } from "./components/common/toast/Toasts";
+import Footer from "./components/layout/Footer";
 
 // Import States
 import AuthState from "./context/auth/authState";
@@ -60,6 +62,8 @@ const HomeScreens = () => {
       <Tab.Screen name="ClaimsView" component={ClaimsView} />
       <Tab.Screen name="NewsView" component={NewsView} />
       <Tab.Screen name="ProfileView" component={UserView} />
+      <Tab.Screen name="EmployeeManagement" component={EmployeeManagement} />
+      <Tab.Screen name="ClientsInvoices" component={ClientsInvoiceView} />
     </Tab.Navigator>
   );
 };

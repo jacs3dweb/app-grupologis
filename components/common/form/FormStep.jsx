@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { colors, getFontStyles, widthPercentageToPx } from "../../utils";
+import { StyleSheet, Text, View } from "react-native";
+import { colors, getFontStyles } from "../../../utils";
 
 const FormStep = ({ number, description }) => {
   return (

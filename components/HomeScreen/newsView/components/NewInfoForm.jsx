@@ -15,13 +15,16 @@ import {
   widthPercentageToPx,
 } from "../../../../utils";
 import GLButton from "../../../common/buttons/GLButton";
-import FormStep from "../../../common/FormStep";
-import SpecialCalendar from "../../../common/SpecialCalendar";
+import FormStep from "../../../common/form/FormStep";
+import SpecialCalendar from "../../../common/form/SpecialCalendar";
 
 const NewInfoForm = ({ confirmInformation, setFormStep }) => {
   const { newForm, changeFormField } = useContext(newsContext);
   return (
-    <ScrollView>
+    <ScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
       <View>
         <View style={styles.titleContainer}>
           <Text style={styles.firstTitle}>Nuevo /</Text>

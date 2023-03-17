@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import newsContext from "../../../../context/news/newsContext";
 import {
   colors,
   getFontStyles,
@@ -7,8 +8,6 @@ import {
   widthPercentageToPx,
 } from "../../../../utils";
 import OptionNews from "./OptionNews";
-import newsContext from "../../../../context/news/newsContext";
-import { ScrollView } from "react-native";
 
 import GLButton from "../../../common/buttons/GLButton";
 
@@ -28,6 +27,8 @@ const SelectType = ({ continueWithForm }) => {
         <Text style={styles.subtitle}>tipo de novedad</Text>
       </View>
       <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           display: "flex",
           justifyContent: "center",

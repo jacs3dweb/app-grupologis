@@ -12,9 +12,9 @@ import {
   getFontStyles,
   validDates,
   widthPercentageToPx,
-} from "../../utils";
+} from "../../../utils";
 
-import GLButton from "../../components/common/buttons/GLButton";
+import GLButton from "../buttons/GLButton";
 
 const MonthYearPicker = ({
   setVisible,
@@ -35,7 +35,12 @@ const MonthYearPicker = ({
       >
         <View style={styles.monthPicker}>
           <Text style={styles.placeholder}>Mes</Text>
-          <ScrollView horizontal contentContainerStyle={styles.dayOptions}>
+          <ScrollView
+            horizontal
+            contentContainerStyle={styles.dayOptions}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+          >
             {validDates().validMonths.map((e, idx) => (
               <Pressable key={idx} onPress={() => handleChangeMonth(idx)}>
                 <View
@@ -47,7 +52,12 @@ const MonthYearPicker = ({
             ))}
           </ScrollView>
           <Text style={styles.placeholder}>Año</Text>
-          <ScrollView horizontal contentContainerStyle={styles.dayOptions}>
+          <ScrollView
+            horizontal
+            contentContainerStyle={styles.dayOptions}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+          >
             {validDates().validYears.map((e, idx) => (
               <Pressable key={idx} onPress={() => changeYear(e)}>
                 <View style={styles.dayElement(selectedMonthYear.year === e)}>

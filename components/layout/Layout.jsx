@@ -1,7 +1,7 @@
-import { StyleSheet, View } from "react-native";
 import React from "react";
-import Header from "../common/Header";
+import { StyleSheet, View } from "react-native";
 import { colors, heightPercentageToPx } from "../../utils";
+import Header from "./Header";
 
 const Layout = ({ children, props }) => {
   return (

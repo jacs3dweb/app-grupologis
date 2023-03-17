@@ -1,22 +1,15 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Image,
-  TextInput,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import React from "react";
 import {
   colors,
   getFontStyles,
   heightPercentageToPx,
-  widthPercentageToPx,
   images,
+  widthPercentageToPx,
 } from "../../utils";
 
-import { InputWithIcon } from "../common/Input";
+import { InputWithIcon } from "../common/form/Input";
 
 import { Feather } from "@expo/vector-icons";
 

@@ -1,7 +1,7 @@
-import { StyleSheet, View, TextInput } from "react-native";
-import React from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { colors, widthPercentageToPx } from "../../utils";
+import React from "react";
+import { StyleSheet, TextInput, View } from "react-native";
+import { colors, widthPercentageToPx } from "../../../utils";
 
 export const InputWithIcon = ({
   icon,

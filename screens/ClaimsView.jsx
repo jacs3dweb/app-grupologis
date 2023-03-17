@@ -1,13 +1,13 @@
-import { StyleSheet, View, ScrollView, Modal } from "react-native";
-import { images } from "../../utils";
+import { Modal, ScrollView, StyleSheet, View } from "react-native";
+import { images } from "../utils";
 
 import { useState } from "react";
-import Layout from "../layout/Layout.jsx";
-import MainCardInfo from "./homeView/MainCardInfo";
-import ViewTitleCard from "./homeView/ViewTitleCard";
-import Form from "./claimsView/Form";
-import ConfirmActivity from "../common/ConfirmActivity";
-import ClaimList from "./claimsView/ClaimList";
+import ConfirmActivity from "../components/common/ConfirmActivity";
+import ClaimList from "../components/HomeScreen/claimsView/ClaimList";
+import Form from "../components/HomeScreen/claimsView/Form";
+import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
+import ViewTitleCard from "../components/HomeScreen/homeView/ViewTitleCard";
+import Layout from "../components/layout/Layout.jsx";
 const Claim = (props) => {
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState(true);
@@ -26,7 +26,10 @@ const Claim = (props) => {
         buttonText="+ Nueva"
         onPressAction={() => setModal(!modal)}
       />
-      <ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         <MainCardInfo
           firstTitle={"Quejas"}
           secondTitle="y reclamos"
@@ -35,7 +38,7 @@ const Claim = (props) => {
           }
           image={images.employeeNimage}
         />
-        <ClaimList/>
+        <ClaimList />
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>

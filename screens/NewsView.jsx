@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
-import { images } from "../../utils";
+import { images } from "../utils";
 
-import Layout from "../layout/Layout.jsx";
-import MainCardInfo from "./homeView/MainCardInfo";
-import ViewTitleCard from "./homeView/ViewTitleCard";
-import FormNew from "./newsView/FormNews";
-import NewsList from "./newsView/NewsList";
+import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
+import ViewTitleCard from "../components/HomeScreen/homeView/ViewTitleCard";
+import FormNew from "../components/HomeScreen/newsView/FormNews";
+import NewsList from "../components/HomeScreen/newsView/NewsList";
+import Layout from "../components/layout/Layout.jsx";
 
 const News = (props) => {
   const [modal, setModal] = useState(false);
@@ -25,7 +25,10 @@ const News = (props) => {
         onPressAction={() => setModal(!modal)}
       />
 
-      <ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         <MainCardInfo
           firstTitle={"Sistema"}
           secondTitle="de novedades"

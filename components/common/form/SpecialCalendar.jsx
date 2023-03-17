@@ -3,7 +3,7 @@ import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 import moment from "moment";
 import { ScrollView } from "react-native";
-import { colors, getFontStyles } from "../../utils";
+import { colors, getFontStyles } from "../../../utils";
 
 import MonthYearPicker from "./MonthYearPicker";
 
@@ -81,7 +81,12 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
           selectedMonthYear={selectedMonthYear}
         />
       </View>
-      <ScrollView horizontal contentContainerStyle={styles.dayOptions}>
+      <ScrollView
+        horizontal
+        contentContainerStyle={styles.dayOptions}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         {dayOptions.map((day) => (
           <Pressable key={day.day} onPress={() => handleChangeDay(day)}>
             <View
