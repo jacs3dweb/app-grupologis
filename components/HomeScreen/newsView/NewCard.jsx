@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../../utils";
 import CardElement from "./components/CardElement";
 
@@ -10,12 +10,9 @@ const NewCard = (props) => {
     <View style={styles.card}>
       <View style={styles.leftContent}>
         <View style={styles.leftTopContent}>
-          <CardElement head={"RAD."} content={props.radicado} />
-          <CardElement
-            head={"F. de Solicitud"}
-            content={props.fechaSolicitud}
-          />
-          <CardElement head={"Tipo de Permiso"} content={props.tipoPermiso} />
+          <CardElement head={"RAD."} content={props.rad} />
+          <CardElement head={"F. de Solicitud"} content={props.requestDate} />
+          <CardElement head={"Tipo de Permiso"} content={props.newType} />
         </View>
         <View style={styles.leftBottomContent}>
           <Text>TODO: Estado de la novedad</Text>
@@ -24,7 +21,7 @@ const NewCard = (props) => {
       <View style={styles.rightContent}>
         <Pressable
           onPress={() => {
-            console.log(`Eliminar: ${props.radicado}`);
+            console.log(`Eliminar: ${props.rad}`);
           }}
         >
           <View style={styles.actionButton("ghost")}>
@@ -33,7 +30,7 @@ const NewCard = (props) => {
         </Pressable>
         <Pressable
           onPress={() => {
-            console.log(`Editar: ${props.radicado}`);
+            console.log(`Editar: ${props.rad}`);
           }}
         >
           <View style={styles.actionButton("normal")}>

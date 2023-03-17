@@ -2,36 +2,47 @@ import React, { useReducer } from "react";
 import newsContext from "./newsContext";
 import { newsReducer } from "./newsReducer";
 
-import { NUEVA_NOVEDAD, CAMBIAR_CAMPO_NOVEDAD } from "../types";
+import {
+  CAMBIAR_CAMPO_NOVEDAD,
+  NUEVA_NOVEDAD,
+  REINICIAR_FORMULARIO_NOVEDADES,
+} from "../types";
 
 const NewsState = (props) => {
   const initialState = {
     newsList: [
       {
-        radicado: "0001",
-        fechaSolicitud: "2022-06-16",
-        tipoPermiso: "Cita Médica",
-        estado: 1,
+        rad: "0001",
+        requestDate: "2022-06-16",
+        newType: "Cita Médica",
+        remunerated: false,
+        comment: "hola mundo",
+        status: 1,
       },
       {
-        radicado: "0002",
-        fechaSolicitud: "2022-06-16",
-        tipoPermiso: "Retiro",
-        estado: 2,
+        rad: "0002",
+        requestDate: "2022-06-16",
+        newType: "Retiro",
+        remunerated: false,
+        comment: "hola mundo",
+        status: 2,
       },
       {
-        radicado: "0003",
-        fechaSolicitud: "2022-06-16",
-        tipoPermiso: "Cita Médica",
-        estado: 3,
+        rad: "0003",
+        requestDate: "2022-06-16",
+        newType: "Cita Médica",
+        remunerated: false,
+        comment: "hola mundo",
+        status: 3,
       },
     ],
     newForm: {
       type: null,
-      startDate: null,
-      endDate: null,
+      startDate: new Date(),
+      endDate: new Date(),
       remunerated: false,
       comment: "",
+      status: 1,
     },
   };
 
@@ -41,6 +52,10 @@ const NewsState = (props) => {
     dispatch({
       type: NUEVA_NOVEDAD,
       payload: data,
+    });
+
+    dispatch({
+      type: REINICIAR_FORMULARIO_NOVEDADES,
     });
   };
 

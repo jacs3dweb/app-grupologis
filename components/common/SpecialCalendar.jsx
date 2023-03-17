@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 import moment from "moment";
-import { colors, getFontStyles } from "../../utils";
 import { ScrollView } from "react-native";
+import { colors, getFontStyles } from "../../utils";
+
+import MonthYearPicker from "./MonthYearPicker";
 
 let getDaysArray = function (year, month) {
   let monthIndex = month - 1;
@@ -23,7 +25,12 @@ let getDaysArray = function (year, month) {
 
 const SpecialCalendar = ({ placeholder, onChange, value }) => {
   const [selectedDate, setSelectedDate] = useState(moment(value));
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedMonthYear, setSelectedMonthYear] = useState({
+    month: selectedDate.get("M"),
+    year: value.getFullYear(),
+  });
   const [dayOptions, setDayOptions] = useState([]);
 
   useEffect(() => {
@@ -32,8 +39,21 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
     setDayOptions(result);
   }, []);
 
-  const handleChangeMonth = () => {
-    console.log("hola");
+  const handleChangeMonth = (e) => {
+    setSelectedMonthYear({
+      ...selectedMonthYear,
+      month: e,
+    });
+
+    setSelectedDate(selectedDate.set("M", e));
+  };
+  const changeYear = (e) => {
+    setSelectedMonthYear({
+      ...selectedMonthYear,
+      year: e,
+    });
+
+    setSelectedDate(selectedDate.set("y", e));
   };
   const handleChangeDay = (day) => {
     if (!day.isSelectable) return;
@@ -42,21 +62,28 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
     setSelectedDate(selectedDate.set("D", dayNumber));
     setSelectedDay(day.day);
 
-    console.log(selectedDate._d);
+    onChange(selectedDate._d);
   };
   return (
-    <View style={styles.specialCalendarContainer}>
+    <SafeAreaView style={styles.specialCalendarContainer}>
       <View style={styles.headerData}>
         <Text style={styles.placeholder}>{placeholder}</Text>
-        <Pressable onPress={handleChangeMonth}>
+        <Pressable onPress={() => setShowMonthPicker(true)}>
           <View style={styles.monthSelector}>
             <Text style={styles.monthText}>{selectedDate.format("MMMM")}</Text>
           </View>
         </Pressable>
+        <MonthYearPicker
+          visible={showMonthPicker}
+          changeYear={changeYear}
+          handleChangeMonth={handleChangeMonth}
+          setVisible={setShowMonthPicker}
+          selectedMonthYear={selectedMonthYear}
+        />
       </View>
       <ScrollView horizontal contentContainerStyle={styles.dayOptions}>
         {dayOptions.map((day) => (
-          <Pressable onPress={() => handleChangeDay(day)}>
+          <Pressable key={day.day} onPress={() => handleChangeDay(day)}>
             <View
               style={styles.dayElement(
                 selectedDay === day.day,
@@ -69,7 +96,7 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
           </Pressable>
         ))}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

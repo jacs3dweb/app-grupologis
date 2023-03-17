@@ -1,15 +1,15 @@
-import { Pressable, StyleSheet, Text, Image, View } from "react-native";
-import React from "react";
 import { Feather } from "@expo/vector-icons";
+import React from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import {
   colors,
   getFontStyles,
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../../utils";
-import GLButton from "./buttons/GLButton";
+import ConfirmActivityContent from "./ConfirmActivityContent";
 
-const confirmActivity = ({ closeModal, image, title, description }) => {
+const ConfirmActivity = ({ closeModal, image, title, description }) => {
   return (
     <View style={styles.modalForm}>
       <Pressable onPress={closeModal}>
@@ -17,27 +17,17 @@ const confirmActivity = ({ closeModal, image, title, description }) => {
           <Feather name="x" size={24} color={colors.purpleIcons} />
         </View>
       </Pressable>
-      <View style={styles.contentContainer}>
-        <View style={styles.topContent}>
-          <Image style={styles.iconImage} source={{ uri: image }} />
-          <View style={styles.textsContainer}>
-            <Text style={styles.titleText}>{title}</Text>
-            <Text style={styles.descriptionText}> {description}</Text>
-          </View>
-        </View>
-
-        <GLButton
-          onPressAction={closeModal}
-          type="second"
-          placeholder={"Cerrar"}
-          width={widthPercentageToPx(70)}
-        />
-      </View>
+      <ConfirmActivityContent
+        closeModal={closeModal}
+        image={image}
+        title={title}
+        description={description}
+      />
     </View>
   );
 };
 
-export default confirmActivity;
+export default ConfirmActivity;
 
 const styles = StyleSheet.create({
   modalForm: {

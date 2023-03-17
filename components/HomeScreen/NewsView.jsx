@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { StyleSheet, ScrollView, View, Modal } from "react-native";
+import { Modal, ScrollView, StyleSheet, View } from "react-native";
 import { images } from "../../utils";
 
 import Layout from "../layout/Layout.jsx";
 import MainCardInfo from "./homeView/MainCardInfo";
 import ViewTitleCard from "./homeView/ViewTitleCard";
-import ConfirmActivity from "../common/ConfirmActivity";
 import FormNew from "./newsView/FormNews";
 import NewsList from "./newsView/NewsList";
 
@@ -40,17 +39,10 @@ const News = (props) => {
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
           <View style={styles.modalContainer}>
-            {showForm ? (
+            {showForm && (
               <FormNew
                 closeModal={() => setModal(false)}
                 onConfirm={closeAfterConfirm}
-              />
-            ) : (
-              <ConfirmActivity
-                closeModal={() => setModal(false)}
-                title="Su solicitud de permiso ha sido enviada"
-                description="Recuerde estar pendiente a su correo para recibir la respuesta"
-                image={images.checkImage}
               />
             )}
           </View>

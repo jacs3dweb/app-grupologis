@@ -4,9 +4,9 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 import iconCertificadoLaboral from "../assets/images/home/downloadView/iconCertificadoLaboral.svg";
-import iconVolanteDeNomina from "../assets/images/home/downloadView/iconVolanteDeNomina.svg";
-import iconIngresoYretencion from "../assets/images/home/downloadView/iconIngresoYretencion.svg";
 import iconHojaDeVida from "../assets/images/home/downloadView/iconHojadevida.svg";
+import iconIngresoYretencion from "../assets/images/home/downloadView/iconIngresoYretencion.svg";
+import iconVolanteDeNomina from "../assets/images/home/downloadView/iconVolanteDeNomina.svg";
 
 const permisosImage = require("../assets/images/home/newsView/mano.png");
 const incapacidadesImage = require("../assets/images/home/newsView/medico.png");
@@ -48,6 +48,8 @@ export const colors = {
   red: "#FF6B86",
   inputBackground: "#EBEBFF",
   stepGray: "#D9D9D9",
+  boldRed: "#FF002E",
+  boldGreen: "#00FF38",
 };
 
 export const images = {
@@ -204,3 +206,31 @@ export const newsInfo = [
     description: "Solicita tus permisos y conoce el estado del tramite",
   },
 ];
+
+export const validDates = () => {
+  let actualDate = new Date();
+  let currentYear = actualDate.getFullYear();
+  let validYears = [];
+
+  for (let i = currentYear; i < currentYear + 10; i++) {
+    validYears.push(i);
+  }
+
+  return {
+    validYears,
+    validMonths: [
+      "Ene.",
+      "Feb.",
+      "Mar.",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sept.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+  };
+};

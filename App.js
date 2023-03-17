@@ -1,30 +1,30 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts } from "expo-font";
 
 // Import Views
 
-import LoginScreen from "./screens/LoginScreen";
-import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
-import CodeAuth from "./components/LoginScreen/CodeAuth";
-import BusinessEntry from "./components/LoginScreen/BusinessEntry";
-import DownloadView from "./components/HomeScreen/DownloadView";
 import ClaimsView from "./components/HomeScreen/ClaimsView";
-import UserView from "./components/HomeScreen/UserView";
+import DownloadView from "./components/HomeScreen/DownloadView";
 import NewsView from "./components/HomeScreen/NewsView";
+import UserView from "./components/HomeScreen/UserView";
+import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
+import BusinessEntry from "./components/LoginScreen/BusinessEntry";
+import CodeAuth from "./components/LoginScreen/CodeAuth";
+import LoginScreen from "./screens/LoginScreen";
 
 // Import components
 
-import Footer from "./components/common/Footer";
-import Toast from "react-native-toast-message";
 import { StatusBar } from "expo-status-bar";
-import { SuccessToast, ErrorToast } from "./components/common/toast/Toasts";
+import Toast from "react-native-toast-message";
+import Footer from "./components/common/Footer";
+import { ErrorToast, SuccessToast } from "./components/common/toast/Toasts";
 
 // Import States
 import AuthState from "./context/auth/authState";
-import NewsState from "./context/news/newsState";
 import ClaimsState from "./context/claims/claimState";
+import NewsState from "./context/news/newsState";
 
 import moment from "moment";
 

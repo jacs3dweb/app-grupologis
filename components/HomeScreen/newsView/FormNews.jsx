@@ -1,21 +1,38 @@
-import { Pressable, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
+import React, { useContext, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import newsContext from "../../../context/news/newsContext";
 import {
   colors,
   getFontStyles,
   heightPercentageToPx,
+  images,
   widthPercentageToPx,
 } from "../../../utils";
-import SelectType from "./components/SelectType";
+import ConfirmActivityContent from "../../common/ConfirmActivityContent";
 import NewInfoForm from "./components/NewInfoForm";
-import ConfirmActivity from "../../common/ConfirmActivity";
+import SelectType from "./components/SelectType";
 
 const FormNew = ({ closeModal }) => {
   const [formStep, setFormStep] = useState(1);
+  const { newForm, agregarNovedad } = useContext(newsContext);
 
   const handleConfirmForm = () => {
-    setFormStep(1);
+    if (!newForm.type || !newForm.startDate || !newForm.endDate) {
+      console.log("todos los campos son requeridos");
+      return;
+    }
+
+    if (newForm.endDate < newForm.startDate) {
+      console.log(
+        "La fecha de finalización debe ser mayor a la fecha de inicio"
+      );
+      return;
+    }
+
+    setFormStep(3);
+
+    agregarNovedad(newForm);
   };
 
   return (
@@ -29,9 +46,17 @@ const FormNew = ({ closeModal }) => {
         {formStep === 1 ? (
           <SelectType continueWithForm={setFormStep} />
         ) : formStep === 2 ? (
-          <NewInfoForm confirmInformation={handleConfirmForm} />
+          <NewInfoForm
+            confirmInformation={handleConfirmForm}
+            setFormStep={setFormStep}
+          />
         ) : (
-          <ConfirmActivity />
+          <ConfirmActivityContent
+            closeModal={closeModal}
+            title="Su solicitud ha sido enviada"
+            description="Recuerde estar pendiente a su correo para recibir la respuesta"
+            image={images.checkImage}
+          />
         )}
       </View>
     </View>
