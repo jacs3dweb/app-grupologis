@@ -19,8 +19,8 @@ const EmployeeMcard = ({ title, desc, image, id }) => {
         <Text style={styles.description}>{desc}</Text>
         <Pressable /* onPress={} */ >
           <View style={styles.downloadButton}>
-            <Text style={{ color: colors.light, fontFamily: "Volks-Bold", fontSize: 30 }}>
-              {">"}
+            <Text style={{ color: colors.light, fontFamily: "Volks-Bold", fontSize: 20 }}>
+              {">>>>>"}
             </Text>
           </View>
         </Pressable>
