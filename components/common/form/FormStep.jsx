@@ -2,11 +2,17 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles } from "../../../utils";
 
-const FormStep = ({ number, description }) => {
+import { Entypo } from "@expo/vector-icons";
+
+const FormStep = ({ number, description, icon }) => {
   return (
     <View style={styles.stepContainer}>
       <View style={styles.numberContainer}>
-        <Text style={styles.numberText}>{number}</Text>
+        {number ? (
+          <Text style={styles.numberText}>{number}</Text>
+        ) : (
+          <Entypo name={icon} size={24} color={colors.white} />
+        )}
       </View>
       <Text style={styles.descriptionText}>{description}</Text>
     </View>

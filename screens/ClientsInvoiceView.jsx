@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Modal, View } from "react-native";
+import { Modal, ScrollView, StyleSheet, View } from "react-native";
 import BillsList from "../components/HomeScreen/billView/BillsList";
+import FormBillsModal from "../components/HomeScreen/billView/FormBillsModal";
 import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
 import ViewTitleCard from "../components/HomeScreen/homeView/ViewTitleCard";
 import Layout from "../components/layout/Layout";
 import { heightPercentageToPx, images, widthPercentageToPx } from "../utils";
-import ConfirmActivity from "../components/common/ConfirmActivity";
-import FormBillsModal from "../components/HomeScreen/billView/FormBillsModal";
 const ClientsInvoiceView = ({ props }) => {
   const [modal, setModal] = useState(false);
 
+  const handleSearchBill = () => {
+    console.log("handling search bill");
+    setModal(false);
+  };
 
   return (
     <Layout props={{ ...props }}>
@@ -37,7 +40,7 @@ const ClientsInvoiceView = ({ props }) => {
           <View style={styles.modalContainer}>
             <FormBillsModal
               closeModal={() => setModal(false)}
-              onConfirm={console.log("sexo")}
+              onConfirm={handleSearchBill}
             />
           </View>
         </Modal>

@@ -1,50 +1,47 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { colors } from "../../../utils";
 import CardElement from "../newsView/components/CardElement";
-import Toast from "react-native-toast-message";
 
 const BillsCard = (props) => {
-    const showToast = () => {
-        Toast.show({
-          type: "success",
-          text1: "Descarga Completada",
-    
-          position: "bottom",
-          visibilityTime: 2000,
-        });
-      };
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text1: "Descarga Completada",
+
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.topContent}>
-        <CardElement head={"Año"} content={props.año} />
-        <CardElement head={"Mes"} content={props.mes} />
-        <CardElement head={"No.Factura"} content={props.noFactura}/>
-        <Pressable
-          onPress={showToast}
-        >
+      <View style={styles.leftContent}>
+        <View style={styles.cardColumn}>
+          <CardElement head={"Año"} content={props.año} />
+          <CardElement head={"Subtipo"} content={props.subtipo} />
+        </View>
+        <View style={styles.cardColumn}>
+          <CardElement head={"Mes"} content={props.mes} />
+          <CardElement head={"Fecha"} content={props.fecha} />
+        </View>
+        <View style={styles.cardColumn}>
+          <CardElement head={"No.Factura"} content={props.noFactura} />
+          <CardElement
+            head={"Descripcion"}
+            content={props.descripcion?.slice(0, 10) + "..."}
+          />
+        </View>
+      </View>
+
+      <View style={styles.rightContent}>
+        <Pressable onPress={showToast}>
           <View style={styles.actionButton("ghost")}>
             <AntDesign name="download" size={18} color={colors.darkGray} />
           </View>
         </Pressable>
       </View>
-      <View style={styles.topContent}>
-        <CardElement head={"Subtipo"} content={props.subtipo} />
-        <CardElement head={"Fecha"} content={props.fecha} />
-        <CardElement head={"Descripcion"} content={props.descripcion} />
-        <Pressable
-          onPress={() => {
-            console.log(`Visualizar: ${props.subtipo}`);
-          }}
-        >
-          <View style={styles.actionButton("ghost")}>
-            <AntDesign name="download" size={18} color={colors.darkGray} />
-          </View>
-        </Pressable>
-      </View>
-      
-      
     </View>
   );
 };
@@ -56,13 +53,20 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     marginBottom: 20,
     padding: 15,
-
-  },
-  topContent: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 20,
+  },
+  leftContent: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "85%",
+  },
+  cardColumn: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 5,
   },
   actionButton: (type) => ({
     width: 36,
