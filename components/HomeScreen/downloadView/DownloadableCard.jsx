@@ -1,6 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import SvgUri from "react-native-svg-uri";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 
 import Toast from "react-native-toast-message";

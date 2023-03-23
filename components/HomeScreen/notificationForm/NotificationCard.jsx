@@ -1,17 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
+import { StyleSheet, Text, View } from "react-native";
+import { colors, getFontStyles } from "../../../utils";
 
 const NotCard = ({ titleNot, descNot }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
-        {/* <SvgUri
-            style={styles.certificadoImage}
-            width={70}
-            height={70}
-            source={image}
-          ></SvgUri> */}
         <Text style={styles.title}>{titleNot}</Text>
         <Text style={styles.description}>{descNot}</Text>
       </View>

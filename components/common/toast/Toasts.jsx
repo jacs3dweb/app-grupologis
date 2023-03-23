@@ -1,10 +1,6 @@
 import React from "react";
-import SvgUri from "react-native-svg-uri";
-import { Text, View, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../../utils";
-
-import iconSuccess from "../../../assets/images/components/toast/success-icon.svg";
-import iconError from "../../../assets/images/components/toast/error-icon.svg";
 
 export const SuccessToast = (props) => {
   return (
@@ -14,7 +10,7 @@ export const SuccessToast = (props) => {
           <Text style={styles.text}>{props.text1}</Text>
         </View>
 
-        {/* <SvgUri width={45} height={45} source={iconSuccess}></SvgUri> */}
+        {/* <SuccessIcon /> */}
       </View>
     </View>
   );
@@ -28,7 +24,7 @@ export const ErrorToast = (props) => {
           <Text style={styles.text}>{props.text1}</Text>
         </View>
 
-        {/* <SvgUri width={45} height={45} source={iconError}></SvgUri> */}
+        {/* <ErrorIcon /> */}
       </View>
     </View>
   );

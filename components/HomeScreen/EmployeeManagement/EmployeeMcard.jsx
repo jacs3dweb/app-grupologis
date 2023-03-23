@@ -1,25 +1,22 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import SvgUri from "react-native-svg-uri";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
-
 
 const EmployeeMcard = ({ title, desc, image, id }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
-        {/* <SvgUri
-          style={styles.certificadoImage}
-          width={65}
-          height={65}
-          source={image}
-        ></SvgUri> */}
-
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
-        <Pressable /* onPress={} */ >
+        <Pressable /* onPress={} */>
           <View style={styles.downloadButton}>
-            <Text style={{ color: colors.light, fontFamily: "Volks-Bold", fontSize: 20 }}>
+            <Text
+              style={{
+                color: colors.light,
+                fontFamily: "Volks-Bold",
+                fontSize: 20,
+              }}
+            >
               {">>>>>"}
             </Text>
           </View>
