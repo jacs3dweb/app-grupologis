@@ -18,12 +18,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
-        {/* <SvgUri
-          style={styles.certificadoImage}
-          width={65}
-          height={65}
-          source={image}
-        ></SvgUri> */}
+        {image}
 
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>

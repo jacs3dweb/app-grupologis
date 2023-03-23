@@ -23,7 +23,7 @@ const UserForm = ({ userData, handleChange, handleUpdateUser }) => {
       <FormInput
         name="business"
         label={"Empresa"}
-        value={userData.business.label}
+        value={userData.business?.label}
         onChange={handleChange}
         disabled={true}
       />

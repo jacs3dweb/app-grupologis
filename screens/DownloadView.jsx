@@ -13,6 +13,16 @@ import { useContext, useState } from "react";
 import DownloadableCard from "../components/HomeScreen/downloadView/DownloadableCard";
 import Layout from "../components/layout/Layout.jsx";
 import authContext from "../context/auth/authContext";
+import SvgPayroll from "../assets/images/home/downloadView/SvgPayroll";
+
+const displaySvg = (type) => {
+  switch (type) {
+    case "generalPayroll":
+      return <SvgPayroll />;
+    default:
+      return null;
+  }
+};
 
 const Download = (props) => {
   const { userData } = useContext(authContext);
@@ -54,7 +64,7 @@ const Download = (props) => {
                   <DownloadableCard
                     key={e.id}
                     desc={e.description}
-                    image={e.image}
+                    image={displaySvg(e.id)}
                     title={e.title}
                     id={e.id}
                   />
