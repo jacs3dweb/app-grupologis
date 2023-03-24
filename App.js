@@ -111,7 +111,7 @@ export default function App() {
                   <Stack.Screen name="CodeAuth" component={CodeAuth} />
                   <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
                   <Stack.Screen name="Home" component={HomeScreens} />
-                  <Stack.Screen name="Resume" component={ResumeView}/>
+                  <Stack.Screen name="ResumeView" component={ResumeView}/>
                 </Stack.Navigator>
 
                 <Toast config={toastConfig} />

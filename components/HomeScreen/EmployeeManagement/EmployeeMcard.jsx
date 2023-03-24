@@ -1,16 +1,13 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Nav } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 const EmployeeMcard = ({ title, desc, image, id, navigation }) => {
-  const handleSelection = () => {
-    
-  };
   return (
     <View style={styles.scrollStyle}>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
-        <Pressable  onPress={()=> handleSelection()} >
+        <Pressable  onPress={()=> navigation.navigate("ResumeView")} >
           <View style={styles.downloadButton}>
             <Text
               style={{

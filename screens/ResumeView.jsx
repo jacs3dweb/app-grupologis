@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
-import BillsList from "../components/HomeScreen/billView/BillsList";
+import ResumeList from "../components/HomeScreen/resumeView/ResumeList";
 import Layout from "../components/layout/Layout";
 import { heightPercentageToPx, images, widthPercentageToPx } from "../utils";
+import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
+import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
+
 const ResumeView = ({ props }) => {
 
   return (
@@ -12,7 +15,13 @@ const ResumeView = ({ props }) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <BillsList />
+        <CardEinfo
+        title={"Hojas de vida"}
+        buttonText="  Buscar"
+        onPressAction={() => setModal(!modal)}
+        />
+        
+        <ResumeList/>
       </ScrollView>
     </Layout>
   );

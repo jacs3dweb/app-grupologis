@@ -16,6 +16,7 @@ const LoginScreen = ({ navigation }) => {
     setRole(type);
     navigation.navigate("BusinessEmployeeLogin", { type });
   };
+  //BusinessEmployeeLogin
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
