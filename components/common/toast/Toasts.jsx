@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../../utils";
 
+import SuccessIcon from "../../../assets/images/components/toast/success-icon";
+
 export const SuccessToast = (props) => {
   return (
     <View style={styles.success}>
@@ -10,7 +12,7 @@ export const SuccessToast = (props) => {
           <Text style={styles.text}>{props.text1}</Text>
         </View>
 
-        {/* <SuccessIcon /> */}
+        <SuccessIcon />
       </View>
     </View>
   );

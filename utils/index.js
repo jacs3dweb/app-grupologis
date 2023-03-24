@@ -3,16 +3,16 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-import iconCertificadoLaboral from "../assets/images/home/downloadView/iconCertificadoLaboral.svg";
-import iconHojaDeVida from "../assets/images/home/downloadView/iconHojadevida.svg";
-import iconIngresoYretencion from "../assets/images/home/downloadView/iconIngresoYretencion.svg";
-import iconVolanteDeNomina from "../assets/images/home/downloadView/iconVolanteDeNomina.svg";
-
 const permisosImage = require("../assets/images/home/newsView/mano.png");
 const incapacidadesImage = require("../assets/images/home/newsView/medico.png");
 const vacacionesImage = require("../assets/images/home/newsView/vacacones.png");
 const retirosImage = require("../assets/images/home/newsView/retiros.png");
 const historiaLaboralImage = require("../assets/images/home/newsView/hlaboral.png");
+
+const notificationType1 = require("../assets/images/components/notifications/type-1.png");
+const notificationType2 = require("../assets/images/components/notifications/type-2.png");
+const notificationType3 = require("../assets/images/components/notifications/type-3.png");
+const notificationType4 = require("../assets/images/components/notifications/type-4.png");
 
 export const getFontStyles = (
   size,
@@ -76,13 +76,6 @@ export const images = {
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FcheckImage.png?alt=media&token=66e7b9e5-9079-4dc8-829a-ebff3d983334",
 };
 
-export const svg = {
-  certificadoLaboral: iconCertificadoLaboral,
-  volanteDeNomina: iconVolanteDeNomina,
-  ingresoYretencion: iconIngresoYretencion,
-  hojaDeVida: iconHojaDeVida,
-};
-
 export const widthPercentageToPx = (percentage) => {
   return (windowWidth * percentage) / 100;
 };
@@ -97,24 +90,28 @@ export const notificationInfo = [
     title: "Su solicitud de permiso ha sido enviada",
     description:
       "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: notificationType1,
   },
   {
     id: "noti2",
     title: "Su solicitud de permiso ha sido aprobada por empleador",
     description:
       "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: notificationType2,
   },
   {
     id: "noti3",
     title: "Su solicitud de permiso se está validando en Nómina",
     description:
       "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: notificationType3,
   },
   {
     id: "noti4",
     title: "Su solicitud de permiso ha sido completada con éxito",
     description:
       "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: notificationType4,
   },
 ];
 
@@ -124,28 +121,24 @@ export const employeeDownloadables = [
     title: "Certificado laboral",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: svg.certificadoLaboral,
   },
   {
     id: "payrollFlyer",
     title: "Volante de nómina",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: svg.volanteDeNomina,
   },
   {
     id: "laboralCertificate2",
     title: "Ingreso y retención",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: svg.ingresoYretencion,
   },
   {
     id: "laboralCertificate3",
     title: "Hoja de vida laboral",
     description:
       "Descargar tu certificado laboral sin necesidad de pedirlo a Grupologis",
-    image: svg.hojaDeVida,
   },
 ];
 export const businessDownloadables = [
@@ -154,25 +147,21 @@ export const businessDownloadables = [
     title: "Indicador de gestion humana",
     description:
       "Descarga tus indicadores de gestión humana indica la fecha inicial y final",
-    image: svg.certificadoLaboral,
   },
   {
     id: "generalPayroll",
     title: "Volante de nómina general",
     description: "Descarga tu volante de nómina desde la App",
-    image: svg.certificadoLaboral,
   },
   {
     id: "capacitations",
     title: "Capacitaciones",
     description: "Ahora puedes descargar tus capacitaciones desde la App",
-    image: svg.certificadoLaboral,
   },
   {
     id: "ausentism",
     title: "Ausentismos",
     description: "Ahora puedes descargar tus certificados desde la App",
-    image: svg.certificadoLaboral,
   },
 ];
 export const newsInfo = [
@@ -212,22 +201,19 @@ export const employeeManagement = [
   {
     id: "hvida",
     title: "Hoja de vida",
-    description:
-      "Ahora puedes descargar las hojas de vida de tus empleados",
+    description: "Ahora puedes descargar las hojas de vida de tus empleados",
     //image: svg.
   },
   {
     id: "novedai",
     title: "Novedad ingresos",
-    description:
-      "Ahora puedes generar una novedad de ingreso desde la App",
-   // image: svg.
+    description: "Ahora puedes generar una novedad de ingreso desde la App",
+    // image: svg.
   },
   {
     id: "maestroe",
     title: "Maestro empleado",
-    description:
-      "Ahora puedes descargar tu certificado de maestro empleado",
+    description: "Ahora puedes descargar tu certificado de maestro empleado",
     //image: svg.
   },
 ];
@@ -258,5 +244,4 @@ export const validDates = () => {
       "Dic.",
     ],
   };
-  
 };

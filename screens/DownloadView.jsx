@@ -13,12 +13,23 @@ import { useContext, useState } from "react";
 import DownloadableCard from "../components/HomeScreen/downloadView/DownloadableCard";
 import Layout from "../components/layout/Layout.jsx";
 import authContext from "../context/auth/authContext";
+
 import SvgPayroll from "../assets/images/home/downloadView/SvgPayroll";
+import SvgPayrollFlyer from "../assets/images/home/downloadView/SvgPayrollFlyer";
+import SvgLaboralCertificate from "../assets/images/home/downloadView/SvgLaboralCertificate";
+import SvgLaboralCertificate2 from "../assets/images/home/downloadView/SvgLaboralCertificate2";
+import SvglaboralCertificate3 from "../assets/images/home/downloadView/SvgLaboralCertificate3";
 
 const displaySvg = (type) => {
   switch (type) {
-    case "generalPayroll":
-      return <SvgPayroll />;
+    case "laboralCertificate":
+      return <SvgLaboralCertificate />;
+    case "payrollFlyer":
+      return <SvgPayrollFlyer />;
+    case "laboralCertificate2":
+      return <SvgLaboralCertificate2 />;
+    case "laboralCertificate3":
+      return <SvglaboralCertificate3 />;
     default:
       return null;
   }

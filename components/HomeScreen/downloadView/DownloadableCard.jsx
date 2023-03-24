@@ -17,8 +17,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
-        {image}
-
+        <View style={styles.imageSvg}>{image}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
         <Pressable onPress={showToast}>
@@ -49,6 +48,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 80,
     width: 80,
+  },
+  imageSvg: {
+    marginBottom: 15,
   },
   title: {
     ...getFontStyles(15, 0.9, 1.1),
