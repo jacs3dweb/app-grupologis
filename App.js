@@ -14,6 +14,7 @@ import DownloadView from "./screens/DownloadView";
 import EmployeeManagement from "./screens/EmployeeManagement";
 import LoginScreen from "./screens/LoginScreen";
 import NewsView from "./screens/NewsView";
+import ResumeView from "./screens/ResumeView";
 import UserView from "./screens/UserView";
 
 // Import components
@@ -25,9 +26,11 @@ import Footer from "./components/layout/Footer";
 
 // Import States
 import AuthState from "./context/auth/authState";
-import ClaimsState from "./context/claims/claimState";
-import NewsState from "./context/news/newsState";
 import BillsState from "./context/bills/billsState";
+import ClaimsState from "./context/claims/claimState";
+import NewingState from "./context/newing/newingState";
+import NewsState from "./context/news/newsState";
+import ResumeState from "./context/resume/resumeState";
 
 import moment from "moment";
 
@@ -65,6 +68,7 @@ const HomeScreens = () => {
       <Tab.Screen name="ProfileView" component={UserView} />
       <Tab.Screen name="EmployeeManagement" component={EmployeeManagement} />
       <Tab.Screen name="ClientsInvoices" component={ClientsInvoiceView} />
+      <Tab.Screen name="ResumeView" component={ResumeView} />
     </Tab.Navigator>
   );
 };
@@ -89,26 +93,33 @@ export default function App() {
       <NewsState>
         <ClaimsState>
           <BillsState>
-          <NavigationContainer>
-            <StatusBar style="auto" hidden={false} />
-            <Stack.Navigator
-              initialRouteName="Login"
-              screenOptions={{
-                headerShown: false,
-              }}
-            >
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen
-                name="BusinessEmployeeLogin"
-                component={BusinessEmployeeLogin}
-              />
-              <Stack.Screen name="CodeAuth" component={CodeAuth} />
-              <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
-              <Stack.Screen name="Home" component={HomeScreens} />
-            </Stack.Navigator>
+            <ResumeState>
+              <NewingState>
+                <NavigationContainer>
+                  <StatusBar style="auto" hidden={false} />
+                  <Stack.Navigator
+                    initialRouteName="Login"
+                    screenOptions={{
+                      headerShown: false,
+                    }}
+                  >
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen
+                      name="BusinessEmployeeLogin"
+                      component={BusinessEmployeeLogin}
+                    />
+                    <Stack.Screen name="CodeAuth" component={CodeAuth} />
+                    <Stack.Screen
+                      name="BusinessEntry"
+                      component={BusinessEntry}
+                    />
+                    <Stack.Screen name="Home" component={HomeScreens} />
+                  </Stack.Navigator>
 
-            <Toast config={toastConfig} />
-          </NavigationContainer>
+                  <Toast config={toastConfig} />
+                </NavigationContainer>
+              </NewingState>
+            </ResumeState>
           </BillsState>
         </ClaimsState>
       </NewsState>

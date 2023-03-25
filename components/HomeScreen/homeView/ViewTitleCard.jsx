@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors, getFontStyles, widthPercentageToPx } from "../../../utils";
-
-const ViewTitleCard = ({ title, buttonText, buttonIcon, onPressAction }) => {
+import FormInput from "../profileView/FormInput";
+const ViewTitleCard = ({ title,inputText,buttonText, buttonIcon, onPressAction }) => {
   return (
     <View style={styles.cardContainer}>
       <Text style={styles.titleText}>{title}</Text>

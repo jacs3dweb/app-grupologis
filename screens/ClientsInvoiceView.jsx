@@ -33,7 +33,7 @@ const ClientsInvoiceView = ({ props }) => {
           }
           image={images.employeeNimage}
         />
-        <BillsList />
+        <BillsList/>
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
