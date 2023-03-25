@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import resumeContext from "../../../context/resume/resumeContext"
+import resumeContext from "../../../context/resume/resumeContext";
 import { colors, getFontStyles, widthPercentageToPx } from "../../../utils";
 
-import { FontAwesome5 } from "@expo/vector-icons";
 import ResumeCard from "./ResumeCard";
 
 const ResumeList = () => {

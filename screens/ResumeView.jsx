@@ -1,27 +1,26 @@
-import React, { useState } from "react";
-import { Modal, ScrollView, StyleSheet, View } from "react-native";
+import React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
 import ResumeList from "../components/HomeScreen/resumeView/ResumeList";
 import Layout from "../components/layout/Layout";
-import { heightPercentageToPx, images, widthPercentageToPx } from "../utils";
-import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
-import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
+import { heightPercentageToPx, widthPercentageToPx } from "../utils";
 
-const ResumeView = ({ props }) => {
-
+const ResumeView = (props) => {
+  const { navigation } = props;
   return (
     <Layout props={{ ...props }}>
-      
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
         <CardEinfo
-        title={"Hojas de vida"}
-        buttonText="  Buscar"
-        onPressAction={() => setModal(!modal)}
+          title={"Hojas de vida"}
+          buttonText="  Buscar"
+          onPressAction={() => setModal(!modal)}
+          handleGoBack={() => navigation.navigate("EmployeeManagement")}
         />
-        
-        <ResumeList/>
+
+        <ResumeList />
       </ScrollView>
     </Layout>
   );
