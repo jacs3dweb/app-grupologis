@@ -14,11 +14,14 @@ import DownloadableCard from "../components/HomeScreen/downloadView/Downloadable
 import Layout from "../components/layout/Layout.jsx";
 import authContext from "../context/auth/authContext";
 
-import SvgPayroll from "../assets/images/home/downloadView/SvgPayroll";
 import SvgPayrollFlyer from "../assets/images/home/downloadView/SvgPayrollFlyer";
 import SvgLaboralCertificate from "../assets/images/home/downloadView/SvgLaboralCertificate";
 import SvgLaboralCertificate2 from "../assets/images/home/downloadView/SvgLaboralCertificate2";
 import SvglaboralCertificate3 from "../assets/images/home/downloadView/SvgLaboralCertificate3";
+
+import SvgCapacitations from "../assets/images/home/downloadView/SvgCapacitations";
+import SvgHumanResourcesIndicator from "../assets/images/home/downloadView/SvgHumanResourcesIndicator";
+import SvgAusentism from "../assets/images/home/downloadView/SvgAusentism";
 
 const displaySvg = (type) => {
   switch (type) {
@@ -30,6 +33,14 @@ const displaySvg = (type) => {
       return <SvgLaboralCertificate2 />;
     case "laboralCertificate3":
       return <SvglaboralCertificate3 />;
+    case "generalPayroll":
+      return <SvgPayrollFlyer />;
+    case "humanResourcesIndicator":
+      return <SvgHumanResourcesIndicator />;
+    case "capacitations":
+      return <SvgCapacitations />;
+    case "ausentism":
+      return <SvgAusentism />;
     default:
       return null;
   }
@@ -99,13 +110,17 @@ const styles = StyleSheet.create({
     color: colors.mainBlue,
     ...getFontStyles(25),
   },
+  subtitle: {
+    ...getFontStyles(17),
+    fontFamily: "Poppins-Bold",
+  },
   toApp: {
     ...getFontStyles(17),
     fontFamily: "Poppins-Bold",
   },
 
   descriptionContainer: {
-    width: widthPercentageToPx(60),
+    width: widthPercentageToPx(70),
   },
   welcomeDesc: {
     fontFamily: "Volks-Serial-Light",
@@ -116,8 +131,8 @@ const styles = StyleSheet.create({
   workersImage: {
     height: heightPercentageToPx(30),
     width: widthPercentageToPx(80),
-    left: 75,
-    bottom: 105,
+    left: 21,
+    bottom: 90,
   },
 
   textInputContainers: {

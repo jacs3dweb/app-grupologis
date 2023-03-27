@@ -77,6 +77,7 @@ export default function App() {
     "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
     "Volks-Serial-Light": require("./assets/fonts/VolksSerialLight.ttf"),
     "Volks-Bold": require("./assets/fonts/Volks-Serial-Bold.ttf"),
+    "Volks-Serial-Medium": require("./assets/fonts/VolksSerialMedium.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -89,26 +90,26 @@ export default function App() {
       <NewsState>
         <ClaimsState>
           <BillsState>
-          <NavigationContainer>
-            <StatusBar style="auto" hidden={false} />
-            <Stack.Navigator
-              initialRouteName="Login"
-              screenOptions={{
-                headerShown: false,
-              }}
-            >
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen
-                name="BusinessEmployeeLogin"
-                component={BusinessEmployeeLogin}
-              />
-              <Stack.Screen name="CodeAuth" component={CodeAuth} />
-              <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
-              <Stack.Screen name="Home" component={HomeScreens} />
-            </Stack.Navigator>
+            <NavigationContainer>
+              <StatusBar style="auto" hidden={false} />
+              <Stack.Navigator
+                initialRouteName="Login"
+                screenOptions={{
+                  headerShown: false,
+                }}
+              >
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen
+                  name="BusinessEmployeeLogin"
+                  component={BusinessEmployeeLogin}
+                />
+                <Stack.Screen name="CodeAuth" component={CodeAuth} />
+                <Stack.Screen name="BusinessEntry" component={BusinessEntry} />
+                <Stack.Screen name="Home" component={HomeScreens} />
+              </Stack.Navigator>
 
-            <Toast config={toastConfig} />
-          </NavigationContainer>
+              <Toast config={toastConfig} />
+            </NavigationContainer>
           </BillsState>
         </ClaimsState>
       </NewsState>

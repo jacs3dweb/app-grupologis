@@ -1,11 +1,12 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 
 const EmployeeMcard = ({ title, desc, image, id }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
+        <View style={styles.certificadoImage}>{image}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
         <Pressable /* onPress={} */>
@@ -13,11 +14,11 @@ const EmployeeMcard = ({ title, desc, image, id }) => {
             <Text
               style={{
                 color: colors.light,
-                fontFamily: "Volks-Bold",
-                fontSize: 20,
+                fontFamily: "Volks-Serial-Light",
+                fontSize: 40,
               }}
             >
-              {">>>>>"}
+              {">"}
             </Text>
           </View>
         </Pressable>
@@ -39,9 +40,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   certificadoImage: {
-    marginBottom: 10,
-    height: 80,
-    width: 80,
+    marginBottom: 1,
+    height: 75,
+    width: 75,
   },
   title: {
     ...getFontStyles(15, 0.9, 1.1),

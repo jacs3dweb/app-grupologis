@@ -14,6 +14,8 @@ const notificationType2 = require("../assets/images/components/notifications/typ
 const notificationType3 = require("../assets/images/components/notifications/type-3.png");
 const notificationType4 = require("../assets/images/components/notifications/type-4.png");
 
+const imgDownloadDocuments = require("../assets/images/home/banners/imgDownloadDocuments.png");
+
 export const getFontStyles = (
   size,
   ptPercentage = 0.6,
@@ -24,6 +26,10 @@ export const getFontStyles = (
     lineHeight: size * lhPercentage,
     paddingTop: size - size * ptPercentage,
   };
+};
+
+export const fonts = {
+  fontPrimaryLight: "Volks-Serial-Light",
 };
 
 export const colors = {
@@ -41,7 +47,7 @@ export const colors = {
   descarga: "#67C9B9",
   black: "#000000",
   lightGray: "#F7F7F7",
-  darkGray: "#606060",
+  darkGray: "#4E4848",
   yellow: "#FDA428",
   purpleIcons: "#9293F5",
   green: "#67C9B9",
@@ -55,7 +61,7 @@ export const colors = {
 
 export const images = {
   loginImage:
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FLoginWorkers.png?alt=media&token=f5dd37cd-ee96-4f3c-a7f6-db0a2bc37549",
+    "/Users/jacs-developer/Documents/Grupologis-app/grupologis-app/assets/images/home/banners/imgDownloadDocuments.png",
   colorLogo:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FlogoColor.png?alt=media&token=cce21b6a-ad7d-4da4-9015-ec672632f72d",
   whiteLogo:
@@ -71,7 +77,7 @@ export const images = {
   certificadoImage4:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FGrupo%2063.png?alt=media&token=0d6c5a70-2c24-42a3-aa79-46e8096b3ddc",
   employeeNimage:
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FEnmascarar_grupo_33x%201.png?alt=media&token=747c3d91-3780-4617-8482-ae8fe7d70fa5",
+    "/Users/jacs-developer/Documents/Grupologis-app/grupologis-app/assets/images/home/banners/imgEmployees.png",
   checkImage:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FcheckImage.png?alt=media&token=66e7b9e5-9079-4dc8-829a-ebff3d983334",
 };

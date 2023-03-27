@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 40,
-    backgroundColor: isSelected ? "#D9D9FE" : colors.white,
+    backgroundColor: isSelected ? "#999AF6" : colors.white,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

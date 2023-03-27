@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "85%",
+    width: "80%",
   },
   cardColumn: {
     display: "flex",

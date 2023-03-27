@@ -19,8 +19,8 @@ const MainCardInfo = ({ firstTitle, secondTitle, description, image }) => {
             <Text style={styles.welcomeDesc}>{description}</Text>
           </View>
         </View>
-        <Image style={styles.workersImage} source={{ uri: image }} />
       </View>
+      <Image style={styles.workersImage} source={{ uri: image }} />
     </View>
   );
 };
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     display: "flex",
     alignItems: "center",
+    marginTop: heightPercentageToPx(4),
   },
   firstTitleText: {
     fontFamily: "Poppins-Bold",
@@ -39,23 +40,26 @@ const styles = StyleSheet.create({
   },
   secondTitleText: {
     ...getFontStyles(17),
+    lineHeight: 14,
     fontFamily: "Poppins-Bold",
   },
 
   descriptionContainer: {
-    width: widthPercentageToPx(60),
+    width: widthPercentageToPx(40),
   },
   welcomeDesc: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Volks-Serial-Light",
     color: colors.descriptionColors,
-    ...getFontStyles(14, 0.5, 0.9),
+    ...getFontStyles(14, 0.5, 1.2),
   },
 
   workersImage: {
-    height: heightPercentageToPx(20),
-    width: widthPercentageToPx(40),
-    left: 120,
-    bottom: 105,
+    height: heightPercentageToPx(21),
+    width: widthPercentageToPx(43),
+    right: 0,
+    bottom: 0,
+    borderBottomRightRadius: 17,
+    position: "absolute",
   },
 
   textInputContainers: {
@@ -70,9 +74,8 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(20),
+    height: heightPercentageToPx(18),
     overflow: "hidden",
-    marginBottom: 7,
     backgroundColor: colors.white,
     borderRadius: 17,
     alignItems: "center",

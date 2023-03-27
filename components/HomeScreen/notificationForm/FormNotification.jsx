@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    transform: [{ translateY: 50 }],
+    transform: [{ translateY: 52 }],
     width: widthPercentageToPx(90),
     height: heightPercentageToPx(90),
   },

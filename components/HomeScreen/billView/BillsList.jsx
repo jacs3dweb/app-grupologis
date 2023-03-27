@@ -1,8 +1,13 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import billsContext from "../../../context/bills/billsContext"
-import { colors, getFontStyles, widthPercentageToPx } from "../../../utils";
+import billsContext from "../../../context/bills/billsContext";
+import {
+  colors,
+  getFontStyles,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
 
 import { FontAwesome5 } from "@expo/vector-icons";
 import BillsCard from "./BillsCard";
@@ -27,6 +32,7 @@ const styles = StyleSheet.create({
   newsListContainer: {
     width: widthPercentageToPx(90),
     height: "100%",
+    marginTop: heightPercentageToPx(2),
   },
   titleContainer: {
     paddingVertical: 10,
