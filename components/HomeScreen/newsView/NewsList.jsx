@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
+    marginTop: 10,
+    marginBottom: 10,
   },
   firstTitle: {
     fontFamily: "Poppins-Regular",

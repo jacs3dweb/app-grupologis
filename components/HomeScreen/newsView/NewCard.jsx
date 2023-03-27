@@ -48,7 +48,7 @@ export default NewCard;
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.white,
-    height: 110,
+    height: 120,
     width: "100%",
     borderRadius: 17,
     marginBottom: 12,
@@ -58,16 +58,16 @@ const styles = StyleSheet.create({
   },
   leftContent: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: "85%",
+    flexDirection: "colunm",
+    alignContent: "space-between",
+    width: "80%",
   },
   rightContent: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    width: "15%",
+    width: "25%",
   },
   leftTopContent: {
     display: "flex",
