@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     gap: 10,
     height: 75,
     marginVertical: 10,
+    marginLeft: 5,
   },
   dayElement: (isSelected, isSelectable) => ({
     width: 70,
