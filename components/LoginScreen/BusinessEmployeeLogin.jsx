@@ -1,6 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   colors,
   getFontStyles,
@@ -12,9 +12,32 @@ import {
 import { InputWithIcon } from "../common/form/Input";
 
 import { Feather } from "@expo/vector-icons";
+import { fetchPost, validatePhone } from "../../utils/functions";
 
 const BusinessEmployeeLogin = ({ navigation, route }) => {
   const { type } = route.params;
+  const [identification, setIdentification] = useState(0);
+  const [phone, setPhone] = useState(0);
+
+  const submitForm = async () => {
+    if (identification != 0 && phone != 0) {
+      console.log(identification.target);
+      // !validatePhone(phone)
+      //   ? console.log("el celular es incorrecto")
+      //   : console.log("celular correcto");
+      // const typeCli = type === "business" ? 2 : 1;
+      // const body = `contactTipoClienteField=${typeCli}
+      //   &contactIdentificacionField=${identification}
+      //   &contactNumeroTelefonico=${phone}
+      //   &contactApp=true`;
+
+      // const respApi = await fetchPost(body);
+      // console.log(respApi);
+    } else {
+      console.log("llene todos los datos");
+    }
+    // navigation.navigate("CodeAuth", { type: "business" });
+  };
   return (
     <View style={styles.businessBackground(type)}>
       <View style={styles.formContainer}>
@@ -46,21 +69,19 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             icon={"user"}
             iconColor={type === "business" ? colors.mainBlue : colors.mainPink}
             iconSize={24}
-            onChange={() => ({})}
+            onChange={(ident) => setIdentification(ident)}
             placeholder="Identificación"
+            type="numeric"
           ></InputWithIcon>
           <InputWithIcon
             icon={"mobile1"}
             iconColor={type === "business" ? colors.mainBlue : colors.mainPink}
             iconSize={24}
+            onChange={(phone) => setPhone(phone)}
             placeholder="Celular"
             type="numeric"
           ></InputWithIcon>
-          <Pressable
-            onPress={() =>
-              navigation.navigate("CodeAuth", { type: "business" })
-            }
-          >
+          <Pressable onPress={() => submitForm()}>
             <View style={styles.asIngresaButton}>
               <Text style={{ color: colors.white }}>Ingresar</Text>
             </View>
