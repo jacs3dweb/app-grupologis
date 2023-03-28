@@ -20,23 +20,23 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
   const [phone, setPhone] = useState(0);
 
   const submitForm = async () => {
-    if (identification != 0 && phone != 0) {
-      console.log(identification.target);
-      // !validatePhone(phone)
-      //   ? console.log("el celular es incorrecto")
-      //   : console.log("celular correcto");
-      // const typeCli = type === "business" ? 2 : 1;
-      // const body = `contactTipoClienteField=${typeCli}
-      //   &contactIdentificacionField=${identification}
-      //   &contactNumeroTelefonico=${phone}
-      //   &contactApp=true`;
+    // if (identification != 0 && phone != 0) {
+    //   console.log(identification.target);
+    //   // !validatePhone(phone)
+    //   //   ? console.log("el celular es incorrecto")
+    //   //   : console.log("celular correcto");
+    //   // const typeCli = type === "business" ? 2 : 1;
+    //   // const body = `contactTipoClienteField=${typeCli}
+    //   //   &contactIdentificacionField=${identification}
+    //   //   &contactNumeroTelefonico=${phone}
+    //   //   &contactApp=true`;
 
-      // const respApi = await fetchPost(body);
-      // console.log(respApi);
-    } else {
-      console.log("llene todos los datos");
-    }
-    // navigation.navigate("CodeAuth", { type: "business" });
+    //   // const respApi = await fetchPost(body);
+    //   // console.log(respApi);
+    // } else {
+    //   console.log("llene todos los datos");
+    // }
+    navigation.navigate("CodeAuth", { type: "business" });
   };
   return (
     <View style={styles.businessBackground(type)}>
