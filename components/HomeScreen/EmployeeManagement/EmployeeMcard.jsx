@@ -4,7 +4,7 @@ import { colors, getFontStyles } from "../../../utils";
 const EmployeeMcard = ({ title, desc, image, id, onRedirect }) => {
   return (
     <View style={styles.scrollStyle}>
-      <View>
+      <View style={styles.containerCard}>
         <View style={styles.certificadoImage}>{image}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
@@ -15,6 +15,7 @@ const EmployeeMcard = ({ title, desc, image, id, onRedirect }) => {
                 color: colors.light,
                 fontFamily: "Volks-Serial-Light",
                 fontSize: 40,
+                lineHeight: 40,
               }}
             >
               {">"}
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 17,
     paddingHorizontal: 25,
-    paddingVertical: 20,
+    paddingVertical: 25,
     alignItems: "flex-start",
     flexDirection: "column",
   },
@@ -52,17 +53,18 @@ const styles = StyleSheet.create({
     fontFamily: "Volks-Serial-Light",
     color: colors.descriptionColors,
     ...getFontStyles(12, 0.9, 1.2),
+    flex: 1,
   },
   downloadButton: {
     backgroundColor: colors.buttonsColor,
     fontFamily: "Volks-Bold",
     height: 41,
-    width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 7,
-    marginTop: 15,
+    marginTop: 10,
     padding: 0,
+    flex: 0,
   },
 });

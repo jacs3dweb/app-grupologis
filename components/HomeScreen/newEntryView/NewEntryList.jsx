@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 
-import resumeContext from "../../../context/resume/resumeContext";
+import newEntryContext from "../../../context/newentry/newEntryContext";
 import {
   colors,
   getFontStyles,
@@ -9,23 +9,23 @@ import {
   widthPercentageToPx,
 } from "../../../utils";
 
-import ResumeCard from "./ResumeCard";
+import NewEntryCard from "./NewEntryCard";
 
-const ResumeList = () => {
-  const { resumeList } = useContext(resumeContext);
+const NewEntryList = () => {
+  const { newEntryList } = useContext(newEntryContext);
 
   return (
     <View style={styles.newsListContainer}>
       <View>
-        {resumeList.map((n4, index4) => (
-          <ResumeCard key={index4} {...n4} />
+        {newEntryList.map((n4, index4) => (
+          <NewEntryCard key={index4} {...n4} />
         ))}
       </View>
     </View>
   );
 };
 
-export default ResumeList;
+export default NewEntryList;
 
 const styles = StyleSheet.create({
   newsListContainer: {

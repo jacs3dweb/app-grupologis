@@ -63,7 +63,7 @@ const Footer = (props) => {
               <Feather
                 name={sc.icon}
                 size={24}
-                color={screen === sc.screen ? "white" : "#D9D9FE"}
+                color={screen === sc.screen ? "white" : "#999AF6"}
               />
             </View>
           </Pressable>
@@ -78,7 +78,10 @@ const styles = StyleSheet.create({
   footerContainer: {
     marginHorizontal: 20,
     position: "absolute",
-    bottom: heightPercentageToPx(2),
+    bottom:
+      Platform.OS === "android"
+        ? heightPercentageToPx(2)
+        : heightPercentageToPx(3),
     width: widthPercentageToPx(90),
     height: 52,
 

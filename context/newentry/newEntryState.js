@@ -1,11 +1,11 @@
 import React, { useReducer } from "react";
-import resumeContext from "./resumeContext";
-import { resumeReducer } from "./resumeReducer";
-import { GET_RESUME } from "../types";
+import newEntryContext from "./newEntryContext";
+import { newEntryReducer } from "./newEntryReducer";
+import { GET_NEWENTRY } from "../types";
 
-const ResumeState = (props) => {
+const NewEntryState = (props) => {
   const initialState = {
-    resumeList: [
+    newEntryList: [
       {
         RAD: "099",
         nombre: "Jorge Castro",
@@ -30,22 +30,22 @@ const ResumeState = (props) => {
     ],
   };
 
-  const [state, dispatch] = useReducer(resumeReducer, initialState);
+  const [state, dispatch] = useReducer(newEntryReducer, initialState);
 
-  const obtenerResume = (data) => {
+  const obtenerNewEntry = (data) => {
     dispatch({
-      type: GET_RESUME,
+      type: GET_NEWENTRY,
       payload: data,
     });
   };
 
   return (
-    <resumeContext.Provider
-      value={{ resumeList: state.resumeList, obtenerResume }}
+    <newEntryContext.Provider
+      value={{ newEntryList: state.newEntryList, obtenerNewEntry }}
     >
       {props.children}
-    </resumeContext.Provider>
+    </newEntryContext.Provider>
   );
 };
 
-export default ResumeState;
+export default NewEntryState;

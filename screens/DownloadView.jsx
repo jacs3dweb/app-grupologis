@@ -1,4 +1,11 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+} from "react-native";
 import {
   businessDownloadables,
   colors,
@@ -153,14 +160,16 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     alignItems: "center",
   },
-
   title: {
     width: "100%",
     padding: 20,
   },
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(36),
+    height:
+      Platform.OS === "android"
+        ? heightPercentageToPx(34)
+        : heightPercentageToPx(31),
     paddingTop: 10,
   },
   downloadableCardsContainer: {

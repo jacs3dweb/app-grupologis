@@ -37,6 +37,9 @@ const EmployeeManagement = (props) => {
       case "hvida":
         navigation.navigate("ResumeView");
         break;
+      case "novedai":
+        navigation.navigate("NewEntryView");
+        break;
 
       default:
         break;
@@ -87,7 +90,10 @@ const styles = StyleSheet.create({
 
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(37),
+    height:
+      Platform.OS === "android"
+        ? heightPercentageToPx(35)
+        : heightPercentageToPx(31),
     paddingTop: 20,
   },
   employeemCardsContainer: {

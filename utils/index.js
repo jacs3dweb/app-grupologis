@@ -149,8 +149,7 @@ export const businessDownloadables = [
   {
     id: "humanResourcesIndicator",
     title: "Indicador de gestion humana",
-    description:
-      "Descarga tus indicadores de gestión humana indica la fecha inicial y final",
+    description: "Descarga tus indicadores de gestión humana desde la App",
   },
   {
     id: "generalPayroll",

@@ -1,7 +1,12 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { colors, widthPercentageToPx } from "../../../utils";
+import {
+  colors,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
+
 const CardEinfo = ({
   title,
   inputText,
@@ -9,6 +14,8 @@ const CardEinfo = ({
   buttonIcon,
   onPressAction,
   handleGoBack,
+  showInput,
+  showButton,
 }) => {
   return (
     <View style={styles.cardContainer}>
@@ -25,13 +32,25 @@ const CardEinfo = ({
           </View>
         </Pressable>
         <Text style={styles.titleText}>{title}</Text>
+        {showButton ? (
+          <Pressable onPress={onPressAction} style={styles.buttonCont}>
+            <View style={styles.newButton}>
+              {buttonIcon && (
+                <Entypo name={buttonIcon} size={24} color={colors.white} />
+              )}
+              {buttonText && (
+                <Text style={styles.buttonText}>{buttonText}</Text>
+              )}
+            </View>
+          </Pressable>
+        ) : null}
       </View>
-      <Pressable onPress={onPressAction}>
+      {showInput ? (
         <TextInput
           style={styles.titleContainer}
           placeholder="Ingresa la identificación"
-        ></TextInput>
-      </Pressable>
+        />
+      ) : null}
     </View>
   );
 };
@@ -54,11 +73,17 @@ const styles = StyleSheet.create({
     color: colors.black,
     textTransform: "uppercase",
     fontFamily: "Poppins-Bold",
+    marginLeft: widthPercentageToPx(5),
+  },
+  buttonCont: {
+    marginLeft: "auto",
   },
   newButton: {
     borderRadius: 8,
     backgroundColor: colors.yellow,
-    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 8,
     width: 80,
   },
@@ -75,11 +100,11 @@ const styles = StyleSheet.create({
     width: "100%",
     fontFamily: "Poppins-Regular",
     height: 50,
-    borderRadius: 17,
+    borderRadius: 10,
     padding: 15,
+    marginTop: heightPercentageToPx(1),
   },
   goBackButton: {
-    position: "relative",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -87,7 +112,5 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 30,
     width: 30,
-    marginRight: 30,
-    marginBottom: 10,
   },
 });

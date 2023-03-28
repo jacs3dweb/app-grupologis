@@ -57,7 +57,10 @@ const styles = StyleSheet.create({
   },
 
   workersImage: {
-    height: heightPercentageToPx(21),
+    height:
+      Platform.OS === "android"
+        ? heightPercentageToPx(22)
+        : heightPercentageToPx(21),
     width: widthPercentageToPx(43),
     right: 0,
     bottom: 0,

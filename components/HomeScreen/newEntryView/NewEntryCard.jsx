@@ -5,7 +5,7 @@ import Toast from "react-native-toast-message";
 import { colors } from "../../../utils";
 import CardElement from "../newsView/components/CardElement";
 
-const ResumeCard = (props) => {
+const NewEntryCard = (props) => {
   const showToast = () => {
     Toast.show({
       type: "success",
@@ -38,7 +38,7 @@ const ResumeCard = (props) => {
     </View>
   );
 };
-export default ResumeCard;
+export default NewEntryCard;
 
 const styles = StyleSheet.create({
   cardContainer: {

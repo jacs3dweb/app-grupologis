@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
-import ResumeList from "../components/HomeScreen/resumeView/ResumeList";
+import NewEntryList from "../components/HomeScreen/newEntryView/NewEntryList";
 import Layout from "../components/layout/Layout";
 import { heightPercentageToPx, widthPercentageToPx } from "../utils";
 
@@ -14,12 +14,14 @@ const ResumeView = (props) => {
         showsVerticalScrollIndicator={false}
       >
         <CardEinfo
-          title={"Hojas de vida"}
-          showInput={true}
+          title={"Novedades ingreso"}
+          buttonText="Buscar"
+          showButton={true}
+          showInput={false}
           onPressAction={() => setModal(!modal)}
           handleGoBack={() => navigation.navigate("EmployeeManagement")}
         />
-        <ResumeList />
+        {/* <NewEntryList /> */}
       </ScrollView>
     </Layout>
   );

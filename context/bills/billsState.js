@@ -11,8 +11,8 @@ const BillsState = (props) => {
         año: "2001",
         mes: "05",
         noFactura: "2022-06-16",
-        subtipo:"12733",
-        fecha:"2022-06-16",
+        subtipo: "12733",
+        fecha: "2022-06-16",
         descripcion: "sin desc...",
         estado: 1,
       },
@@ -20,8 +20,8 @@ const BillsState = (props) => {
         año: "2002",
         mes: "05",
         noFactura: "2022-06-16",
-        subtipo:"12733",
-        fecha:"2022-06-16",
+        subtipo: "12733",
+        fecha: "2022-06-16",
         descripcion: "sin desc...",
         estado: 2,
       },
@@ -29,8 +29,8 @@ const BillsState = (props) => {
         año: "2004",
         mes: "05",
         noFactura: "2022-06-16",
-        subtipo:"12733",
-        fecha:"2022-06-16",
+        subtipo: "12733",
+        fecha: "2022-06-16",
         descripcion: "sin desc...",
         estado: 3,
       },
@@ -38,8 +38,8 @@ const BillsState = (props) => {
         año: "2001",
         mes: "05",
         noFactura: "2022-06-16",
-        subtipo:"12733",
-        fecha:"2022-06-16",
+        subtipo: "12733",
+        fecha: "2022-06-16",
         descripcion: "sin desc...",
         estado: 4,
       },
@@ -47,8 +47,8 @@ const BillsState = (props) => {
         año: "2001",
         mes: "05",
         noFactura: "2022-06-16",
-        subtipo:"12733",
-        fecha:"2022-06-16",
+        subtipo: "12733",
+        fecha: "2022-06-16",
         descripcion: "sin desc...",
         estado: 5,
       },
@@ -65,7 +65,9 @@ const BillsState = (props) => {
   };
 
   return (
-    <billsContext.Provider value={{ billsList: state.billsList, agregarFactura }}>
+    <billsContext.Provider
+      value={{ billsList: state.billsList, agregarFactura }}
+    >
       {props.children}
     </billsContext.Provider>
   );

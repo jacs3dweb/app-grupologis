@@ -16,6 +16,7 @@ import LoginScreen from "./screens/LoginScreen";
 import NewsView from "./screens/NewsView";
 import ResumeView from "./screens/ResumeView";
 import UserView from "./screens/UserView";
+import NewEntryView from "./screens/NewEntryView.jsx";
 
 // Import components
 
@@ -69,6 +70,7 @@ const HomeScreens = () => {
       <Tab.Screen name="EmployeeManagement" component={EmployeeManagement} />
       <Tab.Screen name="ClientsInvoices" component={ClientsInvoiceView} />
       <Tab.Screen name="ResumeView" component={ResumeView} />
+      <Tab.Screen name="NewEntryView" component={NewEntryView} />
     </Tab.Navigator>
   );
 };
@@ -79,9 +81,12 @@ export default function App() {
     "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
     "Poppins-Light": require("./assets/fonts/Poppins-Light.ttf"),
     "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
+
     "Volks-Serial-Light": require("./assets/fonts/VolksSerialLight.ttf"),
     "Volks-Bold": require("./assets/fonts/Volks-Serial-Bold.ttf"),
     "Volks-Serial-Medium": require("./assets/fonts/VolksSerialMedium.ttf"),
+
+    "Roboto-Light": require("./assets/fonts/Roboto-Light.ttf"),
   });
 
   if (!fontsLoaded) {

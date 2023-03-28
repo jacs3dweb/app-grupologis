@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { colors, getFontStyles } from "../../../utils";
+import { colors, getFontStyles, widthPercentageToPx } from "../../../utils";
 
 import { Entypo } from "@expo/vector-icons";
 
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    width: "80%",
-    marginBottom: 10,
+    width: "70%",
+    marginBottom: widthPercentageToPx(5),
   },
   numberContainer: {
     backgroundColor: colors.stepGray,
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     ...getFontStyles(27, 0.5, 0.9),
   },
   descriptionText: {
-    ...getFontStyles(15, 0.5, 0.9),
-    fontFamily: "Poppins-Light",
+    ...getFontStyles(15, 0.7, 1.1),
+    fontFamily: "Roboto-Light",
     color: colors.darkGray,
     flexWrap: "wrap",
   },
