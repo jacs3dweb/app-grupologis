@@ -15,12 +15,13 @@ export default CardElement;
 
 const styles = StyleSheet.create({
   textHead: {
-    fontFamily: "Poppins-Regular",
-    color: colors.darkGray,
+    fontFamily: "Volks-Serial-Medium",
+    color: colors.boldGray,
     ...getFontStyles(14, 0.5, 0.9),
   },
   textContent: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Volks-Bold",
+    color: colors.darkGray,
     ...getFontStyles(15, 0.5, 0.9),
   },
 });

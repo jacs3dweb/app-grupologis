@@ -81,6 +81,7 @@ export default function App() {
     "Poppins-SemiBold": require("./assets/fonts/Poppins-SemiBold.ttf"),
     "Volks-Serial-Light": require("./assets/fonts/VolksSerialLight.ttf"),
     "Volks-Bold": require("./assets/fonts/Volks-Serial-Bold.ttf"),
+    "Volks-Serial-Medium": require("./assets/fonts/VolksSerialMedium.ttf"),
   });
 
   if (!fontsLoaded) {

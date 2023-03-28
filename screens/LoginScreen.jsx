@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import authContext from "../context/auth/authContext";
 import {
   colors,
@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.imageContainer}>
         <Image
           style={styles.loginBackgroundImages}
-          source={{ uri: images.loginImage }}
+          source={require("../assets/images/home/banners/LoginWorkers.png")}
         />
       </View>
     </View>

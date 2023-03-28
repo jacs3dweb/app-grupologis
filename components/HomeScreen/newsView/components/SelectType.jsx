@@ -33,7 +33,7 @@ const SelectType = ({ continueWithForm }) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: 10,
+          gap: 0,
         }}
       >
         {newsInfo.map((e) => (
@@ -62,19 +62,20 @@ export default SelectType;
 const styles = StyleSheet.create({
   titlesContainer: {
     paddingHorizontal: 30,
+    marginBottom: 20,
   },
   welcomeText: {
     fontFamily: "Poppins-Bold",
-    marginBottom: 2,
     marginTop: 2,
     color: colors.mainBlue,
-    ...getFontStyles(30),
+    ...getFontStyles(30, 0.9, 1.1),
   },
   subtitle: {
-    ...getFontStyles(17),
+    ...getFontStyles(17, 0.8),
     marginBottom: 2,
     marginTop: 0,
     fontFamily: "Poppins-Bold",
+    lineHeight: 15,
   },
   inputContainer: {
     display: "flex",

@@ -5,7 +5,6 @@ import {
   employeeDownloadables,
   getFontStyles,
   heightPercentageToPx,
-  images,
   widthPercentageToPx,
 } from "../utils";
 
@@ -14,11 +13,14 @@ import DownloadableCard from "../components/HomeScreen/downloadView/Downloadable
 import Layout from "../components/layout/Layout.jsx";
 import authContext from "../context/auth/authContext";
 
-import SvgPayroll from "../assets/images/home/downloadView/SvgPayroll";
-import SvgPayrollFlyer from "../assets/images/home/downloadView/SvgPayrollFlyer";
 import SvgLaboralCertificate from "../assets/images/home/downloadView/SvgLaboralCertificate";
 import SvgLaboralCertificate2 from "../assets/images/home/downloadView/SvgLaboralCertificate2";
 import SvglaboralCertificate3 from "../assets/images/home/downloadView/SvgLaboralCertificate3";
+import SvgPayrollFlyer from "../assets/images/home/downloadView/SvgPayrollFlyer";
+
+import SvgAusentism from "../assets/images/home/downloadView/SvgAusentism";
+import SvgCapacitations from "../assets/images/home/downloadView/SvgCapacitations";
+import SvgHumanResourcesIndicator from "../assets/images/home/downloadView/SvgHumanResourcesIndicator";
 
 const displaySvg = (type) => {
   switch (type) {
@@ -30,6 +32,14 @@ const displaySvg = (type) => {
       return <SvgLaboralCertificate2 />;
     case "laboralCertificate3":
       return <SvglaboralCertificate3 />;
+    case "generalPayroll":
+      return <SvgPayrollFlyer />;
+    case "humanResourcesIndicator":
+      return <SvgHumanResourcesIndicator />;
+    case "capacitations":
+      return <SvgCapacitations />;
+    case "ausentism":
+      return <SvgAusentism />;
     default:
       return null;
   }
@@ -61,7 +71,7 @@ const Download = (props) => {
             </View>
             <Image
               style={styles.workersImage}
-              source={{ uri: images.loginImage }}
+              source={require("../assets/images/home/banners/imgDownloadDocuments.png")}
             />
           </View>
           <View style={styles.containerScroll}>
@@ -99,13 +109,17 @@ const styles = StyleSheet.create({
     color: colors.mainBlue,
     ...getFontStyles(25),
   },
+  subtitle: {
+    ...getFontStyles(17),
+    fontFamily: "Poppins-Bold",
+  },
   toApp: {
     ...getFontStyles(17),
     fontFamily: "Poppins-Bold",
   },
 
   descriptionContainer: {
-    width: widthPercentageToPx(60),
+    width: widthPercentageToPx(70),
   },
   welcomeDesc: {
     fontFamily: "Volks-Serial-Light",
@@ -116,8 +130,8 @@ const styles = StyleSheet.create({
   workersImage: {
     height: heightPercentageToPx(30),
     width: widthPercentageToPx(80),
-    left: 75,
-    bottom: 105,
+    left: 21,
+    bottom: 90,
   },
 
   textInputContainers: {
@@ -146,7 +160,7 @@ const styles = StyleSheet.create({
   },
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(32.5),
+    height: heightPercentageToPx(36),
     paddingTop: 10,
   },
   downloadableCardsContainer: {

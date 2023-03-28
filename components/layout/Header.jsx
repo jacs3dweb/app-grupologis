@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
   hello: {
     color: colors.light,
     fontFamily: "Poppins-Regular",
-    ...getFontStyles(13, 0.5, 0.9),
+    ...getFontStyles(14, 0.5, 0.9),
   },
 
   nameUser: {
     color: colors.light,
     fontFamily: "Poppins-SemiBold",
-    ...getFontStyles(14, 0.5, 0.9),
+    ...getFontStyles(15, 0.5, 0.7),
   },
 
   infoUser: {
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     transform: [{ translateY: 55 }],
-    width: widthPercentageToPx(90),
+    width: widthPercentageToPx(90.5),
     height: heightPercentageToPx(90),
-    left: 20,
+    left: 21,
   },
 });

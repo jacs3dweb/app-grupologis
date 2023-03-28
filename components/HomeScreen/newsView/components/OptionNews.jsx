@@ -21,7 +21,7 @@ export default OptionNews;
 
 const styles = StyleSheet.create({
   scrollStyle: (selected) => ({
-    width: "85%",
+    width: "80%",
     backgroundColor: selected ? colors.generalBackgroundColor : colors.white,
     borderRadius: 17,
     paddingHorizontal: 35,
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   }),
   optionImage: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
   },
 
   title: {

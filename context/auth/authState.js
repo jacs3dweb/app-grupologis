@@ -11,7 +11,7 @@ import {
 const AuthState = (props) => {
   const initialState = {
     userData: {
-      name: "Prueba cambio desde state",
+      name: "Mary Quiñones",
       business: "",
       email: "mary33@gmail.com",
       phone: "3005658749",

@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     gap: 10,
     height: 75,
     marginVertical: 10,
+    marginLeft: 5,
   },
   dayElement: (isSelected, isSelectable) => ({
     width: 70,
@@ -158,6 +159,15 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.0,
+
+    elevation: 5,
   }),
   dayNumber: {
     fontFamily: "Volks-Bold",

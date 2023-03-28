@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 12,
   },
   statusLine: {
     display: "flex",

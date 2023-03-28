@@ -1,10 +1,11 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
+import { colors, getFontStyles } from "../../../utils";
 const EmployeeMcard = ({ title, desc, image, id, onRedirect }) => {
   return (
     <View style={styles.scrollStyle}>
       <View>
+        <View style={styles.certificadoImage}>{image}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
         <Pressable onPress={() => onRedirect(id)}>
@@ -12,8 +13,8 @@ const EmployeeMcard = ({ title, desc, image, id, onRedirect }) => {
             <Text
               style={{
                 color: colors.light,
-                fontFamily: "Volks-Bold",
-                fontSize: 20,
+                fontFamily: "Volks-Serial-Light",
+                fontSize: 40,
               }}
             >
               {">"}
@@ -38,9 +39,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   certificadoImage: {
-    marginBottom: 10,
-    height: 80,
-    width: 80,
+    marginBottom: 1,
+    height: 75,
+    width: 75,
   },
   title: {
     ...getFontStyles(15, 0.9, 1.1),
@@ -55,12 +56,13 @@ const styles = StyleSheet.create({
   downloadButton: {
     backgroundColor: colors.buttonsColor,
     fontFamily: "Volks-Bold",
-    height: heightPercentageToPx(5.5),
+    height: 41,
     width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 7,
     marginTop: 15,
+    padding: 0,
   },
 });

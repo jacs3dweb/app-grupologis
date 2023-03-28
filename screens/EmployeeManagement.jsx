@@ -1,4 +1,4 @@
-import React from "react";
+import { default as React } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import EmployeeMcard from "../components/HomeScreen/EmployeeManagement/EmployeeMcard";
 import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
@@ -10,7 +10,26 @@ import {
   widthPercentageToPx,
 } from "../utils";
 
+import SvgHvida from "../assets/images/components/HomeScreen/EmployeeManagement/SvgHvida";
+import SvgMaestroE from "../assets/images/components/HomeScreen/EmployeeManagement/SvgMaestroE";
+import SvgNovedaI from "../assets/images/components/HomeScreen/EmployeeManagement/SvgNovedaI";
+
+const displaySvg = (type) => {
+  switch (type) {
+    case "hvida":
+      return <SvgHvida />;
+    case "novedai":
+      return <SvgNovedaI />;
+    case "maestroe":
+      return <SvgMaestroE />;
+    default:
+      return null;
+  }
+};
+
 const EmployeeManagement = (props) => {
+  //const [dataCard, setDataCard] = useState()
+
   const { navigation } = props;
   //const [dataCard, setDataCard] = useState()
   const handleRedirect = (id) => {
@@ -23,6 +42,7 @@ const EmployeeManagement = (props) => {
         break;
     }
   };
+
   return (
     <Layout props={{ ...props }}>
       <MainCardInfo
@@ -44,10 +64,10 @@ const EmployeeManagement = (props) => {
               <EmployeeMcard
                 key={e.id}
                 desc={e.description}
-                image={e.image}
                 title={e.title}
-                id={e.id}
                 onRedirect={handleRedirect}
+                image={displaySvg(e.id)}
+                id={e.id}
               />
             ))}
           </View>
@@ -67,8 +87,8 @@ const styles = StyleSheet.create({
 
   containerScroll: {
     width: widthPercentageToPx(90),
-    height: heightPercentageToPx(32.5),
-    paddingTop: 10,
+    height: heightPercentageToPx(37),
+    paddingTop: 20,
   },
   employeemCardsContainer: {
     display: "flex",
