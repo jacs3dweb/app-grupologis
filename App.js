@@ -17,6 +17,7 @@ import NewsView from "./screens/NewsView";
 import ResumeView from "./screens/ResumeView";
 import UserView from "./screens/UserView";
 import NewEntryView from "./screens/NewEntryView.jsx";
+import MasterEmployee from "./screens/MasterEmployeeView";
 
 // Import components
 
@@ -32,8 +33,11 @@ import ClaimsState from "./context/claims/claimState";
 import NewingState from "./context/newing/newingState";
 import NewsState from "./context/news/newsState";
 import ResumeState from "./context/resume/resumeState";
+import NewentryState from "./context/newentry/newentryState";
+
 
 import moment from "moment";
+
 
 moment.locale("es", {
   months:
@@ -71,6 +75,7 @@ const HomeScreens = () => {
       <Tab.Screen name="ClientsInvoices" component={ClientsInvoiceView} />
       <Tab.Screen name="ResumeView" component={ResumeView} />
       <Tab.Screen name="NewEntryView" component={NewEntryView} />
+      <Tab.Screen name="MasterEmployee" component={MasterEmployee} />
     </Tab.Navigator>
   );
 };
@@ -100,6 +105,7 @@ export default function App() {
         <ClaimsState>
           <BillsState>
             <ResumeState>
+            <NewentryState>
               <NewingState>
                 <NavigationContainer>
                   <StatusBar style="auto" hidden={false} />
@@ -125,6 +131,7 @@ export default function App() {
                   <Toast config={toastConfig} />
                 </NavigationContainer>
               </NewingState>
+            </NewentryState>
             </ResumeState>
           </BillsState>
         </ClaimsState>

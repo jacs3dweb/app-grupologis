@@ -9,6 +9,7 @@ import {
   widthPercentageToPx,
 } from "../../../utils";
 
+
 import ResumeCard from "./ResumeCard";
 
 const ResumeList = () => {

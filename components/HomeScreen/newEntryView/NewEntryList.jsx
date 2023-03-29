@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 
-import newEntryContext from "../../../context/newentry/newEntryContext";
+import newingContext from "../../../context/newing/newingContex";
 import {
   colors,
   getFontStyles,
@@ -12,13 +12,13 @@ import {
 import NewEntryCard from "./NewEntryCard";
 
 const NewEntryList = () => {
-  const { newEntryList } = useContext(newEntryContext);
+  const { newingList } = useContext(newingContext);
 
   return (
     <View style={styles.newsListContainer}>
-      <View>
-        {newEntryList.map((n4, index4) => (
-          <NewEntryCard key={index4} {...n4} />
+      <View> 
+        {newingList.map((n5, index5) => (
+          <NewEntryCard key={index5} {...n5} />
         ))}
       </View>
     </View>

@@ -20,11 +20,14 @@ const NewEntryCard = (props) => {
       <View style={styles.leftContent}>
         <View style={styles.cardColumn}>
           <CardElement head={"RAD."} content={props.RAD} />
+          <CardElement head={"Nombre"} content={props.nombre} />
           <CardElement head={"Identificacion"} content={props.Identificacion} />
         </View>
+        
         <View style={styles.cardColumn}>
-          <CardElement head={"Nombre"} content={props.nombre} />
-          <CardElement head={"Fecha"} content={props.fecha} />
+        <CardElement head={"Fecha"} content={props.fechaEnvio} />
+        <CardElement head={"Cargo"} content={props.cargo} />
+
         </View>
       </View>
 
@@ -52,13 +55,14 @@ const styles = StyleSheet.create({
   },
   leftContent: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
-    width: "65%",
+    width: "80%",
   },
   cardColumn: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 5,
   },
   actionButton: (type) => ({

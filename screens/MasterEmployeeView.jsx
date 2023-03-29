@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
-import NewEntryList from "../components/HomeScreen/newEntryView/NewEntryList";
 import Layout from "../components/layout/Layout";
+import FormBillsModal from "../components/HomeScreen/masterEmployee/FormMasterEmployee";
 import { heightPercentageToPx, widthPercentageToPx } from "../utils";
 
 const NewEntryView = (props) => {
@@ -14,14 +14,13 @@ const NewEntryView = (props) => {
         showsVerticalScrollIndicator={false}
       >
         <CardEinfo
-          title={"Novedades ingreso"}
-          buttonText="Buscar"
-          showButton={true}
+          title={"maestro empleado"}
+          showButton={false}
           showInput={false}
           onPressAction={() => setModal(!modal)}
           handleGoBack={() => navigation.navigate("EmployeeManagement")}
         />
-        <NewEntryList />
+        <FormBillsModal />
       </ScrollView>
     </Layout>
   );
