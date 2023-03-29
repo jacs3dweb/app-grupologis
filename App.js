@@ -33,11 +33,8 @@ import ClaimsState from "./context/claims/claimState";
 import NewingState from "./context/newing/newingState";
 import NewsState from "./context/news/newsState";
 import ResumeState from "./context/resume/resumeState";
-import NewentryState from "./context/newentry/newentryState";
-
 
 import moment from "moment";
-
 
 moment.locale("es", {
   months:
@@ -105,7 +102,6 @@ export default function App() {
         <ClaimsState>
           <BillsState>
             <ResumeState>
-            <NewentryState>
               <NewingState>
                 <NavigationContainer>
                   <StatusBar style="auto" hidden={false} />
@@ -131,7 +127,6 @@ export default function App() {
                   <Toast config={toastConfig} />
                 </NavigationContainer>
               </NewingState>
-            </NewentryState>
             </ResumeState>
           </BillsState>
         </ClaimsState>

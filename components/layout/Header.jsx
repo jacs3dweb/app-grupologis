@@ -1,15 +1,6 @@
-import {
-  Image,
-  StyleSheet,
-  View,
-  Pressable,
-  Platfor,
-  Text,
-  Modal,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-
 import React, { useContext, useState } from "react";
+import { Image, StyleSheet, View, Pressable, Text, Modal } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import {
   colors,
   getFontStyles,
@@ -28,8 +19,27 @@ const Header = ({}) => {
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
         <View style={styles.userImgContainer}>
-          <Image style={styles.userImg} source={{ uri: userData.image }} />
-          <View style={styles.onlineIndicator} />
+          {userData.image ? (
+            <View style={styles.userImgContainer}>
+              <Image style={styles.userImg} source={{ uri: userData.image }} />
+              <View style={styles.onlineIndicator} />
+            </View>
+          ) : (
+            <View style={styles.userImgContainer}>
+              {userData.gender === "male" ? (
+                <Image
+                  style={styles.userImg}
+                  source={{ uri: userData.imgmale }}
+                />
+              ) : (
+                <Image
+                  style={styles.userImg}
+                  source={{ uri: userData.imgfemale }}
+                />
+              )}
+              <View style={styles.onlineIndicator} />
+            </View>
+          )}
         </View>
         <View style={styles.infoUser}>
           <Text style={styles.hello}>Hola!</Text>
@@ -107,6 +117,8 @@ const styles = StyleSheet.create({
     width: widthPercentageToPx(20),
     height: 45,
     width: 45,
+    borderRadius: 50,
+    backgroundColor: colors.purpleIcons,
   },
   onlineIndicator: {
     position: "absolute",

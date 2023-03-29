@@ -84,19 +84,21 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Bold",
     color: colors.mainBlue,
     ...getFontStyles(30),
+    textAlign: "center",
   },
   subtitle: {
     ...getFontStyles(22),
     fontFamily: "Poppins-Bold",
+    textAlign: "center",
   },
   descriptionContainer: {
     width: widthPercentageToPx(60),
   },
   welcomeDesc: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Volks-Serial-Light",
     color: colors.descriptionColors,
-    marginTop: 20,
-    ...getFontStyles(14, 0.5, 0.9),
+    ...getFontStyles(14, 0.4, 1),
+    textAlign: "center",
   },
   buttonsContainer: {
     display: "flex",

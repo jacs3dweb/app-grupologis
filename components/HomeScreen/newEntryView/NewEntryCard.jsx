@@ -21,20 +21,26 @@ const NewEntryCard = (props) => {
         <View style={styles.cardColumn}>
           <CardElement head={"RAD."} content={props.RAD} />
           <CardElement head={"Nombre"} content={props.nombre} />
-          <CardElement head={"Identificacion"} content={props.Identificacion} />
         </View>
-        
-        <View style={styles.cardColumn}>
-        <CardElement head={"Fecha"} content={props.fechaEnvio} />
-        <CardElement head={"Cargo"} content={props.cargo} />
 
+        <View style={styles.cardColumn}>
+          <CardElement head={"Fecha"} content={props.fechaEnvio} />
+          <CardElement head={"Cargo"} content={props.cargo} />
         </View>
+      </View>
+      <View style={styles.cardColumn}>
+        <CardElement head={"Identificacion"} content={props.Identificacion} />
       </View>
 
       <View style={styles.rightContent}>
-        <Pressable onPress={showToast}>
+        <Pressable onPress={showToast} style={styles.rightContent}>
           <View style={styles.actionButton("ghost")}>
             <AntDesign name="download" size={18} color={colors.darkGray} />
+          </View>
+        </Pressable>
+        <Pressable onPress={showToast} style={styles.rightContent}>
+          <View style={styles.actionButton("ghost")}>
+            <AntDesign name="eye" size={18} color={colors.darkGray} />
           </View>
         </Pressable>
       </View>
@@ -55,14 +61,18 @@ const styles = StyleSheet.create({
   },
   leftContent: {
     display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "60%",
+  },
+  rightContent: {
+    display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    width: "80%",
   },
   cardColumn: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
     gap: 5,
   },
   actionButton: (type) => ({

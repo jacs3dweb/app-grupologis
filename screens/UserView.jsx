@@ -44,5 +44,6 @@ const styles = StyleSheet.create({
   userView: {
     height: heightPercentageToPx(100),
     width: widthPercentageToPx(100),
+    marginTop: heightPercentageToPx(2),
   },
 });
