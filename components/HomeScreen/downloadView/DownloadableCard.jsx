@@ -1,12 +1,115 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
-
 import Toast from "react-native-toast-message";
+import { downloadArchivo, fetchPost } from "../../../utils/functions";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
-  const getCerLaboral = () => {
+  // employe
+  // datos que tienes que reemplazar al traer los datos globales
+  // empleado
+  const empSel = "LOGIS";
+  const codEmp = "1143121508";
+
+  // empresa
+  const empSel2 = "logis";
+  const codEmp2 = "900466375";
+
+  const getCerLaboral = async () => {
     // descargar certificado laboral
+    const info = `Empresa=${empSel}&Cedula=${codEmp}`;
+    const path = "usuario/getCertificadoLaboral.php";
+
+    const respApi = await fetchPost(path, info);
+    console.log(respApi);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data.Correcto === 1) {
+        dowloadArchivo(data);
+      } else {
+        console.log("Error en el sistema");
+      }
+    } else {
+      console.log("Ocurrio un error en el sistema");
+    }
+  };
+
+  const getIngresoRete = async () => {
+    // descargar ingreso y retencion
+    const date = new Date().getFullYear() - 1;
+    const info = `Empresa=${empSel}&Cedula=${codEmp}&Anho=${date}`;
+    const path = "usuario/getCertificadoRetencion.php";
+
+    const respApi = await fetchPost(path, info);
+    console.log(respApi);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data.Correcto === 1) {
+        dowloadArchivo(data);
+      } else {
+        console.log("Error en el sistema");
+      }
+    } else {
+      console.log("Ocurrio un error en el sistema");
+    }
+  };
+
+  const getHojaVidaLab = async () => {
+    // descargar hoja de vida laboral
+    const nit = 0;
+    const info = `Empresa=${empSel}&CodEmpleado=${codEmp}&NitCliente=${nit}`;
+    const path = "usuario/getHojaDeVidaEmp.php";
+
+    const respApi = await fetchPost(path, info);
+    console.log(respApi);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data.Correcto === 1) {
+        dowloadArchivo(data);
+      } else if (data.trim() == "VACIO") {
+        console.log("El documento no existe");
+      } else {
+        console.log("Error en el sistema");
+      }
+    } else {
+      console.log("Ocurrio un error en el sistema");
+    }
+  };
+
+  const getCapacitations = async () => {
+    // descargar capacitaciones
+    const info = `NitCliente=${codEmp2}`;
+    const path = "usuario/getCapacitacion.php";
+
+    const respApi = await fetchPost(path, info);
+    console.log(respApi);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data.Correcto === 1) {
+        dowloadArchivo(data);
+      } else if (data.trim() == "VACIO") {
+        console.log("El documento no existe");
+      } else {
+        console.log("Error en el sistema");
+      }
+    } else {
+      console.log("Ocurrio un error en el sistema");
+    }
+  };
+
+  const dowloadArchivo = async (data) => {
+    const archDes = await downloadArchivo(data.file, data.mimetype, data.name);
+    console.log(archDes);
+    if (archDes) {
+      Toast.show({
+        type: "success",
+        text1: "Descarga Completada",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
+    } else {
+      console.log("Error al generar el archivo");
+    }
   };
 
   const showToast = (idSel) => {
@@ -15,17 +118,19 @@ const DownloadableCard = ({ title, desc, image, id }) => {
       case "laboralCertificate":
         getCerLaboral();
         break;
+      case "laboralCertificate2":
+        getIngresoRete();
+        break;
+      case "laboralCertificate3":
+        getHojaVidaLab();
+        break;
+      case "capacitations":
+        getCapacitations();
+        break;
 
       default:
         break;
     }
-    Toast.show({
-      type: "success",
-      text1: "Descarga Completada",
-
-      position: "bottom",
-      visibilityTime: 2000,
-    });
   };
   return (
     <View style={styles.scrollStyle}>

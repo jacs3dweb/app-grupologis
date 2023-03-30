@@ -16,7 +16,15 @@ export const get = async (path) => {
     return false;
   }
 };
-
+export const getDes = async (url) => {
+  try {
+    await axios.get(url);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
 export const post = async (path, data) => {
   try {
     const url = `${urlApi}${path}`;
