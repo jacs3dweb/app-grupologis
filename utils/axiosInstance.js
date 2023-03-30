@@ -21,9 +21,9 @@ export const post = async (path, data) => {
   try {
     const url = `${urlApi}${path}`;
     const response = await axios.post(url, data);
-    return response.data;
+    return { status: true, data: response.data };
   } catch (error) {
     console.error(error);
-    return false;
+    return { status: false, data: null };
   }
 };

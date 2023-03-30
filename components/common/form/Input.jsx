@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { colors, widthPercentageToPx } from "../../../utils";
 
@@ -10,7 +10,7 @@ export const InputWithIcon = ({
   placeholder,
   type,
   value,
-  onChange,
+  onInputChange,
 }) => {
   return (
     <View style={styles.inputWithIcon}>
@@ -23,21 +23,21 @@ export const InputWithIcon = ({
         placeholderTextColor={iconColor}
         keyboardType={type}
         value={value}
-        onChange={onChange}
+        onChangeText={onInputChange}
       ></TextInput>
     </View>
   );
 };
 
 const Input = (props) => {
-  const { hasIcon, placeholder, type, value, onChange, iconSize } = props;
+  const { hasIcon, placeholder, type, value, onChangeText, iconSize } = props;
   if (hasIcon)
     return (
       <InputWithIcon
         icon={icon}
         iconSize={iconSize}
         placeholder={placeholder}
-        onChange={onChange}
+        onChangeText={onChangeText}
         value={value}
         type={type}
       />
@@ -49,7 +49,7 @@ const Input = (props) => {
         placeholder="Identificación"
         type={type}
         value={value}
-        onChange={onChange}
+        onChangeText={onChangeText}
       ></TextInput>
     </View>
   );

@@ -16,6 +16,8 @@ import {
 
 import { Feather } from "@expo/vector-icons";
 import { useRef, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { decode } from "base-64";
 
 const Code = ({ navigation }) => {
   let codeInputRef = useRef(null);
@@ -24,13 +26,18 @@ const Code = ({ navigation }) => {
   const handlePressCode = () => {
     codeInputRef.current.focus();
   };
-  const handleContinueToSelectBusiness = () => {
-    if (code.length !== 4) {
+
+  const handleContinueToSelectBusiness = async () => {
+    const codeEnc = await AsyncStorage.getItem("code");
+    const codeDec = decode(codeEnc);
+    const codeVer = codeDec.slice(3, -2);
+
+    if (code.length !== 4 || code != codeVer) {
       console.log("el código no es válido");
       return;
+    } else {
+      navigation.navigate("BusinessEntry", { type: "business" });
     }
-
-    navigation.navigate("BusinessEntry", { type: "business" });
   };
   return (
     <View style={styles.container}>

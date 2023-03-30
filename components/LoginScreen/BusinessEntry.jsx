@@ -8,19 +8,69 @@ import {
 } from "../../utils";
 // cambiar vista Download al terminar vista claim
 import { Picker } from "@react-native-picker/picker";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import authContext from "../../context/auth/authContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchPost } from "../../utils/functions";
 
 const BusinessE = ({ navigation }) => {
-  const { businessOptions, setBusiness } = useContext(authContext);
+  const { businessOptions = [], setBusiness } = useContext(authContext);
+  // const [businessOption, setBusinessOption] = useState([]);
   const pickerRef = useRef(null);
   const [selectedBusiness, setSelectedBusiness] = useState(null);
+  let consulta = true;
 
   const handleSelectBusiness = () => {
     setBusiness(selectedBusiness);
     navigation.navigate("Home");
   };
+
+  // const addOptionsBusiness = (options) => {
+  //   const desci = options.split("</option>");
+
+  //   let result = [];
+  //   desci.forEach((data) => {
+  //     if (data != "") {
+  //       const value = data.match(/value='(.*?)'/)[1] || "null";
+  //       const texto = data.replace(/<.+?>/g, "");
+  //       result.push({ value, texto });
+  //     }
+  //   });
+  //   setBusinessOption((businessOption) => [...businessOption, result]);
+
+  //   // setBusinessOption([...businessOption, result]);
+
+  //   console.log("businessOption", businessOption);
+  //   console.log("api", result);
+  // };
+
+  // useEffect(() => {
+  //   const getOptionsBusiness = async () => {
+  //     const type = await AsyncStorage.getItem("type");
+  //     const typeCli = type === "business" ? 2 : 1;
+  //     const identification = await AsyncStorage.getItem("identi");
+  //     const phone = await AsyncStorage.getItem("phone");
+
+  //     const body = `tipousuarioId=${typeCli}
+  //       &identificacionId=${identification}
+  //       &contactNumeroTelefonico=${phone}`;
+  //     const path = "usuario/getEmpresa.php";
+  //     const respApi = await fetchPost(path, body);
+  //     if (respApi.status) {
+  //       const data = respApi.data;
+  //       if (data != "falseEmpresa") {
+  //         addOptionsBusiness(data);
+  //       } else {
+  //         console.log("no tiene acceso al sistema");
+  //       }
+  //     } else {
+  //       console.log("ocurrio un error en el sistema");
+  //     }
+  //   };
+
+  //   getOptionsBusiness();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -54,14 +104,22 @@ const BusinessE = ({ navigation }) => {
             setSelectedBusiness(selected);
           }}
         >
-          {businessOptions.map((op, idx) => (
-            <Picker.Item
-              key={idx}
-              enabled={op.value !== null}
-              label={op.label}
-              value={op.value}
-            />
-          ))}
+          {businessOptions.map(
+            (op, idx) => (
+              // op[0] && (
+              <Picker.Item
+                key={idx}
+                enabled={op.value !== null}
+                label={op.label}
+                value={op.value}
+                // key={idx}
+                // enabled={op[0].value !== null}
+                // label={op[0].label}
+                // value={op[0].value}
+              />
+            )
+            // )
+          )}
         </Picker>
         {
           <Pressable

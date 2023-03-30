@@ -1,4 +1,5 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import React, { useState } from "react";
 import {
@@ -19,24 +20,42 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
   const [identification, setIdentification] = useState(0);
   const [phone, setPhone] = useState(0);
 
-  const submitForm = async () => {
-    // if (identification != 0 && phone != 0) {
-    //   console.log(identification.target);
-    //   // !validatePhone(phone)
-    //   //   ? console.log("el celular es incorrecto")
-    //   //   : console.log("celular correcto");
-    //   // const typeCli = type === "business" ? 2 : 1;
-    //   // const body = `contactTipoClienteField=${typeCli}
-    //   //   &contactIdentificacionField=${identification}
-    //   //   &contactNumeroTelefonico=${phone}
-    //   //   &contactApp=true`;
+  const handleIdentificationChange = (ident) => {
+    setIdentification(ident);
+  };
 
-    //   // const respApi = await fetchPost(body);
-    //   // console.log(respApi);
-    // } else {
-    //   console.log("llene todos los datos");
-    // }
-    navigation.navigate("CodeAuth", { type: "business" });
+  const handlePhoneChange = (phon) => {
+    setPhone(phon);
+  };
+
+  const submitForm = async () => {
+    if (identification != 0 && phone != 0) {
+      if (!validatePhone(phone)) {
+        console.log("el celular es incorrecto");
+      } else {
+        const typeCli = type === "business" ? 2 : 1;
+        const body = `contactTipoClienteField=${typeCli}
+            &contactIdentificacionField=${identification}
+            &contactNumeroTelefonico=${phone}
+            &contactApp=true`;
+        const path = "usuario/saveUsuarioNew.php";
+        const respApi = await fetchPost(path, body);
+        if (respApi.status) {
+          const data = respApi.data;
+          if (typeof data == "object") {
+            await AsyncStorage.setItem("type", type);
+            await AsyncStorage.setItem("identi", identification);
+            await AsyncStorage.setItem("phone", phone);
+            await AsyncStorage.setItem("code", data.codigo);
+            navigation.navigate("CodeAuth", { type: "business" });
+          } else {
+            console.log("El usuario o celular no son validos");
+          }
+        } else {
+          console.log("ocurrio un error en el sistema");
+        }
+      }
+    }
   };
   return (
     <View style={styles.businessBackground(type)}>
@@ -69,17 +88,19 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             icon={"user"}
             iconColor={type === "business" ? colors.mainBlue : colors.mainPink}
             iconSize={24}
-            onChange={(ident) => setIdentification(ident)}
+            onInputChange={handleIdentificationChange}
             placeholder="Identificación"
             type="numeric"
+            value={identification}
           ></InputWithIcon>
           <InputWithIcon
             icon={"mobile1"}
             iconColor={type === "business" ? colors.mainBlue : colors.mainPink}
             iconSize={24}
-            onChange={(phone) => setPhone(phone)}
+            onInputChange={handlePhoneChange}
             placeholder="Celular"
             type="numeric"
+            value={phone}
           ></InputWithIcon>
           <Pressable onPress={() => submitForm()}>
             <View style={styles.asIngresaButton}>

@@ -5,7 +5,20 @@ import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 import Toast from "react-native-toast-message";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
-  const showToast = () => {
+  const getCerLaboral = () => {
+    // descargar certificado laboral
+  };
+
+  const showToast = (idSel) => {
+    console.log("id", idSel);
+    switch (idSel) {
+      case "laboralCertificate":
+        getCerLaboral();
+        break;
+
+      default:
+        break;
+    }
     Toast.show({
       type: "success",
       text1: "Descarga Completada",
@@ -20,7 +33,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
         <View style={styles.imageSvg}>{image}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
-        <Pressable onPress={showToast}>
+        <Pressable onPress={() => showToast(id)}>
           <View style={styles.downloadButton}>
             <Text style={{ color: colors.light, fontFamily: "Volks-Bold" }}>
               Descargar

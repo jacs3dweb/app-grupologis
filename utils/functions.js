@@ -1,4 +1,5 @@
 import { get, post } from "./axiosInstance";
+import { encode } from "base-64";
 
 export function validatePhone(phone) {
   phone = phone.toString();
@@ -11,7 +12,7 @@ async function getToken() {
   return respToken.substring(5, respToken.length - 5);
 }
 
-function characteres() {
+const characteres = () => {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const init = Array.from({ length: 5 }, () =>
@@ -22,16 +23,15 @@ function characteres() {
   ).join("");
 
   return [init, fin];
-}
+};
 
-export async function fetchPost(body) {
+export async function fetchPost(path, body) {
   const token = await getToken();
   const carac = await characteres();
 
   body += `&token=${token}`;
-  //   const data = `value=${carac[0]}${window.atob(body)}${carac[1]}`;
-  return body;
-  //   const path = "usuario/saveUsuarioNew.php";
+  const encodedBody = encode(body);
+  const data = `value=${carac[0]}${encodedBody}${carac[1]}`;
 
-  //   return await post(path, data);
+  return await post(path, data);
 }
