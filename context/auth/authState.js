@@ -18,8 +18,14 @@ const AuthState = (props) => {
       role: "business",
       identification: "1010101010",
       direction: "Tv 9b #34-198",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3",
+      gender: "female",
+      imgmale:
+        "/Users/jacs-developer/Documents/Grupologis-app/grupologis-app/assets/images/components/layout/userporfile/male/wanna1.png",
+      imgfemale:
+        "/Users/jacs-developer/Documents/Grupologis-app/grupologis-app/assets/images/components/layout/userporfile/female/wanna1.png",
+      image: "",
+
+      // image "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fphotos%252Fwoman%252Fwanna6.ce59a86a87e87831fa7d.png.png?alt=media&token=b5969067-5adb-4412-80c5-f000500ba3e3"
     },
     businessOptions: [
       {

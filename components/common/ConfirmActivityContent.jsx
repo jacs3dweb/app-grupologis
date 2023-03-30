@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
+    height: "70%",
   },
   topContent: {
-    height: "65%",
     display: "flex",
     alignItems: "center",
     gap: 15,

@@ -1,13 +1,35 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useContext } from "react";
 import authContext from "../../../context/auth/authContext";
-import { getFontStyles, colors } from "../../../utils";
+
+import {
+  colors,
+  getFontStyles,
+  heightPercentageToPx,
+  images,
+  widthPercentageToPx,
+} from "../../../utils";
 
 const UserInfo = () => {
   const { userData } = useContext(authContext);
   return (
     <View style={styles.userInfoContainer}>
-      <Image style={styles.profileImage} source={{ uri: userData.image }} />
+      {userData.image ? (
+        <View>
+          <Image style={styles.userImg} source={{ uri: userData.image }} />
+        </View>
+      ) : (
+        <View>
+          {userData.gender === "male" ? (
+            <Image style={styles.userImg} source={{ uri: userData.imgmale }} />
+          ) : (
+            <Image
+              style={styles.userImg}
+              source={{ uri: userData.imgfemale }}
+            />
+          )}
+        </View>
+      )}
       <Text style={styles.nameText}>{userData.name}</Text>
       <Text style={styles.roleText}>
         {userData.role === "business" ? "Empresa" : "Empleado"}
@@ -38,5 +60,14 @@ const styles = StyleSheet.create({
     fontFamily: "Volks-Serial-Light",
     color: colors.descriptionColors,
     ...getFontStyles(14, 0.5, 0.9),
+  },
+
+  userImg: {
+    height: heightPercentageToPx(10),
+    width: widthPercentageToPx(20),
+    height: 85,
+    width: 85,
+    borderRadius: 50,
+    backgroundColor: colors.purpleIcons,
   },
 });

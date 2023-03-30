@@ -20,22 +20,21 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontFamily: "Poppins-Bold",
-    marginBottom: 2,
     marginTop: 2,
     color: colors.mainBlue,
-    ...getFontStyles(30),
+    ...getFontStyles(30, 1, 1.5),
   },
   subtitle: {
-    ...getFontStyles(17),
+    ...getFontStyles(25, 1, 1),
     marginBottom: 2,
     marginTop: 0,
     fontFamily: "Poppins-Bold",
   },
   welcomeDesc: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Volks-Serial-Light",
     color: colors.descriptionColors,
     marginBottom: 15,
-    marginTop: 15,
-    ...getFontStyles(13, 0.5, 0.9),
+    marginTop: 10,
+    ...getFontStyles(14, 1, 1.2),
   },
 });
