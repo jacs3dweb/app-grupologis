@@ -3,20 +3,15 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 import Toast from "react-native-toast-message";
 import { downloadArchivo, fetchPost } from "../../../utils/functions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
-  // employe
-  // datos que tienes que reemplazar al traer los datos globales
-  // empleado
-  const empSel = "LOGIS";
-  const codEmp = "1143121508";
-
-  // empresa
-  const empSel2 = "logis";
-  const codEmp2 = "900466375";
-
   const getCerLaboral = async () => {
     // descargar certificado laboral
+    const infoLog = await AsyncStorage.getItem("logged");
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+
     const info = `Empresa=${empSel}&Cedula=${codEmp}`;
     const path = "usuario/getCertificadoLaboral.php";
 
@@ -36,7 +31,11 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getIngresoRete = async () => {
     // descargar ingreso y retencion
+    const infoLog = await AsyncStorage.getItem("logged");
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
     const date = new Date().getFullYear() - 1;
+
     const info = `Empresa=${empSel}&Cedula=${codEmp}&Anho=${date}`;
     const path = "usuario/getCertificadoRetencion.php";
 
@@ -56,7 +55,11 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getHojaVidaLab = async () => {
     // descargar hoja de vida laboral
+    const infoLog = await AsyncStorage.getItem("logged");
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
     const nit = 0;
+
     const info = `Empresa=${empSel}&CodEmpleado=${codEmp}&NitCliente=${nit}`;
     const path = "usuario/getHojaDeVidaEmp.php";
 
@@ -78,7 +81,10 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getCapacitations = async () => {
     // descargar capacitaciones
-    const info = `NitCliente=${codEmp2}`;
+    const infoLog = await AsyncStorage.getItem("logged");
+    const codEmp = infoLog.codEmp;
+
+    const info = `NitCliente=${codEmp}`;
     const path = "usuario/getCapacitacion.php";
 
     const respApi = await fetchPost(path, info);
@@ -132,6 +138,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
         break;
     }
   };
+
   return (
     <View style={styles.scrollStyle}>
       <View>

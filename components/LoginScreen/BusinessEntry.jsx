@@ -17,62 +17,80 @@ import { fetchPost } from "../../utils/functions";
 let consulta = true;
 
 const BusinessE = ({ navigation }) => {
-  const { businessOptionsNew = [], setBusiness } = useContext(authContext);
-  // const [businessOptionsNew, setBusinessOption] = useState([]);
+  const { setBusiness } = useContext(authContext);
+  const [businessOptionsNew, setBusinessOption] = useState([]);
   const pickerRef = useRef(null);
   const [selectedBusiness, setSelectedBusiness] = useState(null);
 
-  const handleSelectBusiness = () => {
-    setBusiness(selectedBusiness);
-    navigation.navigate("Home");
+  const handleSelectBusiness = async () => {
+    const type = await AsyncStorage.getItem("type");
+    const typeCli = type === "business" ? 2 : 1;
+    const identification = await AsyncStorage.getItem("identi");
+
+    const info = `empresaId=${selectedBusiness.value}&identificacionId=${identification}`;
+    const path =
+      typeCli === 1
+        ? "usuario/getPerfilInfo.php"
+        : "usuario/getPerfilClienteInfo.php";
+    const respApi = await fetchPost(path, info);
+    if (respApi.status) {
+      const data = respApi.data;
+      data.cod_emp = identification;
+      data.empSel = selectedBusiness.value;
+      await AsyncStorage.clear();
+      const loggedIn = JSON.stringify(data);
+      await AsyncStorage.setItem("logged", loggedIn);
+      navigation.navigate("Home");
+    } else {
+      console.log("Ocurrio un error en el sistema");
+    }
   };
 
-  // useEffect(() => {
-  //   if (consulta) {
-  //     const addOptionsBusiness = (options) => {
-  //       const desci = options.split("</option>");
+  useEffect(() => {
+    if (consulta) {
+      const addOptionsBusiness = (options) => {
+        const regex =
+          /<option[^>]*value=['"]([^'"]*)['"][^>]*>([^<]*)<\/option>/g;
+        const result = [];
 
-  //       const result = [];
-  //       desci.forEach((data) => {
-  //         if (data != "") {
-  //           const value = data.match(/value='(.*?)'/)[1] || "null";
-  //           const texto = data.replace(/<.+?>/g, "");
-  //           result.push({ value, texto });
-  //         }
-  //       });
-  //       // if (result && result.length > 0) {
-  //       setBusinessOption((businessOptionsNew) => [
-  //         ...businessOptionsNew,
-  //         result,
-  //       ]);
-  //       consulta = false;
-  //     };
+        [...options.matchAll(regex)].forEach((match, idx) => {
+          result.push({
+            label: match[2],
+            value: match[1] || null,
+          });
+        });
 
-  //     const getOptionsBusiness = async () => {
-  //       const type = await AsyncStorage.getItem("type");
-  //       const typeCli = type === "business" ? 2 : 1;
-  //       const identification = await AsyncStorage.getItem("identi");
-  //       const phone = await AsyncStorage.getItem("phone");
+        setBusinessOption((businessOptionsNew) =>
+          businessOptionsNew.concat(result)
+        );
+        consulta = false;
+      };
 
-  //       const body = `tipousuarioId=${typeCli}
-  //         &identificacionId=${identification}
-  //         &contactNumeroTelefonico=${phone}`;
-  //       const path = "usuario/getEmpresa.php";
-  //       const respApi = await fetchPost(path, body);
-  //       if (respApi.status) {
-  //         const data = respApi.data;
-  //         if (data != "falseEmpresa") {
-  //           addOptionsBusiness(data);
-  //         } else {
-  //           console.log("no tiene acceso al sistema");
-  //         }
-  //       } else {
-  //         console.log("ocurrio un error en el sistema");
-  //       }
-  //     };
-  //     getOptionsBusiness();
-  //   }
-  // }, [businessOptionsNew]);
+      const getOptionsBusiness = async () => {
+        const type = await AsyncStorage.getItem("type");
+        const typeCli = type === "business" ? 2 : 1;
+        const identification = await AsyncStorage.getItem("identi");
+        const phone = await AsyncStorage.getItem("phone");
+
+        const body = `tipousuarioId=${typeCli}
+          &identificacionId=${identification}
+          &contactNumeroTelefonico=${phone}`;
+        const path = "usuario/getEmpresa.php";
+        const respApi = await fetchPost(path, body);
+        if (respApi.status) {
+          const data = respApi.data;
+          if (data != "falseEmpresa") {
+            addOptionsBusiness(data);
+          } else {
+            console.log("no tiene acceso al sistema");
+          }
+        } else {
+          console.log("ocurrio un error en el sistema");
+        }
+      };
+      getOptionsBusiness();
+    }
+  }, [businessOptionsNew]);
 
   return (
     <View style={styles.container}>
@@ -108,22 +126,14 @@ const BusinessE = ({ navigation }) => {
             setSelectedBusiness(selected);
           }}
         >
-          {businessOptionsNew.map(
-            (op, idx) =>
-              op[0] && (
-                <Picker.Item
-                  // key={idx}
-                  // enabled={op.value !== null}
-                  // label={op.label}
-                  // value={op.value}
-                  key={idx}
-                  // enabled={op[idx].value !== null}
-                  // label={op[idx].texto}
-                  // value={op[idx].value}
-                  label={"idx" + idx}
-                />
-              )
-          )}
+          {businessOptionsNew.map((op, idx) => (
+            <Picker.Item
+              key={idx}
+              enabled={op.value !== null}
+              label={op.label}
+              value={op.value}
+            />
+          ))}
         </Picker>
         {
           <Pressable
