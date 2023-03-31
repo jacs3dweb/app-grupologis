@@ -57,6 +57,8 @@ export const colors = {
   boldRed: "#FF002E",
   boldGreen: "#00FF38",
   boldGray: "#989898",
+  placeholderColor: "#989898",
+  blueIndicator: "#1A68FC",
 };
 
 export const images = {
@@ -245,6 +247,49 @@ export const validDates = () => {
       "Oct.",
       "Nov.",
       "Dic.",
+    ],
+  };
+};
+
+export const validCountry = () => {
+  return {
+    optionsCountry: [
+      "Amazonas",
+      "Antioquia",
+      "Arauca",
+      "San Andres y Providencia",
+      "Atlántico",
+      "Bogotá D.C.",
+      "Bolívar",
+      "Boyacá",
+      "Caldas",
+      "Caquetá",
+      "Casanare",
+      "Cauca",
+      "Cesar",
+      "Chocó",
+      "Córdoba",
+      "Cundinamarca",
+      "Guainía",
+      "Guaviare",
+      "Huila",
+    ],
+  };
+};
+
+export const validCity = () => {
+  return {
+    optionsCity: [
+      "Barranquilla",
+      "Soledad",
+      "Malambo",
+      "Sabanalarga",
+      "Puerto Colombia",
+      "Galapa",
+      "Baranoa",
+      "Luruaco",
+      "Santo Tomás",
+      "Usiacurí",
     ],
   };
 };
