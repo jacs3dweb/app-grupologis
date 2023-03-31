@@ -27,6 +27,11 @@ const Code = ({ navigation }) => {
     codeInputRef.current.focus();
   };
 
+  const returnPag = async () => {
+    await AsyncStorage.clear();
+    navigation.navigate("Login");
+  };
+
   const handleContinueToSelectBusiness = async () => {
     const codeEnc = await AsyncStorage.getItem("code");
     const codeDec = decode(codeEnc);
@@ -41,7 +46,7 @@ const Code = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.goBack()}>
+      <Pressable onPress={() => returnPag()}>
         <View style={styles.goBackButton}>
           <Feather name="x" size={24} color="black" />
         </View>

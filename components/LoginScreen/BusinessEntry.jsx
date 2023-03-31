@@ -35,7 +35,7 @@ const BusinessE = ({ navigation }) => {
     const respApi = await fetchPost(path, info);
     if (respApi.status) {
       const data = respApi.data;
-      data.cod_emp = identification;
+      data.codEmp = identification;
       data.empSel = selectedBusiness.value;
       await AsyncStorage.clear();
       const loggedIn = JSON.stringify(data);
@@ -46,7 +46,14 @@ const BusinessE = ({ navigation }) => {
     }
   };
 
+  const returnPag = async () => {
+    consulta = true;
+    await AsyncStorage.clear();
+    navigation.navigate("Login");
+  };
+
   useEffect(() => {
+    console.log("consulta", consulta);
     if (consulta) {
       const addOptionsBusiness = (options) => {
         const regex =
@@ -59,7 +66,7 @@ const BusinessE = ({ navigation }) => {
             value: match[1] || null,
           });
         });
-
+        console.log("result", result);
         setBusinessOption((businessOptionsNew) =>
           businessOptionsNew.concat(result)
         );
@@ -77,6 +84,7 @@ const BusinessE = ({ navigation }) => {
           &contactNumeroTelefonico=${phone}`;
         const path = "usuario/getEmpresa.php";
         const respApi = await fetchPost(path, body);
+        console.log("respApi", respApi);
         if (respApi.status) {
           const data = respApi.data;
           if (data != "falseEmpresa") {
@@ -91,10 +99,10 @@ const BusinessE = ({ navigation }) => {
       getOptionsBusiness();
     }
   }, [businessOptionsNew]);
-
+  console.log("businessOptionsNew", businessOptionsNew);
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.goBack()}>
+      <Pressable onPress={() => returnPag()}>
         <View style={styles.goBackButton}>
           <Feather name="x" size={24} color="black" />
         </View>
@@ -111,44 +119,48 @@ const BusinessE = ({ navigation }) => {
             </Text>
           </View>
         </View>
-        <Picker
-          ref={pickerRef}
-          style={{
-            display: "none",
-            opacity: 0,
-          }}
-          prompt="Empresas disponibles"
-          selectedValue={selectedBusiness}
-          onValueChange={(itemValue) => {
-            const selected = businessOptionsNew.find(
-              (e) => e.value === itemValue
-            );
-            setSelectedBusiness(selected);
-          }}
-        >
-          {businessOptionsNew.map((op, idx) => (
-            <Picker.Item
-              key={idx}
-              enabled={op.value !== null}
-              label={op.label}
-              value={op.value}
-            />
-          ))}
-        </Picker>
-        {
-          <Pressable
-            onPress={() => pickerRef.current.focus()}
-            style={styles.selectorContainer}
+        <View>
+          <Picker
+            ref={pickerRef}
+            // style={{
+            //   display: "none",
+            //   opacity: 0,
+            // }}
+            prompt="Empresas disponibles"
+            selectedValue={selectedBusiness}
+            onValueChange={(itemValue) => {
+              const selected = businessOptionsNew.find(
+                (e) => e.value === itemValue
+              );
+              setSelectedBusiness(selected);
+            }}
           >
-            <View>
-              <Text style={styles.selectedBusiness}>
-                {selectedBusiness
-                  ? selectedBusiness.label
-                  : "Seleccione la empresa"}
-              </Text>
-            </View>
-          </Pressable>
-        }
+            {businessOptionsNew.map((op, idx) => (
+              <Picker.Item
+                key={idx}
+                enabled={op.value !== null}
+                label={op.label}
+                value={op.value}
+              />
+            ))}
+          </Picker>
+          {
+            <Pressable
+              onPress={() => pickerRef.current.focus()}
+              // style={styles.selectorContainer}
+            >
+              <View>
+                <Text
+                // style={styles.selectedBusiness}
+                >
+                  {selectedBusiness
+                    ? selectedBusiness.label
+                    : "Seleccione la empresa"}
+                </Text>
+              </View>
+            </Pressable>
+          }
+        </View>
         <Pressable onPress={handleSelectBusiness}>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>

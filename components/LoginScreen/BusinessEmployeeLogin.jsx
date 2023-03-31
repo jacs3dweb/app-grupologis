@@ -28,6 +28,11 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
     setPhone(phon);
   };
 
+  const returnPag = async () => {
+    await AsyncStorage.clear();
+    navigation.navigate("Login");
+  };
+
   const submitForm = async () => {
     if (identification != 0 && phone != 0) {
       if (!validatePhone(phone)) {
@@ -60,7 +65,7 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
   return (
     <View style={styles.businessBackground(type)}>
       <View style={styles.formContainer}>
-        <Pressable onPress={() => navigation.navigate("Login")}>
+        <Pressable onPress={() => returnPag()}>
           <View style={styles.goBackButton}>
             <Feather name="x" size={24} color="white" />
           </View>

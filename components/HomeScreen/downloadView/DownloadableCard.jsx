@@ -8,7 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const DownloadableCard = ({ title, desc, image, id }) => {
   const getCerLaboral = async () => {
     // descargar certificado laboral
-    const infoLog = await AsyncStorage.getItem("logged");
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
     const codEmp = infoLog.codEmp;
 
@@ -31,7 +32,8 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getIngresoRete = async () => {
     // descargar ingreso y retencion
-    const infoLog = await AsyncStorage.getItem("logged");
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
     const codEmp = infoLog.codEmp;
     const date = new Date().getFullYear() - 1;
@@ -55,7 +57,8 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getHojaVidaLab = async () => {
     // descargar hoja de vida laboral
-    const infoLog = await AsyncStorage.getItem("logged");
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
     const codEmp = infoLog.codEmp;
     const nit = 0;
@@ -81,7 +84,8 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getCapacitations = async () => {
     // descargar capacitaciones
-    const infoLog = await AsyncStorage.getItem("logged");
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
     const codEmp = infoLog.codEmp;
 
     const info = `NitCliente=${codEmp}`;

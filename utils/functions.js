@@ -1,7 +1,8 @@
 import { get, getDes, post } from "./axiosInstance";
 import { decode, encode } from "base-64";
 // import RNFetchBlob from "rn-fetch-blob";
-// const RNFetchBlob = require("rn-fetch-blob");
+// import RNFS from "react-native-fs";
+
 export function validatePhone(phone) {
   phone = phone.toString();
   return phone.length != 10 ? false : /^\d+$/.test(phone);
@@ -37,44 +38,4 @@ export async function fetchPost(path, body) {
   return await post(path, data);
 }
 
-export const downloadArchivo = async (file, type, nameArc) => {
-  console.log("en proceso de descargar");
-  return false;
-  //   try {
-  //     // verificamos la extension
-  //     let ext = "";
-  //     if (type === "application/pdf") {
-  //       ext = ".pdf";
-  //     } else if (type === "application/vnd.ms-excel") {
-  //       ext = ".xls";
-  //     }
-  //     // verificamos el dispositivo
-  //     const { dirs } = RNFetchBlob.fs;
-  //     const dirToSave =
-  //       Platform.OS === "android" ? dirs.DownloadDir : dirs.DocumentDir;
-  //     // realizamos las configuraciones del archivo
-  //     // creamos el archivo
-  //     RNFetchBlob.fs.createFile(filePath, file, "base64").then(() => {
-  //       RNFetchBlob.config({
-  //         addAndroidDownloads: {
-  //           useDownloadManager: true,
-  //           notification: true,
-  //           path: filePath,
-  //           mime: type,
-  //         },
-  //         fileCache: true,
-  //         appendExt: ext,
-  //       })
-  //         .fetch("GET", `file://${filePath}`)
-  //         .then((res) => {
-  //           console.log(`Archivo ${nameArc} guardado en: `, res.path());
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     return false;
-  //   }
-};
+export const downloadArchivo = async (base64, mime, name) => {};
