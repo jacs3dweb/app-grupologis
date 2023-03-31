@@ -15,13 +15,12 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
     const info = `Empresa=${empSel}&Cedula=${codEmp}`;
     const path = "usuario/getCertificadoLaboral.php";
-
     const respApi = await fetchPost(path, info);
     console.log(respApi);
     if (respApi.status) {
       const data = respApi.data;
       if (data.Correcto === 1) {
-        dowloadArchivo(data);
+        dowArchivo(data);
       } else {
         console.log("Error en el sistema");
       }
@@ -46,7 +45,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     if (respApi.status) {
       const data = respApi.data;
       if (data.Correcto === 1) {
-        dowloadArchivo(data);
+        dowArchivo(data);
       } else {
         console.log("Error en el sistema");
       }
@@ -71,7 +70,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     if (respApi.status) {
       const data = respApi.data;
       if (data.Correcto === 1) {
-        dowloadArchivo(data);
+        dowArchivo(data);
       } else if (data.trim() == "VACIO") {
         console.log("El documento no existe");
       } else {
@@ -96,7 +95,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     if (respApi.status) {
       const data = respApi.data;
       if (data.Correcto === 1) {
-        dowloadArchivo(data);
+        dowArchivo(data);
       } else if (data.trim() == "VACIO") {
         console.log("El documento no existe");
       } else {
@@ -107,9 +106,9 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     }
   };
 
-  const dowloadArchivo = async (data) => {
+  const dowArchivo = async (data) => {
     const archDes = await downloadArchivo(data.file, data.mimetype, data.name);
-    console.log(archDes);
+    console.log("archDes", archDes);
     if (archDes) {
       Toast.show({
         type: "success",
