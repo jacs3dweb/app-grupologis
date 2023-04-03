@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
 import Toast from "react-native-toast-message";
-import { downloadArchivo, fetchPost } from "../../../utils/functions";
+import {
+  downloadArchivoAndroid,
+  downloadArchivoIOS,
+  fetchPost,
+} from "../../../utils/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Platform } from "react-native";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
+  const [modal, setModal] = useState(false);
+  const [showForm, setShowForm] = useState(null);
+
   const getCerLaboral = async () => {
     // descargar certificado laboral
     let infoLog = await AsyncStorage.getItem("logged");
@@ -22,10 +30,20 @@ const DownloadableCard = ({ title, desc, image, id }) => {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else {
-        console.log("Error en el sistema");
+        Toast.show({
+          type: "error",
+          text1: "Error en el servidor",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       }
     } else {
-      console.log("Ocurrio un error en el sistema");
+      Toast.show({
+        type: "error",
+        text1: "Error en el servidor",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 
@@ -47,10 +65,20 @@ const DownloadableCard = ({ title, desc, image, id }) => {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else {
-        console.log("Error en el sistema");
+        Toast.show({
+          type: "error",
+          text1: "Error en el servidor",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       }
     } else {
-      console.log("Ocurrio un error en el sistema");
+      Toast.show({
+        type: "error",
+        text1: "Error en el servidor",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 
@@ -72,12 +100,27 @@ const DownloadableCard = ({ title, desc, image, id }) => {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else if (data.trim() == "VACIO") {
-        console.log("El documento no existe");
+        Toast.show({
+          type: "error",
+          text1: "El documento no existe",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       } else {
-        console.log("Error en el sistema");
+        Toast.show({
+          type: "error",
+          text1: "Error en el servidor",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       }
     } else {
-      console.log("Ocurrio un error en el sistema");
+      Toast.show({
+        type: "error",
+        text1: "Error en el servidor",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 
@@ -97,17 +140,43 @@ const DownloadableCard = ({ title, desc, image, id }) => {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else if (data.trim() == "VACIO") {
-        console.log("El documento no existe");
+        Toast.show({
+          type: "error",
+          text1: "El documento no existe",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       } else {
-        console.log("Error en el sistema");
+        Toast.show({
+          type: "error",
+          text1: "Error en el sistema",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
       }
     } else {
-      console.log("Ocurrio un error en el sistema");
+      Toast.show({
+        type: "error",
+        text1: "Error en el sistema",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
+  useEffect(() => {}, [modal]);
+  const getPayrollFlyer = async () => {};
 
   const dowArchivo = async (data) => {
-    const archDes = await downloadArchivo(data.file, data.mimetype, data.name);
+    let archDes;
+    if (Platform.OS === "android") {
+      archDes = await downloadArchivoAndroid(
+        data.file,
+        data.mimetype,
+        data.name
+      );
+    } else {
+      archDes = await downloadArchivoIOS(data.file, data.mimetype, data.name);
+    }
     console.log("archDes", archDes);
     if (archDes) {
       Toast.show({
@@ -117,7 +186,12 @@ const DownloadableCard = ({ title, desc, image, id }) => {
         visibilityTime: 2000,
       });
     } else {
-      console.log("Error al generar el archivo");
+      Toast.show({
+        type: "error",
+        text1: "Error al generar el archivo",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
     }
   };
 
@@ -135,6 +209,10 @@ const DownloadableCard = ({ title, desc, image, id }) => {
         break;
       case "capacitations":
         getCapacitations();
+        break;
+      // modales
+      case "payrollFlyer":
+        getPayrollFlyer();
         break;
 
       default:

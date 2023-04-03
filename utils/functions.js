@@ -1,8 +1,10 @@
 import { get, getDes, post } from "./axiosInstance";
 import { decode, encode } from "base-64";
 import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
+import * as Permissions from "expo-permissions";
+import * as Sharing from "expo-sharing";
+import { Platform } from "react-native";
 
 export function validatePhone(phone) {
   phone = phone.toString();
@@ -39,57 +41,141 @@ export async function fetchPost(path, body) {
   return await post(path, data);
 }
 
-export const downloadArchivo = async (base64, mime, name) => {
-  // return false;
-  // try {
-  //   const path = `${FileSystem.documentDirectory}${name}`;
+// export const downloadArchivoAndroid = async (base64, mime, name) => {
+//   try {
+//     console.log("android");
+//     const fileUri = FileSystem.cacheDirectory + name;
 
-  //   await RNFetchBlob.config({
-  //     fileCache: true,
-  //     addAndroidDownloads: {
-  //       useDownloadManager: true,
-  //       notification: true,
-  //       mediaScannable: true,
-  //       title: name,
-  //       path,
-  //     },
-  //   })
-  //     .fetch("GET", `data:${mime};base64,${base64}`)
-  //     .then(async (res) => {
-  //       await RNFS.readFile(path, "base64").then((data) => {
-  //         console.log(`File saved to ${path}`);
-  //       });
-  //     });
-  //   return true;
-  // } catch (error) {
-  //   console.error(error);
-  //   return false;
-  // }
-  // try {
-  //   const fileUri = FileSystem.documentDirectory + name;
-  //   const downloadObject = FileSystem.createDownloadResumable(base64, fileUri, {
-  //     mimeType: mime,
-  //   });
-  //   const response = await downloadObject.downloadAsync();
-  //   console.log("Descarga completada");
-  //   return response;
-  // } catch (error) {
-  //   console.error(error);
-  //   return false;
-  // }
+//     const data = `data:${mime};base64,${base64}`;
+//     const base64Code = data.split(`data:${mime};base64,`)[1];
+
+//     await FileSystem.writeAsStringAsync(fileUri, base64Code, {
+//       encoding: FileSystem.EncodingType.Base64,
+//     });
+//     await MediaLibrary.saveToLibraryAsync(fileUri);
+
+//     return true;
+//   } catch (error) {
+//     console.log(error);
+//     return false;
+//   }
+// };
+
+export const downloadArchivoAndroid = async (base64, mime, name) => {
   try {
+    console.log("android");
+    const fileUri = FileSystem.cacheDirectory + name;
+
     const data = `data:${mime};base64,${base64}`;
     const base64Code = data.split(`data:${mime};base64,`)[1];
-    const fileUri = FileSystem.documentDirectory + name;
 
     await FileSystem.writeAsStringAsync(fileUri, base64Code, {
       encoding: FileSystem.EncodingType.Base64,
     });
 
-    const mediaResult = await MediaLibrary.saveToLibraryAsync(fileUri);
+    const uti =
+      mime === "application/pdf" ? "com.adobe.pdf" : "com.microsoft.excel.xls";
+    await Sharing.shareAsync(fileUri, {
+      mimeType: mime,
+      UTI: uti,
+    });
+
     return true;
   } catch (error) {
     console.log(error);
     return false;
   }
 };
+
+export const downloadArchivoIOS = async (base64, mime, name) => {
+  try {
+    const downloadsDirectory = `${FileSystem.documentDirectory}Archivosapp/`;
+    const fileUri = `${downloadsDirectory}${name}`;
+    const base64Code = base64;
+
+    // crea el directorio de descargas si no existe
+    await FileSystem.makeDirectoryAsync(downloadsDirectory, {
+      intermediates: true,
+    });
+
+    // escribe los datos en el archivo
+    await FileSystem.writeAsStringAsync(fileUri, base64Code, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+    if (status !== "granted") {
+      alert("No se otorgó permiso para acceder a la biblioteca de medios");
+      return false;
+    }
+
+    const fileUriLocal = `${FileSystem.documentDirectory}Archivosapp/${name}`;
+
+    // codigo para compartir archivo
+    const uti =
+      mime === "application/pdf" ? "com.adobe.pdf" : "com.microsoft.excel.xls";
+    await Sharing.shareAsync(fileUriLocal, {
+      mimeType: mime,
+      UTI: uti,
+    });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+// export const downloadArchivoIOS = async (base64, mime, name) => {
+//   try {
+//     const downloadsDirectory = `${FileSystem.documentDirectory}Archivosapp/`;
+//     const fileUri = `${downloadsDirectory}${name}`;
+//     console.log(fileUri);
+//     // const data = `data:${mime};base64,${base64}`;
+//     // const base64Code = data.split(`data:${mime};base64,`)[1];
+//     // const base64Code = base64.replace(/^data:application\/pdf;base64,/, "");
+//     const base64Code = base64;
+//     console.log(base64Code);
+//     // crea el directorio de descargas si no existe
+//     await FileSystem.makeDirectoryAsync(downloadsDirectory, {
+//       intermediates: true,
+//     });
+
+//     // escribe los datos en el archivo
+//     await FileSystem.writeAsStringAsync(fileUri, base64Code, {
+//       encoding: FileSystem.EncodingType.Base64,
+//     });
+
+//     const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+//     if (status !== "granted") {
+//       alert("No se otorgó permiso para acceder a la biblioteca de medios");
+//       return false;
+//     }
+
+//     const fileUriLocal = `${FileSystem.documentDirectory}Archivosapp/${name}`;
+
+//     // codigo para compartir archivo
+//     // console.log("status", status);
+//     // await Sharing.shareAsync(fileUriLocal, {
+//     //   mimeType: mime,
+//     //   UTI: "com.adobe.pdf",
+//     // });
+
+//     // const asset = await MediaLibrary.createAssetAsync(fileUri);
+//     // console.log("asset", asset);
+//     // await MediaLibrary.createAlbumAsync("Downloads", asset, false);
+
+//     // const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+//     // if (status !== "granted") {
+//     //   alert("No se otorgó permiso para acceder a la biblioteca de medios");
+//     //   return false;
+//     // }
+
+//     // const fileInfo = await FileSystem.getInfoAsync(fileUri);
+
+//     return true;
+//   } catch (error) {
+//     console.log(error);
+//     return false;
+//   }
+// };

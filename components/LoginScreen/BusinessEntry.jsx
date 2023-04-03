@@ -23,7 +23,9 @@ const BusinessE = ({ navigation }) => {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
 
   const handleSelectBusiness = async () => {
+    console.log("llego handleSelectBusiness");
     const type = await AsyncStorage.getItem("type");
+    console.log(type);
     const typeCli = type === "business" ? 2 : 1;
     const identification = await AsyncStorage.getItem("identi");
 
@@ -33,6 +35,7 @@ const BusinessE = ({ navigation }) => {
         ? "usuario/getPerfilInfo.php"
         : "usuario/getPerfilClienteInfo.php";
     const respApi = await fetchPost(path, info);
+    console.log(respApi);
     if (respApi.status) {
       const data = respApi.data;
       data.codEmp = identification;
@@ -49,7 +52,8 @@ const BusinessE = ({ navigation }) => {
   const returnPag = async () => {
     consulta = true;
     await AsyncStorage.clear();
-    navigation.navigate("Login");
+    navigation.goBack();
+    // navigation.navigate("Login");
   };
 
   useEffect(() => {
@@ -161,7 +165,8 @@ const BusinessE = ({ navigation }) => {
             </Pressable>
           }
         </View>
-        <Pressable onPress={handleSelectBusiness}>
+
+        <Pressable onPress={handleSelectBusiness} style={styles.pressable}>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>
           </View>
@@ -244,6 +249,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
+  pressable: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
   asBusinessButton: {
     backgroundColor: colors.mainBlue,
     fontFamily: "Poppins-Regular",
@@ -254,6 +264,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
     marginTop: 20,
+    padding: 10,
   },
   loginBackgroundImages: {
     width: "100%",

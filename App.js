@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 
+import { PermissionsAndroid } from "react-native";
+
 // Import Views
 
 import BusinessEmployeeLogin from "./components/LoginScreen/BusinessEmployeeLogin";
@@ -35,6 +37,36 @@ import NewsState from "./context/news/newsState";
 import ResumeState from "./context/resume/resumeState";
 
 import moment from "moment";
+import { useEffect } from "react";
+
+async function getMediaLibraryPermission() {
+  const { status } = await Permissions.askAsync(
+    Permissions.MEDIA_LIBRARY_WRITE_ONLY
+  );
+  if (status !== "granted") {
+    alert("Se requiere permiso para acceder el almacenamiento");
+  }
+}
+async function requestStoragePermission() {
+  try {
+    const granted = await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    ]);
+    if (
+      granted["android.permission.READ_EXTERNAL_STORAGE"] ===
+        PermissionsAndroid.RESULTS.GRANTED &&
+      granted["android.permission.WRITE_EXTERNAL_STORAGE"] ===
+        PermissionsAndroid.RESULTS.GRANTED
+    ) {
+      console.log("Storage permissions granted");
+    } else {
+      console.log("Storage permissions denied");
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+}
 
 moment.locale("es", {
   months:
@@ -78,6 +110,11 @@ const HomeScreens = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    getMediaLibraryPermission();
+    requestStoragePermission();
+  }, []);
+
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
