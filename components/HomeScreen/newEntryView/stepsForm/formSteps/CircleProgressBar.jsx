@@ -44,14 +44,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   circle: {
-    width: 45,
-    height: 45,
+    width: 35,
+    height: 35,
     borderRadius: 25,
     borderWidth: 2,
     borderColor: colors.gray,
     backgroundColor: colors.gray,
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 99,
   },
   number: {
     fontSize: 17,
@@ -68,7 +69,10 @@ const styles = StyleSheet.create({
   line: {
     height: 2,
     backgroundColor: colors.gray,
-    width: widthPercentageToPx(11.4),
+    position: "absolute",
+    top: 17,
+    left: 15,
+    width: widthPercentageToPx(20),
   },
   activeLine: {
     backgroundColor: colors.blueIndicator,

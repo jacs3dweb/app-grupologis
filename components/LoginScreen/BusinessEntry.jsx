@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  KeyboardAvoidingView,
+} from "react-native";
 import {
   colors,
   getFontStyles,
@@ -14,6 +21,8 @@ import authContext from "../../context/auth/authContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../../utils/functions";
 
+import FormuBussines from "./FormBussinessEntry/FormBussinesEntry";
+
 let consulta = true;
 
 const BusinessE = ({ navigation }) => {
@@ -24,6 +33,7 @@ const BusinessE = ({ navigation }) => {
 
   const handleSelectBusiness = async () => {
     console.log("llego handleSelectBusiness");
+
     const type = await AsyncStorage.getItem("type");
     console.log(type);
     const typeCli = type === "business" ? 2 : 1;
@@ -105,80 +115,92 @@ const BusinessE = ({ navigation }) => {
   }, [businessOptionsNew]);
   console.log("businessOptionsNew", businessOptionsNew);
   return (
-    <View style={styles.container}>
-      <Pressable onPress={() => returnPag()}>
-        <View style={styles.goBackButton}>
-          <Feather name="x" size={24} color="black" />
-        </View>
-      </Pressable>
-      <View style={styles.topContainer}>
-        <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
-        <View style={styles.title}>
-          <Text style={styles.subtitle}>Elija</Text>
-          <Text style={styles.subtitle}>la empresa.</Text>
-
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.welcomeDesc}>
-              Seleccione la empresa donde desea realizar la consulta.
-            </Text>
-          </View>
-        </View>
-        <View>
-          <Picker
-            ref={pickerRef}
-            // style={{
-            //   display: "none",
-            //   opacity: 0,
-            // }}
-            prompt="Empresas disponibles"
-            selectedValue={selectedBusiness}
-            onValueChange={(itemValue) => {
-              const selected = businessOptionsNew.find(
-                (e) => e.value === itemValue
-              );
-              setSelectedBusiness(selected);
-            }}
-          >
-            {businessOptionsNew.map((op, idx) => (
-              <Picker.Item
-                key={idx}
-                enabled={op.value !== null}
-                label={op.label}
-                value={op.value}
-              />
-            ))}
-          </Picker>
-          {
-            <Pressable
-              onPress={() => pickerRef.current.focus()}
-              // style={styles.selectorContainer}
-            >
-              <View>
-                <Text
-                // style={styles.selectedBusiness}
-                >
-                  {selectedBusiness
-                    ? selectedBusiness.label
-                    : "Seleccione la empresa"}
-                </Text>
-              </View>
-            </Pressable>
-          }
-        </View>
-
-        <Pressable onPress={handleSelectBusiness} style={styles.pressable}>
-          <View style={styles.asBusinessButton}>
-            <Text style={{ color: colors.white }}>Ingresar</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="padding"
+      keyboardVerticalOffset={64}
+    >
+      <View style={styles.container}>
+        <Pressable onPress={() => returnPag()}>
+          <View style={styles.goBackButton}>
+            <Feather name="x" size={24} color="black" />
           </View>
         </Pressable>
+        <View style={styles.topContainer}>
+          <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
+          <View style={styles.title}>
+            <Text style={styles.subtitle}>Elija</Text>
+            <Text style={styles.subtitle}>la empresa.</Text>
+
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.welcomeDesc}>
+                Seleccione la empresa donde desea realizar la consulta.
+              </Text>
+            </View>
+          </View>
+
+          {/* <View style={styles.pickerContainer}>
+              <Picker
+                ref={pickerRef}
+                // style={{
+                //   display: "none",
+                //   opacity: 0,
+                // }}
+                prompt="Empresas disponibles"
+                selectedValue={selectedBusiness}
+                onValueChange={(itemValue) => {
+                  const selected = businessOptionsNew.find(
+                    (e) => e.value === itemValue
+                  );
+                  setSelectedBusiness(selected);
+                }}
+              >
+                {businessOptionsNew.map((op, idx) => (
+                  <Picker.Item
+                    key={idx}
+                    enabled={op.value !== null}
+                    label={op.label}
+                    value={op.value}
+                  />
+                ))}
+              </Picker>
+              {
+                <Pressable
+                  onPress={() => pickerRef.current.focus()}
+                  style={styles.selectorContainer}
+                >
+                  <View>
+                    <Text style={styles.selectedBusiness}>
+                      {selectedBusiness
+                        ? selectedBusiness.label
+                        : "Seleccione la empresa"}
+                    </Text>
+                  </View>
+                </Pressable>
+              }
+            </View> */}
+        </View>
+
+        <View style={styles.formContent}>
+          <View style={styles.pickerContainer}>
+            <FormuBussines />
+          </View>
+
+          <Pressable onPress={handleSelectBusiness} style={styles.pressable}>
+            <View style={styles.asBusinessButton}>
+              <Text style={{ color: colors.white }}>Ingresar</Text>
+            </View>
+          </Pressable>
+        </View>
+
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.loginBackgroundImages}
+            source={{ uri: images.loginImage }}
+          />
+        </View>
       </View>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.loginBackgroundImages}
-          source={{ uri: images.loginImage }}
-        />
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -194,13 +216,13 @@ const styles = StyleSheet.create({
   topContainer: {
     display: "flex",
     alignItems: "center",
-    height: heightPercentageToPx(55),
+    // height: heightPercentageToPx(100), // The height percentage was changed so that the box has 100%
     width: widthPercentageToPx(75),
   },
-  imageContainer: {
-    height: heightPercentageToPx(40),
-    width: widthPercentageToPx(100),
-  },
+  // imageContainer: {
+  //   height: heightPercentageToPx(10),
+  //   width: widthPercentageToPx(100),
+  // },
   logoImage: {
     width: widthPercentageToPx(35),
     height: heightPercentageToPx(9),
@@ -223,7 +245,7 @@ const styles = StyleSheet.create({
   welcomeDesc: {
     fontFamily: "Poppins-Regular",
     color: colors.descriptionColors,
-    marginTop: 20,
+    marginTop: 1,
     ...getFontStyles(14, 0.5, 0.9),
   },
   buttonsContainer: {
@@ -250,9 +272,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   pressable: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
+    zIndex: 99999,
+  },
+  pickerContainer: {
+    zIndex: 99,
   },
   asBusinessButton: {
     backgroundColor: colors.mainBlue,

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Pressable, View, Button, StyleSheet, Text } from "react-native";
+import {
+  Pressable,
+  View,
+  Button,
+  StyleSheet,
+  Text,
+  ScrollView,
+} from "react-native";
 import {
   colors,
   getFontStyles,
@@ -11,6 +18,8 @@ import GLButton from "../../common/buttons/GLButton";
 import StepOne from "./stepsForm/StepOne";
 import StepTwo from "./stepsForm/StepTwo";
 import StepThree from "./stepsForm/StepThree";
+import StepFour from "./stepsForm/StepFour";
+
 import CircleProgressBar from "./stepsForm/formSteps/CircleProgressBar";
 
 const MultiStepForm = ({ onConfirm, closeModal }) => {
@@ -28,6 +37,10 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
     },
     {
       component: <StepThree />,
+      onComplete: setFormData,
+    },
+    {
+      component: <StepFour />,
       onComplete: setFormData,
     },
   ];
@@ -57,42 +70,45 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
         <CircleProgressBar currentStep={currentStep} />
       </View>
 
-      {steps.map((step, index) => (
-        <View
-          key={index}
-          style={{ display: currentStep === index ? "flex" : "none" }}
-        >
-          {step.component}
-        </View>
-      ))}
-      <View style={styles.buttonsContainer}>
-        {currentStep > 0 && (
-          <GLButton
-            onPressAction={handlePrevStep}
-            type="second"
-            placeholder={"Atras"}
-            width={widthPercentageToPx(70)}
-          />
-        )}
-        {currentStep < steps.length - 1 && (
-          <View>
+      <ScrollView>
+        {steps.map((step, index) => (
+          <View
+            key={index}
+            style={{ display: currentStep === index ? "flex" : "none" }}
+          >
+            {step.component}
+          </View>
+        ))}
+
+        <View style={styles.buttonsContainer}>
+          {currentStep > 0 && (
             <GLButton
-              onPressAction={handleNextStep}
-              type="default"
-              placeholder={"Siguiente"}
+              onPressAction={handlePrevStep}
+              type="second"
+              placeholder={"Atras"}
               width={widthPercentageToPx(70)}
             />
-          </View>
-        )}
-        {currentStep === steps.length - 1 && (
-          <GLButton
-            onPressAction={onConfirm}
-            type="default"
-            placeholder={"Enviar"}
-            width={widthPercentageToPx(70)}
-          />
-        )}
-      </View>
+          )}
+          {currentStep < steps.length - 1 && (
+            <View>
+              <GLButton
+                onPressAction={handleNextStep}
+                type="default"
+                placeholder={"Siguiente"}
+                width={widthPercentageToPx(70)}
+              />
+            </View>
+          )}
+          {currentStep === steps.length - 1 && (
+            <GLButton
+              onPressAction={onConfirm}
+              type="default"
+              placeholder={"Enviar"}
+              width={widthPercentageToPx(70)}
+            />
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -125,6 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 1,
+    paddingBottom: heightPercentageToPx(5),
   },
   headFormStep: {
     display: "flex",
