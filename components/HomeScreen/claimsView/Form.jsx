@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import {
@@ -10,6 +10,11 @@ import GLButton from "../../common/buttons/GLButton";
 import FormTitle from "../../common/form/FormTitle";
 
 const Form = ({ closeModal, onConfirm }) => {
+  const [infoForm, setInfoForm] = useState({
+    asunto: "",
+    description: "",
+  });
+
   return (
     <View style={styles.modalForm}>
       <Pressable onPress={closeModal}>
@@ -29,14 +34,18 @@ const Form = ({ closeModal, onConfirm }) => {
         <TextInput
           style={styles.titleContainer}
           placeholder="Asunto"
+          value={infoForm.asunto}
+          onChangeText={(asu) => setInfoForm({ ...infoForm, asunto: asu })}
         ></TextInput>
         <TextInput
           style={styles.descriptionContainer}
           placeholder="Cuéntanos más..."
           multiline={true}
+          value={infoForm.description}
+          onChangeText={(des) => setInfoForm({ ...infoForm, description: des })}
         ></TextInput>
         <GLButton
-          onPressAction={onConfirm}
+          onPressAction={() => onConfirm(infoForm)}
           type="default"
           placeholder={"Enviar"}
           width={widthPercentageToPx(70)}

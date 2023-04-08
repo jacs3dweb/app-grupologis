@@ -32,28 +32,31 @@ const BusinessE = ({ navigation }) => {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
 
   const handleSelectBusiness = async () => {
-    console.log("llego handleSelectBusiness");
-
     const type = await AsyncStorage.getItem("type");
     console.log(type);
     const typeCli = type === "business" ? 2 : 1;
     const identification = await AsyncStorage.getItem("identi");
 
-    const info = `empresaId=${selectedBusiness.value}&identificacionId=${identification}`;
+    const info = `empresaId=${selectedBusiness}&identificacionId=${identification}`;
     const path =
       typeCli === 1
         ? "usuario/getPerfilInfo.php"
         : "usuario/getPerfilClienteInfo.php";
     const respApi = await fetchPost(path, info);
-    console.log(respApi);
+
     if (respApi.status) {
       const data = respApi.data;
-      data.codEmp = identification;
-      data.empSel = selectedBusiness.value;
-      await AsyncStorage.clear();
-      const loggedIn = JSON.stringify(data);
-      await AsyncStorage.setItem("logged", loggedIn);
-      navigation.navigate("Home");
+      if (typeof data === "object") {
+        data.codEmp = identification;
+        data.empSel = selectedBusiness;
+        data.type = type;
+        await AsyncStorage.clear();
+        const loggedIn = JSON.stringify(data);
+        await AsyncStorage.setItem("logged", loggedIn);
+        navigation.navigate("Home");
+      } else {
+        console.log(data);
+      }
     } else {
       console.log("Ocurrio un error en el sistema");
     }
@@ -183,7 +186,10 @@ const BusinessE = ({ navigation }) => {
 
         <View style={styles.formContent}>
           <View style={styles.pickerContainer}>
-            <FormuBussines />
+            <FormuBussines
+              list={businessOptionsNew}
+              onOptionSel={(selected) => setSelectedBusiness(selected)}
+            />
           </View>
 
           <Pressable onPress={handleSelectBusiness} style={styles.pressable}>

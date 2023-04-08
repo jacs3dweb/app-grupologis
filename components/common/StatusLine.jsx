@@ -35,13 +35,13 @@ const LineElement = ({ completed }) => {
 const StatusLine = ({ status }) => {
   return (
     <View style={styles.statusContainer}>
-      <Text style={styles.textStyle}>{getTextByStatus(status)}</Text>
+      <Text style={styles.textStyle}>{status}</Text>
 
       <View style={styles.statusLine}>
-        <LineElement completed={status <= 0} />
-        <LineElement completed={status <= 1} />
-        <LineElement completed={status <= 2} />
-        <LineElement completed={status <= 3} />
+        <LineElement completed={status != "Registrado"} />
+        <LineElement completed={status != "Aprobado"} />
+        <LineElement completed={status != "Nómina"} />
+        <LineElement completed={status != "Completado"} />
       </View>
     </View>
   );

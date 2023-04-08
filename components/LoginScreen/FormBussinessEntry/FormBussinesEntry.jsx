@@ -6,7 +6,7 @@ import { colors } from "../../../utils";
 
 class FormuBussines extends Component {
   state = {
-    select1: "Seleccione empresa",
+    optSelectLab: "Seleccione empresa",
     modalVisible: false,
     modalOptions: [],
     modalSelect: "",
@@ -15,8 +15,8 @@ class FormuBussines extends Component {
   openModal = (select) => {
     let modalOptions = [];
     switch (select) {
-      case "select1":
-        modalOptions = ["empresa 1", "empresa 2", "Opción 3"];
+      case "select":
+        modalOptions = this.props.list;
         break;
       default:
         break;
@@ -34,9 +34,9 @@ class FormuBussines extends Component {
         {/* Selects */}
         <TouchableOpacity
           style={styles.select}
-          onPress={() => this.openModal("select1")}
+          onPress={() => this.openModal("select")}
         >
-          <Text style={styles.selectText}>{this.state.select1}</Text>
+          <Text style={styles.selectText}>{this.state.optSelectLab}</Text>
           <Ionicons
             name="chevron-down-outline"
             size={24}
@@ -59,18 +59,19 @@ class FormuBussines extends Component {
             </TouchableOpacity>
             {this.state.modalOptions.map((option) => (
               <TouchableOpacity
-                key={option}
+                key={option.value}
                 onPress={() => {
                   // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
                   this.setState({
-                    [this.state.modalSelect]: option,
+                    [this.state.modalSelect]: option.value,
                     modalVisible: false,
                     modalOptions: [],
-                    modalSelect: "",
+                    optSelectLab: option.label
                   });
+                  this.props.onOptionSel(option.value)
                 }}
               >
-                <Text style={styles.modalOption}>{option}</Text>
+                <Text style={styles.modalOption}>{option.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
