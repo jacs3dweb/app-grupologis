@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { colors } from "../../../../../utils";
+import {
+  colors,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../../../utils";
 
 class Formulario extends Component {
   state = {
@@ -133,7 +137,12 @@ class Formulario extends Component {
         </View>
 
         {/* Modal */}
-        <Modal visible={this.state.modalVisible} animationType="slide">
+        <Modal
+          visible={this.state.modalVisible}
+          animationType="slide"
+          transparent={true}
+          backgroundColor="white"
+        >
           <View style={styles.modal}>
             <TouchableOpacity
               style={styles.closeButton}
@@ -145,22 +154,25 @@ class Formulario extends Component {
                 color={colors.placeholderColor}
               />
             </TouchableOpacity>
-            {this.state.modalOptions.map((option) => (
-              <TouchableOpacity
-                key={option}
-                onPress={() => {
-                  // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                  this.setState({
-                    [this.state.modalSelect]: option,
-                    modalVisible: false,
-                    modalOptions: [],
-                    modalSelect: "",
-                  });
-                }}
-              >
-                <Text style={styles.modalOption}>{option}</Text>
-              </TouchableOpacity>
-            ))}
+            <View style={styles.selectContainer}>
+              {this.state.modalOptions.map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={styles.modalOptionBox}
+                  onPress={() => {
+                    // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                    this.setState({
+                      [this.state.modalSelect]: option,
+                      modalVisible: false,
+                      modalOptions: [],
+                      modalSelect: "",
+                    });
+                  }}
+                >
+                  <Text style={styles.modalOption}>{option}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </Modal>
       </View>
@@ -184,25 +196,47 @@ const styles = StyleSheet.create({
     fontFamily: "Volks-Serial-Medium",
     color: colors.placeholderColor,
   },
-  modal: {
+  modalContainer: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
     margin: 16,
     borderRadius: 8,
-    padding: 15,
+    height: 20,
     alignItems: "center",
     justifyContent: "center",
   },
+  modal: {
+    backgroundColor: "white",
+    width: widthPercentageToPx(100),
+    height: heightPercentageToPx(40),
+    borderRadius: 40,
+    padding: 30,
+    position: "absolute",
+    bottom: -20,
+  },
   closeButton: {
     position: "absolute",
-    top: 50,
+    top: 20,
     right: 30,
   },
-  modalOption: {
-    fontSize: 20,
-    marginBottom: 16,
+  selectOption: {
+    borderColor: "white",
+    marginBottom: 25,
   },
-
+  selectContainer: {
+    marginTop: heightPercentageToPx(5),
+  },
+  modalOptionBox: {
+    fontSize: 15,
+    padding: 18,
+    borderWidth: "1px",
+    borderColor: colors.purpleIcons,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  modalOption: {
+    fontSize: 15,
+    fontFamily: "Volks-Serial-Medium",
+  },
   input: {
     backgroundColor: colors.mainBackgroundColor,
     height: 50,
