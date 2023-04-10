@@ -141,52 +141,12 @@ const BusinessE = ({ navigation }) => {
               </Text>
             </View>
           </View>
-
-          {/* <View style={styles.pickerContainer}>
-              <Picker
-                ref={pickerRef}
-                // style={{
-                //   display: "none",
-                //   opacity: 0,
-                // }}
-                prompt="Empresas disponibles"
-                selectedValue={selectedBusiness}
-                onValueChange={(itemValue) => {
-                  const selected = businessOptionsNew.find(
-                    (e) => e.value === itemValue
-                  );
-                  setSelectedBusiness(selected);
-                }}
-              >
-                {businessOptionsNew.map((op, idx) => (
-                  <Picker.Item
-                    key={idx}
-                    enabled={op.value !== null}
-                    label={op.label}
-                    value={op.value}
-                  />
-                ))}
-              </Picker>
-              {
-                <Pressable
-                  onPress={() => pickerRef.current.focus()}
-                  style={styles.selectorContainer}
-                >
-                  <View>
-                    <Text style={styles.selectedBusiness}>
-                      {selectedBusiness
-                        ? selectedBusiness.label
-                        : "Seleccione la empresa"}
-                    </Text>
-                  </View>
-                </Pressable>
-              }
-            </View> */}
         </View>
 
         <View style={styles.formContent}>
           <View style={styles.pickerContainer}>
             <FormuBussines
+              title="Seleccione la empresa"
               list={businessOptionsNew}
               onOptionSel={(selected) => setSelectedBusiness(selected)}
             />

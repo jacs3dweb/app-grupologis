@@ -6,7 +6,7 @@ import { colors } from "../../../utils";
 
 class FormuBussines extends Component {
   state = {
-    optSelectLab: "Seleccione empresa",
+    optSelectLab: this.props.title,
     modalVisible: false,
     modalOptions: [],
     modalSelect: "",
@@ -66,9 +66,15 @@ class FormuBussines extends Component {
                     [this.state.modalSelect]: option.value,
                     modalVisible: false,
                     modalOptions: [],
-                    optSelectLab: option.label
+                    optSelectLab: option.label,
                   });
-                  this.props.onOptionSel(option.value)
+                  {
+                    {
+                      option.value != null
+                        ? this.props.onOptionSel(option.value)
+                        : console.log("seleccione una opcion");
+                    }
+                  }
                 }}
               >
                 <Text style={styles.modalOption}>{option.label}</Text>

@@ -2,58 +2,49 @@ import { Entypo, Feather } from "@expo/vector-icons";
 import moment from "moment";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import {
-  colors,
-  getFontStyles,
-  heightPercentageToPx,
-  validDates,
-  widthPercentageToPx,
-} from "../../../utils";
+import { colors, getFontStyles, widthPercentageToPx } from "../../../utils";
 import GLButton from "../../common/buttons/GLButton";
 import FormStep from "../../common/form/FormStep";
-import MonthYearPicker from "../../common/form/MonthYearPicker";
+import FormuBussines from "../../LoginScreen/FormBussinessEntry/FormBussinesEntry";
+import SpecialCalendar from "../../common/form/SpecialCalendar";
+import Toast from "react-native-toast-message";
 
 const FormBillsModal = ({ closeModal, onConfirm }) => {
   const now = moment();
-  const [period, setPeriod] = useState({
-    start: now.startOf("M"),
-    end: now.startOf("M").add(1, "M"),
-  });
   const [values, setValues] = useState({
-    month: now.get("M"),
-    year: now.get("year"),
+    status: "",
+    startDate: "",
+    endDate: "",
   });
-  const [showYearSelector, setShowYearSelector] = useState(false);
-  const [showMonthSelector, setShowMonthSelector] = useState(false);
-  const [hasChangedMonth, setHasChangedMonth] = useState(false);
-  const [hasChangedYear, setHasChangedYear] = useState(false);
+  const optionsMasterEmp = [
+    [
+      { value: null, label: "Seleccione el estado" },
+      { value: "1", label: "Todos" },
+      { value: "2", label: "Ingresos" },
+      { value: "3", label: "Retiros" },
+    ],
+  ];
 
-  const handleChangeMonth = (e) => {
-    setPeriod({
-      start: period.start.set("M", e),
-      end: period.end.set("M", e),
-    });
+  const handleValidation = () => {
+    // Validamos los campos aquí
+    if (
+      values.endDate === "" ||
+      values.startDate === "" ||
+      values.status === ""
+    ) {
+      Toast.show({
+        type: "error",
+        text1: "Por favor, completa todos los campos",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
+      return;
+    }
 
-    setValues({
-      ...values,
-      month: e,
-    });
-
-    setHasChangedMonth(true);
+    // Llamar a la función onConfirm si los campos son válidos
+    onConfirm(values);
   };
-  const changeYear = (e) => {
-    setPeriod({
-      start: period.start.set("y", e),
-      end: period.end.set("y", e),
-    });
 
-    setValues({
-      ...values,
-      year: e,
-    });
-
-    setHasChangedYear(true);
-  };
   return (
     <View style={styles.modalForm}>
       <View style={styles.modalContent}>
@@ -63,50 +54,29 @@ const FormBillsModal = ({ closeModal, onConfirm }) => {
             description="Selecciona las fechas en las cuales deseas buscar."
           />
         </View>
+        <View style={{ width: "85%" }}>
+          <SpecialCalendar
+            placeholder={"Fecha inicio"}
+            value={new Date()}
+            onChange={(e) => setValues({ ...values, startDate: e.date })}
+          />
+        </View>
 
-        <Pressable
-          style={{ width: "85%" }}
-          onPress={() => setShowYearSelector(true)}
-        >
-          <View style={styles.selectorOption}>
-            <Text style={styles.selectorText}>
-              {hasChangedYear ? values.year : "Seleccione año"}
-            </Text>
-            <Entypo name="chevron-down" size={20} color={colors.boldGray} />
-          </View>
-        </Pressable>
-
-        <MonthYearPicker
-          showMonth={false}
-          changeYear={changeYear}
-          setVisible={setShowYearSelector}
-          visible={showYearSelector}
-          selectedMonthYear={values}
+        <View style={{ width: "85%" }}>
+          <SpecialCalendar
+            placeholder={"Fecha fin"}
+            value={new Date()}
+            onChange={(e) => setValues({ ...values, endDate: e.date })}
+          />
+        </View>
+        <FormuBussines
+          title="Seleccione el estado"
+          list={optionsMasterEmp[0]}
+          onOptionSel={(selected) => setValues({ ...values, status: selected })}
         />
 
-        <Pressable
-          style={{ width: "85%" }}
-          onPress={() => setShowMonthSelector(true)}
-        >
-          <View style={styles.selectorOption}>
-            <Text style={styles.selectorText}>
-              {hasChangedMonth
-                ? validDates().validMonths[period.start.get("M")]
-                : "Seleccione mes / periodo"}
-            </Text>
-            <Entypo name="chevron-down" size={20} color={colors.boldGray} />
-          </View>
-        </Pressable>
-
-        <MonthYearPicker
-          showYear={false}
-          handleChangeMonth={handleChangeMonth}
-          setVisible={setShowMonthSelector}
-          visible={showMonthSelector}
-          selectedMonthYear={values}
-        />
         <GLButton
-          onPressAction={onConfirm}
+          onPressAction={handleValidation}
           type="default"
           placeholder={"Descargar"}
           width={widthPercentageToPx(70)}
@@ -125,7 +95,6 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
     paddingHorizontal: 15,
     width: widthPercentageToPx(90),
-    
   },
   goBackButton: {
     position: "relative",
@@ -142,6 +111,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 30,
   },
   selectorOption: {
     height: 50,
