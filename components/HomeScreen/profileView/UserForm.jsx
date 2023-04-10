@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import FormInput from "./FormInput";
 import GLButton from "../../common/buttons/GLButton";
-import { widthPercentageToPx } from "../../../utils";
+import { heightPercentageToPx, widthPercentageToPx } from "../../../utils";
 
 const UserForm = ({ userData, handleChange, handleUpdateUser }) => {
   return (
@@ -74,5 +74,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    paddingBottom: heightPercentageToPx(15),
   },
 });

@@ -1,21 +1,12 @@
-import React, { Component, useState } from "react";
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import React, { Component } from "react";
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { colors } from "../../../../../utils";
+import { colors } from "../../../utils";
 
-class Formulario extends Component {
+class FormuBussines extends Component {
   state = {
-    select1: "Departamento",
-    select2: "Ciudad",
+    optSelectLab: "Seleccione empresa",
     modalVisible: false,
     modalOptions: [],
     modalSelect: "",
@@ -24,11 +15,8 @@ class Formulario extends Component {
   openModal = (select) => {
     let modalOptions = [];
     switch (select) {
-      case "select1":
-        modalOptions = ["Dept 1", "Dept 2", "Dept 3"];
-        break;
-      case "select2":
-        modalOptions = ["City 1", "City 2", "City 3"];
+      case "select":
+        modalOptions = this.props.list;
         break;
       default:
         break;
@@ -42,24 +30,13 @@ class Formulario extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         {/* Selects */}
         <TouchableOpacity
           style={styles.select}
-          onPress={() => this.openModal("select1")}
+          onPress={() => this.openModal("select")}
         >
-          <Text style={styles.selectText}>{this.state.select1}</Text>
-          <Ionicons
-            name="chevron-down-outline"
-            size={24}
-            color={colors.placeholderColor}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.select}
-          onPress={() => this.openModal("select2")}
-        >
-          <Text style={styles.selectText}>{this.state.select2}</Text>
+          <Text style={styles.selectText}>{this.state.optSelectLab}</Text>
           <Ionicons
             name="chevron-down-outline"
             size={24}
@@ -82,18 +59,19 @@ class Formulario extends Component {
             </TouchableOpacity>
             {this.state.modalOptions.map((option) => (
               <TouchableOpacity
-                key={option}
+                key={option.value}
                 onPress={() => {
                   // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
                   this.setState({
-                    [this.state.modalSelect]: option,
+                    [this.state.modalSelect]: option.value,
                     modalVisible: false,
                     modalOptions: [],
-                    modalSelect: "",
+                    optSelectLab: option.label
                   });
+                  this.props.onOptionSel(option.value)
                 }}
               >
-                <Text style={styles.modalOption}>{option}</Text>
+                <Text style={styles.modalOption}>{option.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -105,14 +83,15 @@ class Formulario extends Component {
 
 const styles = StyleSheet.create({
   select: {
-    backgroundColor: colors.mainBackgroundColor,
+    backgroundColor: "white",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
     borderRadius: 8,
-    marginBottom: 10,
+
+    marginTop: 20,
   },
   selectText: {
     fontSize: 16,
@@ -137,7 +116,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 16,
   },
-
   input: {
     backgroundColor: colors.mainBackgroundColor,
     height: 50,
@@ -149,9 +127,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "normal",
   },
-  boxForm: {
-    marginBottom: 10,
-  },
 });
 
-export default Formulario;
+export default FormuBussines;

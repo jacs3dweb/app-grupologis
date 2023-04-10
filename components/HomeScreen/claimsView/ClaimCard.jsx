@@ -9,11 +9,11 @@ const ClaimCard = (props) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.topContent}>
-        <CardElement head={"RAD."} content={props.radicado} />
-        <CardElement head={"Fecha"} content={props.fecha} />
+        <CardElement head={"RAD."} content={props.Documento} />
+        <CardElement head={"Fecha"} content={props.Fecha} />
         <Pressable
           onPress={() => {
-            console.log(`Visualizar: ${props.radicado}`);
+            console.log(`Visualizar: ${props}`);
           }}
         >
           <View style={styles.actionButton("ghost")}>
@@ -21,7 +21,7 @@ const ClaimCard = (props) => {
           </View>
         </Pressable>
       </View>
-      <StatusLine status={props.estado} />
+      <StatusLine status={props.Estado} />
     </View>
   );
 };
