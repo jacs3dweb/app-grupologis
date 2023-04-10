@@ -1,8 +1,20 @@
 import React, { Component } from "react";
-import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { colors } from "../../../utils";
+import {
+  colors,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 class FormuBussines extends Component {
   state = {
@@ -45,41 +57,51 @@ class FormuBussines extends Component {
         </TouchableOpacity>
 
         {/* Modal */}
-        <Modal visible={this.state.modalVisible} animationType="slide">
-          <View style={styles.modal}>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => this.closeModal()}
-            >
-              <Ionicons
-                name="md-close"
-                size={32}
-                color={colors.placeholderColor}
-              />
-            </TouchableOpacity>
-            {this.state.modalOptions.map((option) => (
+        <Modal
+          visible={this.state.modalVisible}
+          animationType="slide"
+          transparent={true}
+          backgroundColor="white"
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
               <TouchableOpacity
-                key={option.value}
-                onPress={() => {
-                  // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                  this.setState({
-                    [this.state.modalSelect]: option.value,
-                    modalVisible: false,
-                    modalOptions: [],
-                    optSelectLab: option.label,
-                  });
-                  {
-                    {
-                      option.value != null
-                        ? this.props.onOptionSel(option.value)
-                        : console.log("seleccione una opcion");
-                    }
-                  }
-                }}
+                style={styles.closeButton}
+                onPress={() => this.closeModal()}
               >
-                <Text style={styles.modalOption}>{option.label}</Text>
+                <Ionicons
+                  name="md-close"
+                  size={32}
+                  color={colors.placeholderColor}
+                />
               </TouchableOpacity>
-            ))}
+              <View style={styles.selectContainer}>
+                {this.state.modalOptions.map((option) => (
+                  <TouchableOpacity
+                    key={option.value}
+                    style={
+                      option.value == null
+                        ? styles.selectOption
+                        : styles.modalOptionBox
+                    }
+                    onPress={() => {
+                      // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                      this.setState({
+                        [this.state.modalSelect]: option.value,
+                        modalVisible: false,
+                        modalOptions: [],
+                        optSelectLab: option.label,
+                      });
+                      this.props.onOptionSel(option.value);
+                    }}
+                  >
+                    <ScrollView>
+                      <Text style={styles.modalOption}>{option.label}</Text>
+                    </ScrollView>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
           </View>
         </Modal>
       </View>
@@ -104,23 +126,46 @@ const styles = StyleSheet.create({
     fontFamily: "Volks-Serial-Medium",
     color: colors.placeholderColor,
   },
-  modal: {
+  modalContainer: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
     margin: 16,
     borderRadius: 8,
-    padding: 15,
+    height: 20,
     alignItems: "center",
     justifyContent: "center",
   },
+  modal: {
+    backgroundColor: "white",
+    width: widthPercentageToPx(100),
+    height: heightPercentageToPx(40),
+    borderRadius: 40,
+    padding: 30,
+    position: "absolute",
+    bottom: -20,
+  },
   closeButton: {
     position: "absolute",
-    top: 50,
+    top: 20,
     right: 30,
   },
+  selectOption: {
+    borderColor: "white",
+    marginBottom: 25,
+  },
+  selectContainer: {
+    marginTop: 20,
+  },
+  modalOptionBox: {
+    fontSize: 15,
+    padding: 18,
+    borderWidth: "1px",
+    borderColor: colors.purpleIcons,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
   modalOption: {
-    fontSize: 20,
-    marginBottom: 16,
+    fontSize: 15,
+    fontFamily: "Volks-Serial-Medium",
   },
   input: {
     backgroundColor: colors.mainBackgroundColor,
