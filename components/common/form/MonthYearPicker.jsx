@@ -36,38 +36,48 @@ const MonthYearPicker = ({
         }}
       >
         <View style={styles.monthPicker}>
-          <Text style={styles.placeholder}>Mes</Text>
-          <ScrollView
-            horizontal
-            contentContainerStyle={styles.dayOptions}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-          >
-            {validDates().validMonths.map((e, idx) => (
-              <Pressable key={idx} onPress={() => handleChangeMonth(idx)}>
-                <View
-                  style={styles.dayElement(selectedMonthYear.month === idx)}
-                >
-                  <Text style={styles.dayNumber}>{e}</Text>
-                </View>
-              </Pressable>
-            ))}
-          </ScrollView>
-          <Text style={styles.placeholder}>Año</Text>
-          <ScrollView
-            horizontal
-            contentContainerStyle={styles.dayOptions}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-          >
-            {validDates().validYears.map((e, idx) => (
-              <Pressable key={idx} onPress={() => changeYear(e)}>
-                <View style={styles.dayElement(selectedMonthYear.year === e)}>
-                  <Text style={styles.dayNumber}>{e}</Text>
-                </View>
-              </Pressable>
-            ))}
-          </ScrollView>
+          {showMonth && (
+            <>
+              <Text style={styles.placeholder}>Mes</Text>
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.dayOptions}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+              >
+                {validDates().validMonths.map((e, idx) => (
+                  <Pressable key={idx} onPress={() => handleChangeMonth(idx)}>
+                    <View
+                      style={styles.dayElement(selectedMonthYear.month === idx)}
+                    >
+                      <Text style={styles.dayNumber}>{e}</Text>
+                    </View>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </>
+          )}
+          {showYear && (
+            <>
+              <Text style={styles.placeholder}>Año</Text>
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.dayOptions}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+              >
+                {validDates().validYears.map((e, idx) => (
+                  <Pressable key={idx} onPress={() => changeYear(e)}>
+                    <View
+                      style={styles.dayElement(selectedMonthYear.year === e)}
+                    >
+                      <Text style={styles.dayNumber}>{e}</Text>
+                    </View>
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </>
+          )}
 
           <GLButton
             type="default"

@@ -112,7 +112,7 @@ const FormBillsModal = ({ closeModal, onConfirm }) => {
           selectedMonthYear={values}
         />
         <GLButton
-          onPressAction={onConfirm}
+          onPressAction={() => onConfirm(values)}
           type="default"
           placeholder={"Consultar"}
           width={widthPercentageToPx(70)}

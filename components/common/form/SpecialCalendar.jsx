@@ -48,6 +48,7 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
     setSelectedDate(selectedDate.set("M", e));
   };
   const changeYear = (e) => {
+    console.log("changeYear", e);
     setSelectedMonthYear({
       ...selectedMonthYear,
       year: e,
@@ -57,12 +58,21 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
   };
   const handleChangeDay = (day) => {
     if (!day.isSelectable) return;
-    const dayNumber = parseInt(day.day);
-
-    setSelectedDate(selectedDate.set("D", dayNumber));
+    const dayNumber = day.day;
+    const selectedDateCopy = selectedDate.clone();
+    selectedDateCopy.set("D", dayNumber);
+    let month = (selectedMonthYear.month += 1);
+    month = month.toString().padStart(2, "0");
+    const selectedDay = {
+      date: `${selectedMonthYear.year}/${month}/${dayNumber}`,
+      day: dayNumber,
+      month: month,
+      year: selectedMonthYear.year,
+    };
+    console.log("selectedDay", selectedDay);
+    // setSelectedDate(selectedDate.set("D", dayNumber));
     setSelectedDay(day.day);
-
-    onChange(selectedDate._d);
+    onChange(selectedDay);
   };
   return (
     <SafeAreaView style={styles.specialCalendarContainer}>

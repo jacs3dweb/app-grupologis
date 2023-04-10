@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 
 import { PermissionsAndroid } from "react-native";
+import * as Permissions from "expo-permissions";
 
 // Import Views
 
@@ -40,9 +41,8 @@ import moment from "moment";
 import { useEffect } from "react";
 
 async function getMediaLibraryPermission() {
-  const { status } = await Permissions.askAsync(
-    Permissions.MEDIA_LIBRARY_WRITE_ONLY
-  );
+  const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+  console.log("status al", status);
   if (status !== "granted") {
     alert("Se requiere permiso para acceder el almacenamiento");
   }
@@ -144,6 +144,7 @@ export default function App() {
                   <StatusBar style="auto" hidden={false} />
                   <Stack.Navigator
                     initialRouteName="Login"
+                    // initialRouteName="Home"
                     screenOptions={{
                       headerShown: false,
                     }}

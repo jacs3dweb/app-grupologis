@@ -228,7 +228,7 @@ export const validDates = () => {
   let currentYear = actualDate.getFullYear();
   let validYears = [];
 
-  for (let i = currentYear; i < currentYear + 10; i++) {
+  for (let i = currentYear; i > currentYear - 10; i--) {
     validYears.push(i);
   }
 

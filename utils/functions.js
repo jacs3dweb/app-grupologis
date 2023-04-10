@@ -41,6 +41,25 @@ export async function fetchPost(path, body) {
   return await post(path, data);
 }
 
+export const downloadArchivoAndroid = async (base64, mime, name) => {
+  try {
+    const fileUri = FileSystem.cacheDirectory + name;
+
+    const data = `data:${mime};base64,${base64}`;
+    const base64Code = data.split(`data:${mime};base64,`)[1];
+
+    await FileSystem.writeAsStringAsync(fileUri, base64Code, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+    await MediaLibrary.saveToLibraryAsync(fileUri);
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 // export const downloadArchivoAndroid = async (base64, mime, name) => {
 //   try {
 //     console.log("android");
@@ -52,7 +71,13 @@ export async function fetchPost(path, body) {
 //     await FileSystem.writeAsStringAsync(fileUri, base64Code, {
 //       encoding: FileSystem.EncodingType.Base64,
 //     });
-//     await MediaLibrary.saveToLibraryAsync(fileUri);
+
+//     const uti =
+//       mime === "application/pdf" ? "com.adobe.pdf" : "com.microsoft.excel.xls";
+//     await Sharing.shareAsync(fileUri, {
+//       mimeType: mime,
+//       UTI: uti,
+//     });
 
 //     return true;
 //   } catch (error) {
@@ -60,32 +85,6 @@ export async function fetchPost(path, body) {
 //     return false;
 //   }
 // };
-
-export const downloadArchivoAndroid = async (base64, mime, name) => {
-  try {
-    console.log("android");
-    const fileUri = FileSystem.cacheDirectory + name;
-
-    const data = `data:${mime};base64,${base64}`;
-    const base64Code = data.split(`data:${mime};base64,`)[1];
-
-    await FileSystem.writeAsStringAsync(fileUri, base64Code, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    const uti =
-      mime === "application/pdf" ? "com.adobe.pdf" : "com.microsoft.excel.xls";
-    await Sharing.shareAsync(fileUri, {
-      mimeType: mime,
-      UTI: uti,
-    });
-
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-};
 
 export const downloadArchivoIOS = async (base64, mime, name) => {
   try {

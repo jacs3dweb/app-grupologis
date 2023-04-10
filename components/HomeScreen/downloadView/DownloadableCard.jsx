@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { colors, getFontStyles, heightPercentageToPx } from "../../../utils";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  colors,
+  getFontStyles,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
 import Toast from "react-native-toast-message";
 import {
   downloadArchivoAndroid,
@@ -9,10 +14,12 @@ import {
 } from "../../../utils/functions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
+import FormBillsModal from "../billView/FormBillsModal";
+import FormInicFin from "../newsView/components/FormInicFin";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
   const [modal, setModal] = useState(false);
-  const [showForm, setShowForm] = useState(null);
+  const [showForm, setShowForm] = useState("");
 
   const getCerLaboral = async () => {
     // descargar certificado laboral
@@ -163,8 +170,90 @@ const DownloadableCard = ({ title, desc, image, id }) => {
       });
     }
   };
-  useEffect(() => {}, [modal]);
-  const getPayrollFlyer = async () => {};
+
+  const getPayrollFlyer = async (val) => {
+    // descargar volante nomina
+    setModal(false);
+    setShowForm("");
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel.trim();
+    const codEmp = infoLog.codEmp.trim();
+    const month = parseInt(val.month) + 1;
+    const info =
+      infoLog.type === "employee"
+        ? // es 1
+          `empresaId=${empSel}&identificacionId=${codEmp}
+          &anho=${val.year}&mes=${month}`
+        : // es 2
+          `Empresa=${empSel}&NitCliente=${codEmp}
+          &Anho=${val.year}&Mes=${month}`;
+    const path = "usuario/getVolanteNomina.php";
+    const respApi = await fetchPost(path, info);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data.Correcto === 1) {
+        dowArchivo(data);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Error en el servidor",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
+      }
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Error en el servidor",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
+    }
+  };
+
+  const getModalHumanAndAusen = async (val) => {
+    // descargar Indicador de Gestión humana
+    // descargar Ausentismo
+    setModal(false);
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+    const fecIni = val.startDate;
+    const fecFin = val.endDate;
+
+    const info = `FechaInicial=${fecIni}&FechaFinal=${fecFin}&
+    Empresa=${empSel}&NitCliente=${codEmp}`;
+    const path =
+      showForm == "humanResourcesIndicator"
+        ? "usuario/getIGH.php"
+        : "usuario/getAusentismo.php";
+
+    const respApi = await fetchPost(path, info);
+    setShowForm("");
+    console.log(respApi);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data.Correcto === 1) {
+        dowArchivo(data);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Error en el sistema",
+          position: "bottom",
+          visibilityTime: 2000,
+        });
+      }
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Error en el sistema",
+        position: "bottom",
+        visibilityTime: 2000,
+      });
+    }
+  };
 
   const dowArchivo = async (data) => {
     let archDes;
@@ -195,30 +284,51 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     }
   };
 
-  const showToast = (idSel) => {
-    console.log("id", idSel);
-    switch (idSel) {
-      case "laboralCertificate":
-        getCerLaboral();
-        break;
-      case "laboralCertificate2":
-        getIngresoRete();
-        break;
-      case "laboralCertificate3":
-        getHojaVidaLab();
-        break;
-      case "capacitations":
-        getCapacitations();
-        break;
-      // modales
-      case "payrollFlyer":
-        getPayrollFlyer();
-        break;
-
-      default:
-        break;
+  useEffect(() => {
+    if (!modal) {
+      setShowForm("");
     }
-  };
+  }, [modal]);
+
+  useEffect(() => {
+    const idSel = showForm;
+    if (idSel != "") {
+      switch (idSel) {
+        case "laboralCertificate":
+          setShowForm("");
+          getCerLaboral();
+          break;
+        case "laboralCertificate2":
+          setShowForm("");
+          getIngresoRete();
+          break;
+        case "laboralCertificate3":
+          setShowForm("");
+          getHojaVidaLab();
+          break;
+        case "capacitations":
+          setShowForm("");
+          getCapacitations();
+          break;
+        // modales
+        case "payrollFlyer":
+          setModal(true);
+          break;
+        case "generalPayroll":
+          setModal(true);
+          break;
+        case "humanResourcesIndicator":
+          setModal(true);
+          break;
+        case "ausentism":
+          setModal(true);
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, [showForm]);
 
   return (
     <View style={styles.scrollStyle}>
@@ -226,7 +336,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
         <View style={styles.imageSvg}>{image}</View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{desc}</Text>
-        <Pressable onPress={() => showToast(id)}>
+        <Pressable onPress={() => setShowForm(id)}>
           <View style={styles.downloadButton}>
             <Text style={{ color: colors.light, fontFamily: "Volks-Bold" }}>
               Descargar
@@ -234,6 +344,28 @@ const DownloadableCard = ({ title, desc, image, id }) => {
           </View>
         </Pressable>
       </View>
+      {modal && (
+        <Modal animationType="slide" visible={modal} transparent={true}>
+          {showForm === "payrollFlyer" || showForm === "generalPayroll" ? (
+            <View style={styles.modalContainer}>
+              <FormBillsModal
+                closeModal={() => setModal(false)}
+                onConfirm={getPayrollFlyer}
+              />
+            </View>
+          ) : (
+            <View style={styles.modalForm}>
+              <FormInicFin
+                closeModal={() => {
+                  setModal(false);
+                  setShowForm("");
+                }}
+                onConfirm={getModalHumanAndAusen}
+              />
+            </View>
+          )}
+        </Modal>
+      )}
     </View>
   );
 };
@@ -280,5 +412,23 @@ const styles = StyleSheet.create({
     marginTop: 0,
     padding: 0,
     flex: 0,
+  },
+  generalView: {
+    height: heightPercentageToPx(100),
+    width: widthPercentageToPx(100),
+  },
+  modalContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalForm: {
+    top: 45,
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    transform: [{ translateY: 50 }],
+    width: widthPercentageToPx(90),
+    height: heightPercentageToPx(90),
   },
 });

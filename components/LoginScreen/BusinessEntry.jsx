@@ -40,6 +40,7 @@ const BusinessE = ({ navigation }) => {
       const data = respApi.data;
       data.codEmp = identification;
       data.empSel = selectedBusiness.value;
+      data.type = type;
       await AsyncStorage.clear();
       const loggedIn = JSON.stringify(data);
       await AsyncStorage.setItem("logged", loggedIn);
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
   pressable: {
     width: "100%",
     height: "100%",
-    position: "absolute",
+    // position: "absolute",
   },
   asBusinessButton: {
     backgroundColor: colors.mainBlue,
