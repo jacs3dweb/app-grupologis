@@ -11,9 +11,9 @@ import {
 } from "../../utils";
 
 import { InputWithIcon } from "../common/form/Input";
-
-import { Feather } from "@expo/vector-icons";
 import { fetchPost, validatePhone } from "../../utils/functions";
+
+import CloseLogin from "../../assets/images/auth/svg/CloseLogin";
 
 const BusinessEmployeeLogin = ({ navigation, route }) => {
   const { type } = route.params;
@@ -29,8 +29,8 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
   };
 
   const returnPag = async () => {
+    navigation.goBack();
     await AsyncStorage.clear();
-    navigation.navigate("Login");
   };
 
   const submitForm = async () => {
@@ -67,7 +67,7 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
       <View style={styles.formContainer}>
         <Pressable onPress={() => returnPag()}>
           <View style={styles.goBackButton}>
-            <Feather name="x" size={24} color="white" />
+            <CloseLogin />
           </View>
         </Pressable>
         <View style={styles.logoContainer}>
@@ -117,12 +117,11 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
       <View style={styles.imageContainer}>
         <Image
           style={styles.loginBackgroundImages}
-          source={{
-            uri:
-              type === "business"
-                ? images.BusinessEmployeeLoginImage
-                : images.employeeLoginImage,
-          }}
+          source={
+            type === "business"
+              ? images.businessLoginImage
+              : images.employeeLoginImage
+          }
         />
       </View>
     </View>
@@ -157,13 +156,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: widthPercentageToPx(100),
   },
-  descriptionContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "justify",
-    width: widthPercentageToPx(70),
-  },
   logoContainer: {
     display: "flex",
     alignItems: "center",
@@ -183,11 +175,10 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.white,
-    opacity: 0.4,
     borderRadius: 15,
     height: 30,
     width: 30,
+    zIndex: 99,
   },
   welcomeText: {
     fontFamily: "Poppins-Light",
@@ -199,13 +190,20 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: "Poppins-Bold",
   },
+  descriptionContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "justify",
+    width: widthPercentageToPx(65),
+    marginBottom: 20,
+  },
   welcomeDesc: {
     fontFamily: "Poppins-Regular",
     color: colors.white,
-    marginTop: 20,
-    ...getFontStyles(13, 0.5, 0.9),
+    ...getFontStyles(13, 0.7, 1.2),
+    textAlign: "center",
   },
-
   loginFormInput: {
     fontFamily: "Poppins-Regular",
     width: widthPercentageToPx(60),
@@ -215,7 +213,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 7,
   },
-
   asIngresaButton: {
     backgroundColor: "transparent",
     fontFamily: "Poppins-Regular",
@@ -229,6 +226,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 2,
     borderColor: colors.white,
+    zIndex: 99,
   },
   textInputContainers: {
     display: "flex",
@@ -239,11 +237,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   imageContainer: {
-    height: heightPercentageToPx(35),
+    height: heightPercentageToPx(45),
     width: widthPercentageToPx(100),
   },
   loginBackgroundImages: {
-    height: "100%",
+    height: "90%",
     width: "100%",
   },
 });

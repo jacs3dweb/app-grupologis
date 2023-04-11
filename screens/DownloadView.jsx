@@ -20,6 +20,8 @@ import DownloadableCard from "../components/HomeScreen/downloadView/Downloadable
 import Layout from "../components/layout/Layout.jsx";
 import authContext from "../context/auth/authContext";
 
+import NewsDailyHome from "../components/HomeScreen/newsDaily/newsDailyHome";
+
 import SvgLaboralCertificate from "../assets/images/home/downloadView/SvgLaboralCertificate";
 import SvgLaboralCertificate2 from "../assets/images/home/downloadView/SvgLaboralCertificate2";
 import SvglaboralCertificate3 from "../assets/images/home/downloadView/SvgLaboralCertificate3";
@@ -101,6 +103,9 @@ const Download = (props) => {
             </ScrollView>
           </View>
         </View>
+        <View style={styles.newsDailyContainer}>
+          <NewsDailyHome />
+        </View>
       </ScrollView>
     </Layout>
   );
@@ -110,6 +115,12 @@ const styles = StyleSheet.create({
   downloadContainer: {
     display: "flex",
     alignItems: "center",
+  },
+  newsDailyContainer: {
+    display: "flex",
+    alignItems: "center",
+    width: widthPercentageToPx(90),
+    paddingBottom: heightPercentageToPx(15),
   },
   welcomeText: {
     fontFamily: "Poppins-Bold",

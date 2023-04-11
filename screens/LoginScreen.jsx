@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.imageContainer}>
         <Image
           style={styles.loginBackgroundImages}
-          source={require("../assets/images/home/banners/LoginWorkers.png")}
+          source={images.loginImage}
         />
       </View>
     </View>
@@ -128,9 +128,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
+  imageContainer: {
+    height: heightPercentageToPx(50),
+    width: widthPercentageToPx(100),
+  },
   loginBackgroundImages: {
+    height: "90%",
     width: "100%",
-    height: "100%",
   },
 });
 

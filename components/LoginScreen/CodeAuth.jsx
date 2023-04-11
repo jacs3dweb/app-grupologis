@@ -46,11 +46,6 @@ const Code = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => returnPag()}>
-        <View style={styles.goBackButton}>
-          <Feather name="x" size={24} color="black" />
-        </View>
-      </Pressable>
       <View style={styles.topContainer}>
         <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
         <View style={styles.title}>
@@ -88,6 +83,11 @@ const Code = ({ navigation }) => {
         <Pressable onPress={handleContinueToSelectBusiness}>
           <View style={styles.asBusinessButton}>
             <Text style={{ color: colors.white }}>Ingresar</Text>
+          </View>
+        </Pressable>
+        <Pressable>
+          <View style={styles.asCodeSend}>
+            <Text style={{ color: colors.blueIndicator }}>Reenviar codigo</Text>
           </View>
         </Pressable>
       </View>
@@ -173,6 +173,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
     marginTop: 20,
+  },
+  asCodeSend: {
+    fontFamily: "Poppins-Regular",
+    height: 55,
+    width: widthPercentageToPx(65),
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
   },
   loginBackgroundImages: {
     width: "100%",

@@ -14,7 +14,13 @@ const notificationType2 = require("../assets/images/components/notifications/typ
 const notificationType3 = require("../assets/images/components/notifications/type-3.png");
 const notificationType4 = require("../assets/images/components/notifications/type-4.png");
 
+const noticeImg = require("../assets/noticeImg.jpg");
+
 const imgDownloadDocuments = require("../assets/images/home/banners/imgDownloadDocuments.png");
+
+const imgBussines = require("../assets/images/auth/img-bussines-login.png");
+const imgEmployee = require("../assets/images/auth/img-employee.png");
+const loginImage = require("../assets/images/auth/login-img.png");
 
 export const getFontStyles = (
   size,
@@ -62,15 +68,13 @@ export const colors = {
 };
 
 export const images = {
-  loginImage: "../assets/images/home/banners/imgDownloadDocuments.png",
+  loginImage: loginImage,
   colorLogo:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FlogoColor.png?alt=media&token=cce21b6a-ad7d-4da4-9015-ec672632f72d",
   whiteLogo:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2FwhiteColor.png?alt=media&token=d506f814-bc0b-4f78-9b28-76460324332a",
-  BusinessEmployeeLoginImage:
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fworkers.png?alt=media&token=471853f4-fa12-4500-8113-45871c6829fd",
-  employeeLoginImage:
-    "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Fbusiness.png?alt=media&token=65d34ae8-2712-4304-ba00-232acdfad60f",
+  businessLoginImage: imgBussines,
+  employeeLoginImage: imgEmployee,
   payrollFlyer:
     "https://firebasestorage.googleapis.com/v0/b/grupologis-app.appspot.com/o/images%2Ficons-sidebar-m-02.svg.png?alt=media&token=faad7c32-b792-4417-8cd8-bca82cf81f0e",
   certificadoImage3:
@@ -118,6 +122,30 @@ export const notificationInfo = [
     description:
       "Recuerde estar pendiente a su correo para recibir la respuesta.",
     image: notificationType4,
+  },
+];
+
+export const notices = [
+  {
+    id: "noti1",
+    title: "Titulo de dos lineas",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: noticeImg,
+  },
+  {
+    id: "noti2",
+    title: "Titulo de dos lineas",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: noticeImg,
+  },
+  {
+    id: "noti3",
+    title: "Titulo de dos lineas",
+    description:
+      "Recuerde estar pendiente a su correo para recibir la respuesta.",
+    image: noticeImg,
   },
 ];
 

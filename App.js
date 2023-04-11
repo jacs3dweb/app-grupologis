@@ -20,6 +20,7 @@ import ResumeView from "./screens/ResumeView";
 import UserView from "./screens/UserView";
 import NewEntryView from "./screens/NewEntryView.jsx";
 import MasterEmployee from "./screens/MasterEmployeeView";
+import NewsDailyView from "./screens/NewsDailyView";
 
 // Import components
 
@@ -103,6 +104,15 @@ const HomeScreens = () => {
       <Tab.Screen name="ClientsInvoices" component={ClientsInvoiceView} />
       <Tab.Screen name="ResumeView" component={ResumeView} />
       <Tab.Screen name="NewEntryView" component={NewEntryView} />
+      <Tab.Screen
+        name="NewsDailyView"
+        component={NewsDailyView}
+        options={({ route }) => {
+          return {
+            tabBarVisible: route.name !== "NewsDailyView", // Oculta el Footer solo en la vista NewsDailyView
+          };
+        }}
+      />
       <Tab.Screen name="MasterEmployee" component={MasterEmployee} />
     </Tab.Navigator>
   );
