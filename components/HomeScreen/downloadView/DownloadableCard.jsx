@@ -64,7 +64,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
     const info = `Empresa=${empSel}&Cedula=${codEmp}&Anho=${date}`;
     const path = "usuario/getCertificadoRetencion.php";
-
+    console.log(info, path);
     const respApi = await fetchPost(path, info);
     console.log(respApi);
     if (respApi.status) {
@@ -174,6 +174,10 @@ const DownloadableCard = ({ title, desc, image, id }) => {
   const getPayrollFlyer = async (val) => {
     // descargar volante nomina
     setModal(false);
+    const path =
+      showForm === "generalPayroll"
+        ? "usuario/getVolanteNominaGeneral.php"
+        : "usuario/getVolanteNomina.php";
     setShowForm("");
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
@@ -183,13 +187,12 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     const info =
       infoLog.type === "employee"
         ? // es 1
-          `empresaId=${empSel}&identificacionId=${codEmp}
-          &anho=${val.year}&mes=${month}`
+          `empresaId=${empSel}&identificacionId=${codEmp}&anho=${val.year}&mes=${month}`
         : // es 2
-          `Empresa=${empSel}&NitCliente=${codEmp}
-          &Anho=${val.year}&Mes=${month}`;
-    const path = "usuario/getVolanteNomina.php";
+          `Empresa=${empSel}&NitCliente=${codEmp}&Anho=${val.year}&Mes=${month}`;
+    console.log(path, info);
     const respApi = await fetchPost(path, info);
+    console.log("respuesta", respApi);
     if (respApi.status) {
       const data = respApi.data;
       if (data.Correcto === 1) {
@@ -293,6 +296,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
   useEffect(() => {
     const idSel = showForm;
     if (idSel != "") {
+      console.log("idSel", idSel);
       switch (idSel) {
         case "laboralCertificate":
           setShowForm("");

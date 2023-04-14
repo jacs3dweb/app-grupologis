@@ -80,7 +80,7 @@ class FormuBussines extends Component {
                   <TouchableOpacity
                     key={option.value}
                     style={
-                      option.value == null
+                      option.value === null
                         ? styles.selectOption
                         : styles.modalOptionBox
                     }
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   modalOptionBox: {
     fontSize: 15,
     padding: 18,
-    borderWidth: "1px",
+    borderWidth: 1,
     borderColor: colors.purpleIcons,
     borderRadius: 10,
     marginBottom: 15,

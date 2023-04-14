@@ -94,7 +94,8 @@ const Code = ({ navigation }) => {
       <View style={styles.imageContainer}>
         <Image
           style={styles.loginBackgroundImages}
-          source={{ uri: images.loginImage }}
+          // source={{ uri: images.loginImage }}
+          source={images.loginImage}
         />
       </View>
     </View>
