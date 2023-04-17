@@ -41,8 +41,7 @@ const Claim = (props) => {
     const codEmp = infoLog.codEmp;
     const typeCli = infoLog.type === "business" ? 2 : 1;
 
-    const info = `Asunto=${infoPqr.asunto}&Detalle=${infoPqr.description}
-    &Empresa=${empSel}&IdUsuario=${codEmp}&tipousuarioId=${typeCli}`;
+    const info = `Asunto=${infoPqr.asunto}&Detalle=${infoPqr.description}&Empresa=${empSel}&IdUsuario=${codEmp}&tipousuarioId=${typeCli}`;
     const path = "usuario/getQuejas.php";
     const respApi = await fetchPost(path, info);
     console.log(respApi);

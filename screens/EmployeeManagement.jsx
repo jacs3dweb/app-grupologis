@@ -1,5 +1,5 @@
 import { default as React } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import EmployeeMcard from "../components/HomeScreen/EmployeeManagement/EmployeeMcard";
 import MainCardInfo from "../components/HomeScreen/homeView/MainCardInfo";
 import Layout from "../components/layout/Layout";
@@ -40,9 +40,9 @@ const EmployeeManagement = (props) => {
       case "novedai":
         navigation.navigate("NewEntryView");
         break;
-        case "maestroe":
-          navigation.navigate("MasterEmployee");
-          break;
+      case "maestroe":
+        navigation.navigate("MasterEmployee");
+        break;
       default:
         break;
     }

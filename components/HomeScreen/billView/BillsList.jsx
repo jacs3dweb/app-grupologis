@@ -12,8 +12,8 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import BillsCard from "./BillsCard";
 
-const BillsList = () => {
-  const { billsList } = useContext(billsContext);
+const BillsList = (props) => {
+  const { billsList } = props;
 
   return (
     <View style={styles.newsListContainer}>

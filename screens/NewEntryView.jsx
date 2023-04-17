@@ -32,7 +32,7 @@ const NewEntryView = (props) => {
       >
         <CardEinfo
           title={"Novedades ingreso"}
-          buttonText="Buscar"
+          buttonText="Generar"
           showButton={true}
           showInput={false}
           onPressAction={() => setModal(!modal)}

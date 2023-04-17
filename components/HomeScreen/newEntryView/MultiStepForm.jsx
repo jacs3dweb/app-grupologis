@@ -19,14 +19,20 @@ import StepOne from "./stepsForm/StepOne";
 import StepTwo from "./stepsForm/StepTwo";
 import StepThree from "./stepsForm/StepThree";
 import StepFour from "./stepsForm/StepFour";
+import Toast from "react-native-toast-message";
 
 import CircleProgressBar from "./stepsForm/formSteps/CircleProgressBar";
+import StepIdent from "./stepsForm/StepIdent";
 
 const MultiStepForm = ({ onConfirm, closeModal }) => {
   const [formData, setFormData] = useState({});
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
+    {
+      component: <StepIdent onComplete={handleStepComplete} />,
+      // onComplete: setFormData,
+    },
     {
       component: <StepOne />,
       onComplete: setFormData,
@@ -45,6 +51,27 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
     },
   ];
 
+  const handleStepComplete = (data) => {
+    setFormData({ ...formData, ...data });
+  };
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
+
+  const validateAndSubmit = async () => {
+    console.log("step", currentStep);
+    console.log("formData", formData);
+    if (!formData.stepIdentData) {
+      showToast("Ingrese su Identificación", "error");
+      return;
+    }
+  };
   const handleNextStep = () => setCurrentStep(currentStep + 1);
   const handlePrevStep = () => setCurrentStep(currentStep - 1);
 
@@ -92,7 +119,7 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
           {currentStep < steps.length - 1 && (
             <View>
               <GLButton
-                onPressAction={handleNextStep}
+                onPressAction={validateAndSubmit}
                 type="default"
                 placeholder={"Siguiente"}
                 width={widthPercentageToPx(70)}
