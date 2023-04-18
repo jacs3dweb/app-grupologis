@@ -9,17 +9,29 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FormCountry from "./formSteps/FormCountry";
-import { colors } from "../../../../utils";
+import { colors, widthPercentageToPx } from "../../../../utils";
+import GLButton from "../../../common/buttons/GLButton";
 
 const StepTwo = ({ formData, onComplete }) => {
   const [email, setEmail] = React.useState("");
   const [tel, setTel] = React.useState("");
 
   const handlePress = () => {
-    onComplete({ stepOneData: value });
+    onComplete({ stepOneData: {} });
   };
 
   return (
+    // inputs paso 2
+    // fec ingreso
+    // fec egreso
+    // contrato
+    // trabajador
+    // jornada
+    // input oc jorn
+    // convenio
+    // cargo
+    // labor orden
+    // pago dia 31
     <View>
       <TextInput
         value={email}
@@ -36,6 +48,12 @@ const StepTwo = ({ formData, onComplete }) => {
         placeholderTextColor={colors.placeholderColor}
       />
       <FormCountry />
+      <GLButton
+        onPressAction={handlePress}
+        type="default"
+        placeholder={"Siguiente"}
+        width={widthPercentageToPx(70)}
+      />
     </View>
   );
 };

@@ -28,32 +28,26 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
   const [formData, setFormData] = useState({});
   const [currentStep, setCurrentStep] = useState(0);
 
+  const handleStepComplete = (data) => {
+    console.log("llego handleStepComplete", data);
+    setFormData({ ...formData, ...data });
+    handleNextStep();
+  };
+
   const steps = [
     {
-      component: <StepIdent onComplete={handleStepComplete} />,
-      // onComplete: setFormData,
+      component: <StepOne onComplete={handleStepComplete} />,
     },
     {
-      component: <StepOne />,
-      onComplete: setFormData,
+      component: <StepTwo onComplete={handleStepComplete} />,
     },
     {
-      component: <StepTwo />,
-      onComplete: setFormData,
+      component: <StepThree onComplete={handleStepComplete} />,
     },
     {
-      component: <StepThree />,
-      onComplete: setFormData,
-    },
-    {
-      component: <StepFour />,
-      onComplete: setFormData,
+      component: <StepFour onComplete={handleStepComplete} />,
     },
   ];
-
-  const handleStepComplete = (data) => {
-    setFormData({ ...formData, ...data });
-  };
 
   const showToast = (smg, type) => {
     Toast.show({
@@ -64,23 +58,11 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
     });
   };
 
-  const validateAndSubmit = async () => {
-    console.log("step", currentStep);
-    console.log("formData", formData);
-    if (!formData.stepIdentData) {
-      showToast("Ingrese su Identificación", "error");
-      return;
-    }
-  };
   const handleNextStep = () => setCurrentStep(currentStep + 1);
   const handlePrevStep = () => setCurrentStep(currentStep - 1);
 
   const StepComponent = steps[currentStep].component;
   const onComplete = steps[currentStep].onComplete;
-
-  const handleSubmit = () => {
-    // handle submit logic here
-  };
 
   return (
     <View style={styles.modalForm}>
@@ -115,16 +97,6 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
               placeholder={"Atras"}
               width={widthPercentageToPx(70)}
             />
-          )}
-          {currentStep < steps.length - 1 && (
-            <View>
-              <GLButton
-                onPressAction={validateAndSubmit}
-                type="default"
-                placeholder={"Siguiente"}
-                width={widthPercentageToPx(70)}
-              />
-            </View>
           )}
           {currentStep === steps.length - 1 && (
             <GLButton

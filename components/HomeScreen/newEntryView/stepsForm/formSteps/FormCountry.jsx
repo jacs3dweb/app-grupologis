@@ -9,31 +9,72 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import listDep from "../../../../../utils/json/depart.json";
+import listMun from "../../../../../utils/json/municip.json";
 import { colors } from "../../../../../utils";
 
 class Formulario extends Component {
-  state = {
-    select1: "Departamento",
-    select2: "Ciudad",
-    modalVisible: false,
-    modalOptions: [],
-    modalSelect: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      select1: props.dep === "" ? "Departamento" : props.dep,
+      select2: props.ciu === "" ? "Ciudad" : props.ciu,
+      optionAb: null,
+      modalVisible: false,
+      modalOptions: [],
+      modalSelect: "",
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.dep !== prevProps.dep || this.props.ciu !== prevProps.ciu) {
+      this.setState({
+        select1: this.props.dep === "" ? "Departamento" : this.props.dep,
+        select2: this.props.ciu === "" ? "Ciudad" : this.props.ciu,
+      });
+    } else if (this.state.select1 !== prevState.select1) {
+      this.setState({
+        select2: "Ciudad",
+      });
+    }
+  }
+
+  handleSelection = (dep, mun) => {
+    console.log("onSelectionChange", dep, mun);
+    this.props.onSelectionChange(dep, mun);
   };
 
   openModal = (select) => {
+    console.log("abrir modal dep ciu", select);
+    console.log("state", this.state.select1);
+    console.log("state", this.props);
     let modalOptions = [];
     switch (select) {
       case "select1":
-        modalOptions = ["Dept 1", "Dept 2", "Dept 3"];
+        modalOptions = listDep.departamentos;
+        console.log(modalOptions);
+        this.setState({
+          modalVisible: true,
+          modalOptions,
+          optionAb: "select1",
+          modalSelect: select,
+        });
         break;
       case "select2":
-        modalOptions = ["City 1", "City 2", "City 3"];
+        if (this.state.select1 != "Departamento") {
+          modalOptions = listMun.municipios;
+          this.setState({
+            modalVisible: true,
+            modalOptions,
+            modalSelect: select,
+          });
+        } else {
+          console.log("Seleccione un departamento");
+        }
         break;
       default:
         break;
     }
-    this.setState({ modalVisible: true, modalOptions, modalSelect: select });
   };
 
   closeModal = () => {
@@ -80,22 +121,51 @@ class Formulario extends Component {
                 color={colors.placeholderColor}
               />
             </TouchableOpacity>
-            {this.state.modalOptions.map((option) => (
-              <TouchableOpacity
-                key={option}
-                onPress={() => {
-                  // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                  this.setState({
-                    [this.state.modalSelect]: option,
-                    modalVisible: false,
-                    modalOptions: [],
-                    modalSelect: "",
-                  });
-                }}
-              >
-                <Text style={styles.modalOption}>{option}</Text>
-              </TouchableOpacity>
-            ))}
+            {this.state.modalOptions.map((option) =>
+              this.state.optionAb == "select1" ? (
+                <TouchableOpacity
+                  key={option.nombre}
+                  onPress={() => {
+                    // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                    this.setState({
+                      [this.state.modalSelect]: option.nombre,
+                      modalVisible: false,
+                      modalOptions: [],
+                      optionAb: null,
+                      modalSelect: "",
+                    });
+                    this.handleSelection(option.nombre, "Ciudad");
+                  }}
+                >
+                  <Text style={styles.modalOption}>{option.nombre}</Text>
+                </TouchableOpacity>
+              ) : (
+                this.state.select1 != "Departamento" &&
+                option.nombreDepart === this.state.select1 && (
+                  <TouchableOpacity
+                    key={option.nombre}
+                    onPress={() => {
+                      // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                      this.setState({
+                        [this.state.modalSelect]: option.nombre,
+                        modalVisible: false,
+                        modalOptions: [],
+                        optionAb: null,
+                        modalSelect: "",
+                      });
+                      console.log("props", this.props);
+                      this.handleSelection(this.state.select1, option.nombre);
+                      // this.props.selCountry = {
+                      //   this.props.selCountry.dep: this.state.select1,
+                      //   mun: this.state.select2,
+                      // };
+                    }}
+                  >
+                    <Text style={styles.modalOption}>{option.nombre}</Text>
+                  </TouchableOpacity>
+                )
+              )
+            )}
           </View>
         </Modal>
       </View>
