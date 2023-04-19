@@ -32,6 +32,22 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
     console.log("llego handleStepComplete", data);
     setFormData({ ...formData, ...data });
     handleNextStep();
+    // switch (currentStep) {
+    //   case 0:
+    //     setStepOneCompleted(true);
+    //     break;
+    //   case 1:
+    //     setStepTwoCompleted(true);
+    //     break;
+    //   case 2:
+    //     setStepThreeCompleted(true);
+    //     break;
+    //   case 3:
+    //     setStepFourCompleted(true);
+
+    //   default:
+    //     break;
+    // }
   };
 
   const steps = [
@@ -39,7 +55,12 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
       component: <StepOne onComplete={handleStepComplete} />,
     },
     {
-      component: <StepTwo onComplete={handleStepComplete} />,
+      component: (
+        <StepTwo
+          onComplete={handleStepComplete}
+          completed={currentStep == 1 ? true : false}
+        />
+      ),
     },
     {
       component: <StepThree onComplete={handleStepComplete} />,

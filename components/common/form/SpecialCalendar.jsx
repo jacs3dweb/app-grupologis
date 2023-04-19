@@ -7,15 +7,25 @@ import { colors, getFontStyles } from "../../../utils";
 
 import MonthYearPicker from "./MonthYearPicker";
 
-let getDaysArray = function (year, month) {
+let getDaysArray = function (year, month, addDay) {
+  console.log("getDaysArray", year, month, addDay);
+  const today = new Date();
+  let day = addDay !== 0 ? today.getDate() + addDay : 1;
   let monthIndex = month - 1;
   let names = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vie", "Sab"];
-  let date = new Date(year, monthIndex, 1);
+  let date = new Date(year, monthIndex, day > 0 ? Math.min(day, 31) : 1);
   let result = [];
   while (date.getMonth() == monthIndex) {
+    let isSelectable = true;
+    if (addDay != 0) {
+      isSelectable = date >= today && ![0, 6].includes(date.getDay());
+    } else {
+      isSelectable = ![0, 6].includes(date.getDay());
+    }
     result.push({
       day: date.getDate().toString().padStart(2, "0"),
-      isSelectable: ![0, 6].includes(date.getDay()),
+      isSelectable: isSelectable,
+      // isSelectable: ![0, 6].includes(date.getDay()),
       weekdayName: names[date.getDay()],
     });
     date.setDate(date.getDate() + 1);
@@ -23,7 +33,7 @@ let getDaysArray = function (year, month) {
   return result;
 };
 
-const SpecialCalendar = ({ placeholder, onChange, value }) => {
+const SpecialCalendar = ({ placeholder, onChange, value, dayAdd = 0 }) => {
   const [selectedDate, setSelectedDate] = useState(moment(value));
   const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -34,12 +44,39 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
   const [dayOptions, setDayOptions] = useState([]);
 
   useEffect(() => {
-    const result = getDaysArray(value.getFullYear(), value.getMonth() + 1);
-
+    console.log("entra useEffect");
+    const result = getDaysArray(
+      value.getFullYear(),
+      value.getMonth() + 1,
+      dayAdd
+    );
     setDayOptions(result);
   }, []);
 
   const handleChangeMonth = (e) => {
+    console.log("cambio el mes", e, dayAdd);
+    if (dayAdd > 0) {
+      const date = new Date();
+      const [month, day, year] = [
+        date.getMonth(),
+        date.getDate(),
+        date.getFullYear(),
+      ];
+
+      if (e < month) {
+        console.log("no puede elegir este mes");
+      } else if (e == month) {
+        const anio = selectedMonthYear.year;
+        console.log("año", selectedMonthYear.year);
+        const resu = getDaysArray(anio, e + 1, dayAdd);
+        setDayOptions(resu);
+      } else {
+        const anio = selectedMonthYear.year;
+        console.log("año", selectedMonthYear.year);
+        const resu = getDaysArray(anio, e + 1, 0);
+        setDayOptions(resu);
+      }
+    }
     setSelectedMonthYear({
       ...selectedMonthYear,
       month: e,
@@ -56,6 +93,7 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
 
     setSelectedDate(selectedDate.set("y", e));
   };
+
   const handleChangeDay = (day) => {
     if (!day.isSelectable) return;
     const dayNumber = day.day;
@@ -74,6 +112,7 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
     setSelectedDay(day.day);
     onChange(selectedDay);
   };
+
   return (
     <SafeAreaView style={styles.specialCalendarContainer}>
       <View style={styles.headerData}>
@@ -98,6 +137,7 @@ const SpecialCalendar = ({ placeholder, onChange, value }) => {
         showsVerticalScrollIndicator={false}
       >
         {dayOptions.map((day) => (
+          // <Text> {JSON.stringify(day)} </Text>
           <Pressable key={day.day} onPress={() => handleChangeDay(day)}>
             <View
               style={styles.dayElement(

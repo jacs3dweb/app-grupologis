@@ -9,6 +9,7 @@ import GLButton from "../../../common/buttons/GLButton";
 import Toast from "react-native-toast-message";
 
 const StepOne = ({ formData, onComplete }) => {
+  // const [completed, setCompleted] = useState(false);
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -58,11 +59,13 @@ const StepOne = ({ formData, onComplete }) => {
   };
 
   useEffect(() => {
+    // if (completed) {
     if (id.length >= 8) {
       // buscar identificacion
       console.log(id);
       getIdentificacionSer();
     }
+    // }
   }, [id]);
 
   const getMunicipio = (idMun) => {
