@@ -18,13 +18,12 @@ import {
 
 class Formulario extends Component {
   state = {
-    select1: "Centro de costos",
-    select2: "Tipo de salario",
-    select3: "Cargo",
-    select4: "Obra / Labor (Descripción)",
-    select5: "Aux / bonificaciones ",
-    inputValue1: "",
-    inputValue2: "",
+    selSalario: "Tipo de salario",
+    selCenCost: "Centro de costos",
+    selCenCost2: "",
+    selAuxBon: "Aux / bonificaciones ",
+    inputValBon: "",
+    inputValSal: "",
     modalVisible: false,
     modalOptions: [],
     modalSelect: "",
@@ -33,20 +32,14 @@ class Formulario extends Component {
   openModal = (select) => {
     let modalOptions = [];
     switch (select) {
-      case "select1":
-        modalOptions = ["empresa 1", "empresa 2", "Opción 3"];
+      case "selSalario":
+        modalOptions = ["Ordinario", "Salario integral"];
         break;
-      case "select2":
-        modalOptions = ["Opción 4", "Opción 5", "Opción 6"];
+      case "selCenCost":
+        modalOptions = this.props.lisCenCost;
         break;
-      case "select3":
-        modalOptions = ["Opción 7", "Opción 8", "Opción 9"];
-        break;
-      case "select4":
-        modalOptions = ["Opción 10", "Opción 11", "Opción 12"];
-        break;
-      case "select5":
-        modalOptions = ["Opción 13", "Opción 14", "Opción 15"];
+      case "selAuxBon":
+        modalOptions = this.props.lisAuxBon;
         break;
       default:
         break;
@@ -65,74 +58,54 @@ class Formulario extends Component {
           {/* Selects */}
           <TouchableOpacity
             style={styles.select}
-            onPress={() => this.openModal("select1")}
+            onPress={() => this.openModal("selCenCost")}
           >
-            <Text style={styles.selectText}>{this.state.select1}</Text>
+            <Text style={styles.selectText}>{this.state.selCenCost}</Text>
             <Ionicons
               name="chevron-down-outline"
               size={24}
               color={colors.placeholderColor}
             />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.select}
-            onPress={() => this.openModal("select2")}
+            onPress={() => this.openModal("selSalario")}
           >
-            <Text style={styles.selectText}>{this.state.select2}</Text>
+            <Text style={styles.selectText}>{this.state.selSalario}</Text>
             <Ionicons
               name="chevron-down-outline"
               size={24}
               color={colors.placeholderColor}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.select}
-            onPress={() => this.openModal("select3")}
-          >
-            <Text style={styles.selectText}>{this.state.select3}</Text>
-            <Ionicons
-              name="chevron-down-outline"
-              size={24}
-              color={colors.placeholderColor}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.select}
-            onPress={() => this.openModal("select4")}
-          >
-            <Text style={styles.selectText}>{this.state.select4}</Text>
-            <Ionicons
-              name="chevron-down-outline"
-              size={24}
-              color={colors.placeholderColor}
-            />
-          </TouchableOpacity>
+
           <TextInput
+            placeholder="Salario Base"
             style={styles.input}
-            placeholder="Salario base"
             placeholderTextColor={colors.placeholderColor}
-            value={this.state.inputValue1}
-            onChangeText={(text) => this.setState({ inputValue1: text })}
+            value={this.state.inputValSal}
+            onChangeText={(text) => this.setState({ inputValSal: text })}
           />
-        </View>
-        <View>
+
           <TouchableOpacity
             style={styles.select}
-            onPress={() => this.openModal("select5")}
+            onPress={() => this.openModal("selAuxBon")}
           >
-            <Text style={styles.selectText}>{this.state.select5}</Text>
+            <Text style={styles.selectText}>{this.state.selAuxBon}</Text>
             <Ionicons
               name="chevron-down-outline"
               size={24}
               color={colors.placeholderColor}
             />
           </TouchableOpacity>
+
           <TextInput
+            placeholder="Valor Auxilio Bonificación"
             style={styles.input}
-            placeholder="Valor de Aux / bonificaciones"
             placeholderTextColor={colors.placeholderColor}
-            value={this.state.inputValue2}
-            onChangeText={(text) => this.setState({ inputValue2: text })}
+            value={this.state.inputValBon}
+            onChangeText={(text) => this.setState({ inputValBon: text })}
           />
         </View>
 
@@ -155,23 +128,57 @@ class Formulario extends Component {
               />
             </TouchableOpacity>
             <View style={styles.selectContainer}>
-              {this.state.modalOptions.map((option) => (
-                <TouchableOpacity
-                  key={option}
-                  style={styles.modalOptionBox}
-                  onPress={() => {
-                    // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                    this.setState({
-                      [this.state.modalSelect]: option,
-                      modalVisible: false,
-                      modalOptions: [],
-                      modalSelect: "",
-                    });
-                  }}
-                >
-                  <Text style={styles.modalOption}>{option}</Text>
-                </TouchableOpacity>
-              ))}
+              {this.state.modalOptions.map((option) =>
+                this.state.modalSelect == "selSalario" ? (
+                  <TouchableOpacity
+                    key={option}
+                    style={styles.modalOptionBox}
+                    onPress={() => {
+                      // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                      this.setState({
+                        [this.state.modalSelect]: option,
+                        modalVisible: false,
+                        modalOptions: [],
+                        modalSelect: "",
+                      });
+                    }}
+                  >
+                    <Text style={styles.modalOption}>{option}</Text>
+                  </TouchableOpacity>
+                ) : this.state.modalSelect == "selCenCost" ? (
+                  <TouchableOpacity
+                    key={option}
+                    style={styles.modalOptionBox}
+                    onPress={() => {
+                      // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                      this.setState({
+                        [this.state.modalSelect]: option,
+                        modalVisible: false,
+                        modalOptions: [],
+                        modalSelect: "",
+                      });
+                    }}
+                  >
+                    <Text style={styles.modalOption}>{option}</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    key={option}
+                    style={styles.modalOptionBox}
+                    onPress={() => {
+                      // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                      this.setState({
+                        [this.state.modalSelect]: option,
+                        modalVisible: false,
+                        modalOptions: [],
+                        modalSelect: "",
+                      });
+                    }}
+                  >
+                    <Text style={styles.modalOption}>{option}</Text>
+                  </TouchableOpacity>
+                )
+              )}
             </View>
           </View>
         </Modal>

@@ -63,7 +63,12 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
       ),
     },
     {
-      component: <StepThree onComplete={handleStepComplete} />,
+      component: (
+        <StepThree
+          onComplete={handleStepComplete}
+          completed={currentStep == 2 ? true : false}
+        />
+      ),
     },
     {
       component: <StepFour onComplete={handleStepComplete} />,
