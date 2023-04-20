@@ -89,8 +89,12 @@ const StepTwo = ({ formData, onComplete, completed }) => {
     console.log("dateIng", dateIng);
     console.log("dateEgr", dateEgr);
     console.log("infoForm", infoForm);
-    let fechaIng = new Date(dateIng.date);
+    const { year, month, day } = dateIng;
+    let fechaIng = new Date(parseInt(year), parseInt(month - 1), parseInt(day));
+    console.log("dateIng.date", fechaIng.getTime());
     let hoy = new Date();
+    const tresDiasMs = 3 * 24 * 60 * 60 * 1000; // milisegundos en 3 días
+    const nuevaFechaMs = hoy.getTime() + tresDiasMs;
 
     const { cargo, contrato, convenio, jornada, trabajador, jornadaPer } =
       infoForm;
@@ -98,7 +102,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
       !laborOrden ||
       !dateIng ||
       !dateEgr ||
-      hoy.getTime() <= fechaIng.getTime() ||
+      nuevaFechaMs > fechaIng.getTime() ||
       contrato.label == "Tipo de contrato" ||
       cargo.label == "Cargo" ||
       convenio.label == "Convenio" ||
@@ -119,6 +123,9 @@ const StepTwo = ({ formData, onComplete, completed }) => {
         stepTwoData: {
           select: infoForm,
           laborOrden: laborOrden,
+          pago31: isDay31,
+          fecIngreso: dateIng.date,
+          fecEgreso: dateEgr.date,
         },
       });
     }

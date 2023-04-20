@@ -32,22 +32,6 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
     console.log("llego handleStepComplete", data);
     setFormData({ ...formData, ...data });
     handleNextStep();
-    // switch (currentStep) {
-    //   case 0:
-    //     setStepOneCompleted(true);
-    //     break;
-    //   case 1:
-    //     setStepTwoCompleted(true);
-    //     break;
-    //   case 2:
-    //     setStepThreeCompleted(true);
-    //     break;
-    //   case 3:
-    //     setStepFourCompleted(true);
-
-    //   default:
-    //     break;
-    // }
   };
 
   const steps = [
@@ -65,13 +49,20 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
     {
       component: (
         <StepThree
+          formData={formData}
           onComplete={handleStepComplete}
           completed={currentStep == 2 ? true : false}
         />
       ),
     },
     {
-      component: <StepFour onComplete={handleStepComplete} />,
+      component: (
+        <StepFour
+          formData={formData}
+          onComplete={handleStepComplete}
+          completed={currentStep == 3 ? true : false}
+        />
+      ),
     },
   ];
 
@@ -126,7 +117,7 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
           )}
           {currentStep === steps.length - 1 && (
             <GLButton
-              onPressAction={onConfirm}
+              onPressAction={() => onConfirm(formData)}
               type="default"
               placeholder={"Enviar"}
               width={widthPercentageToPx(70)}

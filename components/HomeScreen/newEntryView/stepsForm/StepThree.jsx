@@ -1,18 +1,128 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, TextInput, Button, Text, Switch } from "react-native";
 import FormStepThree from "./formSteps/FormStepThree";
 import GLButton from "../../../common/buttons/GLButton";
 import { widthPercentageToPx } from "../../../../utils";
 import FormDotacion from "./formSteps/FormDotacion";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getSer } from "../../../../utils/axiosInstance";
+import Toast from "react-native-toast-message";
 
-const StepThree = ({ formData, onComplete }) => {
-  const [value, setValue] = React.useState("");
+const StepThree = ({ formData, onComplete, completed }) => {
+  const [value, setValue] = React.useState();
   const [dotacion, setDotacion] = useState(false);
+  const [listCenCost, setListCenCost] = useState([]);
+  const [listAuxBon, setListAuxBon] = useState([]);
 
   const toggleDotacion = () => setDotacion((previousState) => !previousState);
 
+  useEffect(() => {
+    console.log("completed", completed);
+    if (completed) {
+      console.log("formData", formData);
+      const getServiciosSel = async () => {
+        let infoLog = await AsyncStorage.getItem("logged");
+        infoLog = JSON.parse(infoLog);
+        const empSel = infoLog.empSel.toUpperCase();
+        const codEmp = infoLog.codEmp;
+        const codCon = formData.stepTwoData.select.convenio.value;
+
+        let pathCenCos = `GetDatosOrdenIngreso.php`;
+        pathCenCos += `?cod_cli=${codEmp}&empresa=${empSel}&cod_conv=${codCon}`;
+        const pathAuxBon = `GetNovedadesFijas.php?empresa=${empSel}`;
+
+        const respCenCos = await getSer(pathCenCos);
+        if (respCenCos == "limitExe") {
+          console.log("limitExe");
+        } else {
+          if (respCenCos.status) {
+            const respAuxBon = await getSer(pathAuxBon);
+            if (respAuxBon.status) {
+              setListCenCost(respCenCos.data.centro_costos);
+              respAuxBon.data.Correcto === 1
+                ? setListAuxBon(respAuxBon.data.novedades)
+                : console.log("error al buscar Aux / bonific");
+            } else {
+              console.log("error al buscar Aux / bonific");
+            }
+          } else {
+            console.log("error al buscar listado de cargos");
+          }
+        }
+      };
+
+      getServiciosSel();
+    }
+  }, [completed]);
+
+  const setSeleccForm = (selec) => {
+    console.log("selecciones formulario step 3", selec);
+    setValue({ ...value, ...selec });
+  };
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
+
   const handlePress = () => {
-    onComplete({ stepOneData: {} });
+    console.log("dotacion", dotacion);
+    console.log("resultados", value);
+    if (value) {
+      const {
+        auxBonif,
+        camisa,
+        centCostos,
+        guantes,
+        overol,
+        pantalon,
+        salario,
+        valorAuxBonifi,
+        valorSalario,
+        zapatos,
+      } = value;
+      console.log("entro");
+      if (
+        auxBonif.label == "Aux / bonificaciones" ||
+        centCostos.label == "Centro de costos" ||
+        salario.label == "Tipo de salario" ||
+        valorAuxBonifi.label == "" ||
+        valorSalario.label == ""
+      ) {
+        showToast("Por favor, rellene todos los campos", "error");
+        console.log("Por favor, rellene todos los campos", "error");
+      } else if (
+        dotacion &&
+        (!zapatos ||
+          !pantalon ||
+          !guantes ||
+          !overol ||
+          !camisa ||
+          zapatos.label == "" ||
+          pantalon.label == "" ||
+          guantes.label == "Talla guantes" ||
+          overol.label == "Talla overol" ||
+          camisa.label == "Talla Camisa")
+      ) {
+        showToast("Por favor, rellene todos los campos", "error");
+        console.log("Por favor, rellene todos los campos", "error");
+      } else {
+        console.log("enviar todo");
+        onComplete({
+          stepThreeData: {
+            select: value,
+            dotacion: dotacion,
+          },
+        });
+      }
+    } else {
+      showToast("Por favor, rellene todos los campos", "error");
+      console.log("Por favor, rellene todos los campos", "error");
+    }
   };
 
   return (
@@ -23,8 +133,12 @@ const StepThree = ({ formData, onComplete }) => {
     // auxilio bon valor
     // dotacion
     <View>
-      <FormStepThree />
-      <Text>Doatacion Aspirante</Text>
+      <FormStepThree
+        lisCenCost={listCenCost}
+        lisAuxBon={listAuxBon}
+        onSelectionChange={setSeleccForm}
+      />
+      <Text>Dotacion Aspirante</Text>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={dotacion ? "#f5dd4b" : "#f4f3f4"}
@@ -32,7 +146,7 @@ const StepThree = ({ formData, onComplete }) => {
         onValueChange={toggleDotacion}
         value={dotacion}
       />
-      {dotacion && <FormDotacion />}
+      {dotacion && <FormDotacion onSelectionChange={setSeleccForm} />}
       <GLButton
         onPressAction={handlePress}
         type="default"

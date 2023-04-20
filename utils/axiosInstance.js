@@ -50,3 +50,14 @@ export const getSer = async (path) => {
     return { status: false, data: null };
   }
 };
+
+export const postSer = async (path, body) => {
+  try {
+    const url = `${urlSer}${path}`;
+    const response = await axios.post(url, body);
+    return { status: true, data: response.data };
+  } catch (error) {
+    console.error(error);
+    return { status: false, data: null };
+  }
+};

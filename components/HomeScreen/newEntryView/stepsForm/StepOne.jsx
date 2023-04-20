@@ -46,6 +46,7 @@ const StepOne = ({ formData, onComplete }) => {
     }
     onComplete({
       stepOneData: {
+        identificacion: id,
         nombre,
         apellido,
         segundoNombre,

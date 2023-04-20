@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { colors, heightPercentageToPx } from "../../../../../utils";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -10,10 +17,15 @@ class FormDotacion extends Component {
     selCamisa: "Talla Camisa",
     tallPantalon: "",
     tallZapatos: "",
+    modalVisible: false,
+    modalOptions: [],
+    modalSelect: "",
   };
 
   openModal = (select) => {
+    // let modalOptions = [];
     let modalOptions = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+    // console.log("optionsIns", optionsIns);
     switch (select) {
       case "selGuantes":
         modalOptions = modalOptions;
@@ -28,13 +40,37 @@ class FormDotacion extends Component {
         break;
     }
     this.setState({ modalVisible: true, modalOptions, modalSelect: select });
+    console.log("openModal", this.state);
   };
 
   closeModal = () => {
     this.setState({ modalVisible: false });
   };
 
+  handleSelection = () => {
+    const state = this.state;
+    console.log("state handleSelection", state);
+    this.props.onSelectionChange({
+      camisa: {
+        label: state.selCamisa,
+      },
+      guantes: {
+        label: state.selGuantes,
+      },
+      overol: {
+        label: state.selOverol,
+      },
+      pantalon: {
+        label: state.tallPantalon,
+      },
+      zapatos: {
+        label: state.tallZapatos,
+      },
+    });
+  };
+
   render() {
+    console.log("render", this.state);
     return (
       <View style={styles.container}>
         <View style={styles.boxForm}>
@@ -76,6 +112,7 @@ class FormDotacion extends Component {
 
           <TextInput
             placeholder="Talla pantalon"
+            keyboardType="numeric"
             onChangeText={(text) => {
               this.setState({ tallPantalon: text }, () => {
                 this.handleSelection();
@@ -88,6 +125,7 @@ class FormDotacion extends Component {
 
           <TextInput
             placeholder="Talla zapatos"
+            keyboardType="numeric"
             onChangeText={(text) => {
               this.setState({ tallZapatos: text }, () => {
                 this.handleSelection();
@@ -97,6 +135,51 @@ class FormDotacion extends Component {
             style={styles.input}
             value={this.state.tallZapatos}
           />
+
+          {/* Modal */}
+          <Modal
+            visible={this.state.modalVisible}
+            animationType="slide"
+            transparent={true}
+            backgroundColor="white"
+          >
+            <View style={styles.modal}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => this.closeModal()}
+              >
+                <Ionicons
+                  name="md-close"
+                  size={32}
+                  color={colors.placeholderColor}
+                />
+              </TouchableOpacity>
+              <View style={styles.selectContainer}>
+                {this.state.modalOptions.map((option) => (
+                  <TouchableOpacity
+                    key={option}
+                    style={styles.modalOptionBox}
+                    onPress={() => {
+                      // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
+                      this.setState(
+                        {
+                          [this.state.modalSelect]: option,
+                          modalVisible: false,
+                          modalOptions: [],
+                          modalSelect: "",
+                        },
+                        () => {
+                          this.handleSelection();
+                        }
+                      );
+                    }}
+                  >
+                    <Text style={styles.modalOption}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          </Modal>
         </View>
       </View>
     );

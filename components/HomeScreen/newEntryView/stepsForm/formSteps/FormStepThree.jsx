@@ -21,7 +21,8 @@ class Formulario extends Component {
     selSalario: "Tipo de salario",
     selCenCost: "Centro de costos",
     selCenCost2: "",
-    selAuxBon: "Aux / bonificaciones ",
+    selAuxBon: "Aux / bonificaciones",
+    selAuxBon2: "",
     inputValBon: "",
     inputValSal: "",
     modalVisible: false,
@@ -49,6 +50,30 @@ class Formulario extends Component {
 
   closeModal = () => {
     this.setState({ modalVisible: false });
+  };
+
+  handleSelection = () => {
+    const state = this.state;
+    console.log("state handleSelection", state);
+    this.props.onSelectionChange({
+      auxBonif: {
+        label: state.selAuxBon,
+        value: state.selAuxBon2,
+      },
+      centCostos: {
+        label: state.selCenCost,
+        value: state.selCenCost2,
+      },
+      salario: {
+        label: state.selSalario,
+      },
+      valorSalario: {
+        label: state.inputValSal,
+      },
+      valorAuxBonifi: {
+        label: state.inputValBon,
+      },
+    });
   };
 
   render() {
@@ -83,9 +108,14 @@ class Formulario extends Component {
           <TextInput
             placeholder="Salario Base"
             style={styles.input}
+            keyboardType="numeric"
             placeholderTextColor={colors.placeholderColor}
             value={this.state.inputValSal}
-            onChangeText={(text) => this.setState({ inputValSal: text })}
+            onChangeText={(text) =>
+              this.setState({ inputValSal: text }, () => {
+                this.handleSelection();
+              })
+            }
           />
 
           <TouchableOpacity
@@ -103,9 +133,14 @@ class Formulario extends Component {
           <TextInput
             placeholder="Valor Auxilio Bonificación"
             style={styles.input}
+            keyboardType="numeric"
             placeholderTextColor={colors.placeholderColor}
             value={this.state.inputValBon}
-            onChangeText={(text) => this.setState({ inputValBon: text })}
+            onChangeText={(text) =>
+              this.setState({ inputValBon: text }, () => {
+                this.handleSelection();
+              })
+            }
           />
         </View>
 
@@ -128,54 +163,78 @@ class Formulario extends Component {
               />
             </TouchableOpacity>
             <View style={styles.selectContainer}>
-              {this.state.modalOptions.map((option) =>
+              {this.state.modalOptions.map((option, index) =>
                 this.state.modalSelect == "selSalario" ? (
                   <TouchableOpacity
                     key={option}
                     style={styles.modalOptionBox}
                     onPress={() => {
                       // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                      this.setState({
-                        [this.state.modalSelect]: option,
-                        modalVisible: false,
-                        modalOptions: [],
-                        modalSelect: "",
-                      });
+                      this.setState(
+                        {
+                          [this.state.modalSelect]: option,
+                          modalVisible: false,
+                          modalOptions: [],
+                          modalSelect: "",
+                        },
+                        () => {
+                          this.handleSelection();
+                        }
+                      );
                     }}
                   >
                     <Text style={styles.modalOption}>{option}</Text>
                   </TouchableOpacity>
                 ) : this.state.modalSelect == "selCenCost" ? (
                   <TouchableOpacity
-                    key={option}
+                    key={index}
                     style={styles.modalOptionBox}
                     onPress={() => {
                       // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                      this.setState({
-                        [this.state.modalSelect]: option,
-                        modalVisible: false,
-                        modalOptions: [],
-                        modalSelect: "",
-                      });
+                      this.setState(
+                        {
+                          [this.state.modalSelect]: option.conv_cco_des.trim(),
+                          selCenCost: option.conv_cco_des.trim(),
+                          selCenCost2: option.conv_cco.trim(),
+                          modalVisible: false,
+                          modalOptions: [],
+                          modalSelect: "",
+                        },
+                        () => {
+                          this.handleSelection();
+                        }
+                      );
                     }}
                   >
-                    <Text style={styles.modalOption}>{option}</Text>
+                    <Text style={styles.modalOption}>
+                      {option.conv_cco_des.trim()}
+                    </Text>
                   </TouchableOpacity>
                 ) : (
+                  // select selAuxBon Auxilio / bonificacion
                   <TouchableOpacity
-                    key={option}
+                    key={option.cod_con.trim()}
                     style={styles.modalOptionBox}
                     onPress={() => {
                       // Aquí actualizamos el estado del select correspondiente con la opción seleccionada
-                      this.setState({
-                        [this.state.modalSelect]: option,
-                        modalVisible: false,
-                        modalOptions: [],
-                        modalSelect: "",
-                      });
+                      this.setState(
+                        {
+                          [this.state.modalSelect]: option.nom_con.trim(),
+                          selAuxBon: option.nom_con.trim(),
+                          selAuxBon2: option.cod_con.trim(),
+                          modalVisible: false,
+                          modalOptions: [],
+                          modalSelect: "",
+                        },
+                        () => {
+                          this.handleSelection();
+                        }
+                      );
                     }}
                   >
-                    <Text style={styles.modalOption}>{option}</Text>
+                    <Text style={styles.modalOption}>
+                      {option.nom_con.trim()}
+                    </Text>
                   </TouchableOpacity>
                 )
               )}
@@ -235,7 +294,7 @@ const styles = StyleSheet.create({
   modalOptionBox: {
     fontSize: 15,
     padding: 18,
-    borderWidth: "1px",
+    borderWidth: 1,
     borderColor: colors.purpleIcons,
     borderRadius: 10,
     marginBottom: 15,
