@@ -11,12 +11,12 @@ import {
 
 import NewEntryCard from "./NewEntryCard";
 
-const NewEntryList = () => {
-  const { newingList } = useContext(newingContext);
+const NewEntryList = (props) => {
+  const { newingList } = props;
 
   return (
     <View style={styles.newsListContainer}>
-      <View> 
+      <View>
         {newingList.map((n5, index5) => (
           <NewEntryCard key={index5} {...n5} />
         ))}

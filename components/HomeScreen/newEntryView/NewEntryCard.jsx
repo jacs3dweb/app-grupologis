@@ -19,17 +19,20 @@ const NewEntryCard = (props) => {
     <View style={styles.cardContainer}>
       <View style={styles.leftContent}>
         <View style={styles.cardColumn}>
-          <CardElement head={"RAD."} content={props.RAD} />
-          <CardElement head={"Nombre"} content={props.nombre} />
+          <CardElement head={"RAD."} content={props.ID_oi} />
+          <CardElement
+            head={"Nombre"}
+            content={props.nom1_emp + " " + props.ap1_emp}
+          />
         </View>
 
         <View style={styles.cardColumn}>
-          <CardElement head={"Fecha"} content={props.fechaEnvio} />
-          <CardElement head={"Cargo"} content={props.cargo} />
+          <CardElement head={"Fecha"} content={props.fecha_ing} />
+          <CardElement head={"Cargo"} content={props.tip_tra} />
         </View>
       </View>
       <View style={styles.cardColumn}>
-        <CardElement head={"Identificacion"} content={props.Identificacion} />
+        <CardElement head={"Identificacion"} content={props.cod_emp} />
       </View>
 
       <View style={styles.rightContent}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
@@ -18,6 +18,9 @@ const NewEntryView = (props) => {
   const { navigation } = props;
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState(true);
+  const [listNoved, setListNoved] = useState([]);
+
+  useEffect(() => {}, []);
 
   const selectFechaActual = () => {
     let fecha = new Date();
@@ -116,7 +119,13 @@ const NewEntryView = (props) => {
       const { data } = respApi;
       console.log("data", data);
       if (data.status) {
-        showToast("Orden de ingreso creada", "success");
+        setShowForm(false);
+
+        setTimeout(() => {
+          setModal(false);
+          setShowForm(true);
+          getNovedadesAll();
+        }, 3000);
         console.log("Orden de ingreso creada", "success");
       } else {
         showToast("Error en el servidor", "error");
@@ -126,13 +135,31 @@ const NewEntryView = (props) => {
       showToast("Ocurrio un error en el servidor", "error");
       console.log("Ocurrio un error en el servidor", "error");
     }
-    // setShowForm(false);
-
-    // setTimeout(() => {
-    //   setModal(false);
-    //   setShowForm(true);
-    // }, 3000);
   };
+
+  const getNovedadesAll = async () => {
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel.trim().toUpperCase();
+    const codEmp = infoLog.codEmp;
+
+    const path = `ConsultarOrdenIngreso.php?cod_cli=${codEmp}&empresa=${empSel}`;
+    const respApi = await getSer(path);
+    if (respApi.status) {
+      const { data } = respApi;
+      if (data.orden_ingreso != null) {
+        setListNoved(data.orden_ingreso);
+      } else {
+        setListNoved([]);
+      }
+    } else {
+      showToast("Error al buscar las novedades", "error");
+      console.log("Error al buscar las novedades", "error");
+    }
+  };
+
+  getNovedadesAll();
+
   return (
     <Layout props={{ ...props }}>
       <ScrollView
@@ -147,7 +174,7 @@ const NewEntryView = (props) => {
           onPressAction={() => setModal(!modal)}
           handleGoBack={() => navigation.navigate("EmployeeManagement")}
         />
-        <NewEntryList />
+        <NewEntryList newingList={listNoved} />
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>

@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
 import Layout from "../components/layout/Layout";
@@ -17,12 +17,50 @@ import {
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../utils";
+import Toast from "react-native-toast-message";
 
 import NewsDailyCard from "../components/HomeScreen/newsDaily/newsDailyCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { get } from "../utils/axiosInstance";
 
 const NewsDailyView = (props) => {
   const { navigation } = props;
+  const [listNotic, setListNotic] = useState([]);
+  const urlImg = "https://appgrupologis.com/app/managers/usuario/";
 
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
+
+  const getNews = async () => {
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+    let path = "noticia/getNoticiasHabilitadas.php";
+    path += `?empresaId=${empSel}&tipousuarioId=${codEmp}`;
+    const respApi = await get(path);
+    const { status, data } = respApi;
+    if (status) {
+      if (data != "ERROR") {
+        const cantNews = data.shift();
+        setListNotic(data);
+      } else {
+        setListNotic([]);
+      }
+    } else {
+      showToast("Error al obtener noticias", "error");
+      console.log("Error al obtener noticias", "error");
+      setListNotic([]);
+    }
+  };
+
+  getNews();
   return (
     <Layout props={{ ...props }}>
       <CardEinfo
@@ -33,12 +71,13 @@ const NewsDailyView = (props) => {
       />
 
       <ScrollView styles={styles.inputContainer}>
-        {notices.map((e) => (
+        {listNotic.map((e, i) => (
           <NewsDailyCard
-            descNot={e.description}
-            titleNot={e.title}
-            id={e.id}
-            imageNot={e.image}
+            key={i}
+            descNot={e.mensaje}
+            titleNot={e.titulo}
+            id={i}
+            imageNot={urlImg + e.ruta}
           />
         ))}
       </ScrollView>

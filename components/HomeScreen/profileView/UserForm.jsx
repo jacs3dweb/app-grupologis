@@ -3,53 +3,79 @@ import React from "react";
 import FormInput from "./FormInput";
 import GLButton from "../../common/buttons/GLButton";
 import { heightPercentageToPx, widthPercentageToPx } from "../../../utils";
+import FormuBussines from "../../LoginScreen/FormBussinessEntry/FormBussinesEntry";
 
 const UserForm = ({ userData, handleChange, handleUpdateUser }) => {
+  console.log("userData", userData);
+  // undefined;
+  const estadoCiv = [
+    [
+      { label: "DESCONOCIDO", value: "0" },
+      { label: "SOLTERO", value: "1" },
+      { label: "CASADO", value: "2" },
+      { label: "VIUDO", value: "3" },
+      { label: "UNION LIBRE", value: "4" },
+      { label: "RELIGIOSO", value: "5" },
+      { label: "OTRO", value: "6" },
+    ],
+  ];
   return (
     <View style={styles.formContainer}>
       <FormInput
-        name="name"
-        label={"Nombre"}
-        value={userData.name}
-        onChange={handleChange}
-      />
-      <FormInput
         type="numeric"
-        name="identification"
+        name="codEmp"
         label={"Identificación"}
-        value={userData.identification}
+        value={userData.codEmp}
         onChange={handleChange}
       />
       <FormInput
-        name="business"
-        label={"Empresa"}
-        value={userData.business?.label}
-        onChange={handleChange}
-        disabled={true}
-      />
-      <FormInput
-        name="direction"
+        name={userData.Direccion !== undefined ? "Direccion" : "dir_res"}
         label={"Dirección"}
-        value={userData.direction}
+        value={userData.Direccion ?? userData.dir_res}
         onChange={handleChange}
         disabled={false}
       />
       <FormInput
-        name="email"
+        name={userData.Correo !== undefined ? "Correo" : "e_mail"}
         type="email-address"
         label={"Email"}
-        value={userData.email}
+        value={userData.Correo ?? userData.e_mail}
         onChange={handleChange}
         disabled={false}
       />
       <FormInput
         type="phone-pad"
-        name="phone"
+        name={userData.Telefono !== undefined ? "Telefono" : "tel_res"}
         label={"Teléfono"}
-        value={userData.phone}
+        value={userData.Telefono ?? userData.tel_res}
         onChange={handleChange}
         disabled={false}
       />
+      {userData.type === "employee" && (
+        <>
+          <FormInput
+            type="numeric"
+            name="tel_cel"
+            label={"Celular"}
+            value={userData.tel_cel}
+            onChange={handleChange}
+            disabled={false}
+          />
+          <FormInput
+            name="empSel"
+            label={"Empresa"}
+            value={userData.empSel}
+            onChange={handleChange}
+            disabled={false}
+          />
+          <Text>Estado Civil</Text>
+          <FormuBussines
+            title={userData.Est_Civ.trim()}
+            list={estadoCiv[0]}
+            onOptionSel={(e) => handleChange("Id_Est_Civ", e)}
+          />
+        </>
+      )}
       <GLButton
         type={"default"}
         placeholder="Actualizar"

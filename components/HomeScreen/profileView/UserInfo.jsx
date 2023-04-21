@@ -10,17 +10,24 @@ import {
   widthPercentageToPx,
 } from "../../../utils";
 
-const UserInfo = () => {
-  const { userData } = useContext(authContext);
+const UserInfo = (props) => {
+  const { userData } = props;
+  console.log("userData info", userData);
+  console.log("userData info");
   return (
     <View style={styles.userInfoContainer}>
-      {userData.image ? (
+      {typeof userData.foto == "object" ? (
         <View>
-          <Image style={styles.userImg} source={{ uri: userData.image }} />
+          <Image
+            style={styles.userImg}
+            source={{
+              uri: `data:${userData.foto.mimetype};base64,${userData.foto.file}`,
+            }}
+          />
         </View>
       ) : (
         <View>
-          {userData.gender === "male" ? (
+          {userData.sexo === "M" ? (
             <Image style={styles.userImg} source={{ uri: userData.imgmale }} />
           ) : (
             <Image
@@ -30,9 +37,12 @@ const UserInfo = () => {
           )}
         </View>
       )}
-      <Text style={styles.nameText}>{userData.name}</Text>
+      <Text style={styles.nameText}>
+        {userData.Nombre ?? userData.nom1_emp + " " + userData.ap1_emp}
+      </Text>
+
       <Text style={styles.roleText}>
-        {userData.role === "business" ? "Empresa" : "Empleado"}
+        {userData.type === "business" ? "Empresa" : "Empleado"}
       </Text>
     </View>
   );

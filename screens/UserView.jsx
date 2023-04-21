@@ -1,25 +1,96 @@
-import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import UserForm from "../components/HomeScreen/profileView/UserForm";
 import UserInfo from "../components/HomeScreen/profileView/UserInfo";
 import Layout from "../components/layout/Layout";
 import authContext from "../context/auth/authContext";
 import { heightPercentageToPx, widthPercentageToPx } from "../utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchPost } from "../utils/functions";
+import Toast from "react-native-toast-message";
 
 const UserView = ({ props }) => {
   const { userData, updateUser } = useContext(authContext);
-  const [data, setData] = useState({ ...userData });
+  const [dataUs, setDataUs] = useState({ ...userData });
+
+  const getUserDataFromAsyncStorage = async () => {
+    try {
+      const userDataJSON = await AsyncStorage.getItem("logged");
+      if (userDataJSON !== null) {
+        const userData = JSON.parse(userDataJSON);
+        console.log("userData", userData);
+        setDataUs(userData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserDataFromAsyncStorage();
+  }, []);
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
 
   const handleChangeInput = (field, value) => {
-    setData({
-      ...data,
+    console.log("handleChangeInput", field, value);
+    setDataUs({
+      ...dataUs,
       [field]: value,
     });
   };
 
-  const handleUpdateUser = () => {
-    updateUser(data);
+  const handleUpdateUser = async () => {
+    try {
+      console.log("update info", dataUs);
+      let infoLog = await AsyncStorage.getItem("logged");
+      infoLog = JSON.parse(infoLog);
+
+      let path;
+      let info;
+      if (infoLog.type === "employee") {
+        // es 1
+        path = "usuario/getLoadEditar.php";
+        info = `CodEmpleado=${dataUs.codEmp.trim()}&Direccion=${dataUs.dir_res.trim()}&Email=${dataUs.e_mail.trim()}`;
+        info += `&Telefono=${dataUs.tel_res.trim()}&Celular=${dataUs.tel_cel.trim()}`;
+        info += `&EstadoCivil=${dataUs.Id_Est_Civ.trim()}&Empresa=${dataUs.empSel.trim()}`;
+      } else {
+        // es 2
+        path = "usuario/getLoadEditarClien.php";
+        info = `NitCliente=${dataUs.codEmp.trim()}&Direccion=${dataUs.Direccion.trim()}`;
+        info += `&Email=${dataUs.Correo.trim()}&Telefono=${dataUs.Telefono.trim()}`;
+      }
+
+      console.log(info, path);
+      const respApi = await fetchPost(path, info);
+      console.log("respApi", respApi);
+      const { status, data } = respApi;
+      if (status) {
+        if (data == "Perfil actualizado correctamente") {
+          showToast("Perfil actualizado correctamente", "success");
+          console.log("Perfil actualizado correctamente", "success");
+          await updateUser(dataUs);
+          await AsyncStorage.setItem("logged", JSON.stringify(dataUs));
+        } else {
+          showToast("Ocurrio un error al actualizar", "error");
+          console.log("Ocurrio un error al actualizar", "error");
+        }
+      } else {
+        showToast("Ocurrio un error en el servidor", "error");
+        console.log("Ocurrio un error en el servidor", "error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <Layout props={{ ...props }}>
       <ScrollView
@@ -27,9 +98,9 @@ const UserView = ({ props }) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <UserInfo data={data} />
+        <UserInfo userData={dataUs} />
         <UserForm
-          userData={data}
+          userData={dataUs}
           handleChange={handleChangeInput}
           handleUpdateUser={handleUpdateUser}
         />

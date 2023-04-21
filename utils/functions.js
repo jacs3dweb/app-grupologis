@@ -14,7 +14,10 @@ export function validatePhone(phone) {
 async function getToken() {
   const path = "usuario/GetToken.php";
   const respToken = await get(path);
-  return respToken.substring(5, respToken.length - 5);
+  if (respToken.status) {
+    const { data } = respToken;
+    return data.substring(5, data.length - 5);
+  }
 }
 
 const characteres = () => {

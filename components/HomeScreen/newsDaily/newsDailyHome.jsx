@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -12,22 +13,66 @@ import {
 } from "../../../utils";
 
 import NewsDailyHomeCard from "./newsDailyHomeCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { get } from "../../../utils/axiosInstance";
 
 const newsDailyHome = ({ closeM }) => {
   const navigation = useNavigation();
+  const [listNotic, setListNotic] = useState([]);
+  const urlImg = "https://appgrupologis.com/app/managers/usuario/";
+
+  // useEffect(() => {}, []);
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
+
+  const getNews = async () => {
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+    let path = "noticia/getNoticiasHabilitadas.php";
+    path += `?empresaId=${empSel}&tipousuarioId=${codEmp}`;
+    const respApi = await get(path);
+    const { status, data } = respApi;
+    if (status) {
+      if (data != "ERROR") {
+        data.shift();
+        data.splice(data.length - 3, 3);
+        setListNotic(data);
+      } else {
+        setListNotic([]);
+      }
+    } else {
+      showToast("Error al obtener noticias", "error");
+      console.log("Error al obtener noticias", "error");
+      setListNotic([]);
+    }
+  };
+
+  getNews();
   return (
     <View styles={styles.modalnForm}>
       <View style={styles.titlesContainer}>
         <Text style={styles.subtitle}>Noticias</Text>
       </View>
       <View styles={styles.inputContainer}>
-        {notices.map((e) => (
-          <NewsDailyHomeCard
-            descNot={e.description}
-            titleNot={e.title}
-            id={e.id}
-            imageNot={e.image}
-          />
+        {listNotic.map((e, i) => (
+          <Pressable onPress={() => navigation.navigate("NewsDailyView")}>
+            <NewsDailyHomeCard
+              key={i}
+              descNot={e.mensaje}
+              titleNot={e.titulo}
+              id={i}
+              imageNot={urlImg + e.ruta}
+            />
+          </Pressable>
         ))}
       </View>
       <Pressable onPress={() => navigation.navigate("NewsDailyView")}>

@@ -12,10 +12,10 @@ export const get = async (path) => {
   try {
     const url = `${urlApi}${path}`;
     const response = await axios.get(url);
-    return response.data;
+    return { status: true, data: response.data };
   } catch (error) {
     console.error(error);
-    return false;
+    return { status: false, data: null };
   }
 };
 
