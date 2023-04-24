@@ -13,6 +13,7 @@ import {
   images,
   widthPercentageToPx,
 } from "../../utils";
+import Toast from "react-native-toast-message";
 
 import { Feather } from "@expo/vector-icons";
 import { useRef, useState } from "react";
@@ -37,8 +38,18 @@ const Code = ({ navigation }) => {
     const codeDec = decode(codeEnc);
     const codeVer = codeDec.slice(3, -2);
 
+    const showToast = (smg, type) => {
+      Toast.show({
+        type: type, //"success", error
+        text1: smg,
+        position: "bottom",
+        visibilityTime: 2000,
+      });
+    };
+
     if (code.length !== 4 || code != codeVer) {
       console.log("el código no es válido");
+      showToast("El código no es válido", "error");
       return;
     } else {
       navigation.navigate("BusinessEntry", { type: "business" });

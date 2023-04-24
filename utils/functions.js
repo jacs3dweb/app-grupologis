@@ -11,12 +11,14 @@ export function validatePhone(phone) {
   return phone.length != 10 ? false : /^\d+$/.test(phone);
 }
 
-async function getToken() {
+async function getToken(limit = "") {
   const path = "usuario/GetToken.php";
-  const respToken = await get(path);
-  if (respToken.status) {
-    const { data } = respToken;
-    return data.substring(5, data.length - 5);
+  const respToken = await get(path, limit);
+  const { data, status } = respToken;
+  if (status) {
+    return { status: true, data: data.substring(5, data.length - 5) };
+  } else {
+    return { status: false, data };
   }
 }
 
@@ -33,15 +35,19 @@ const characteres = () => {
   return [init, fin];
 };
 
-export async function fetchPost(path, body) {
-  const token = await getToken();
+export async function fetchPost(path, body, limit = "") {
+  const minSec = typeof limit == "number" ? limit : 20000;
+  const token = await getToken(minSec);
   const carac = await characteres();
+  if (token.status) {
+    body += `&token=${token.data}`;
+    const encodedBody = encode(body);
+    const data = `value=${carac[0]}${encodedBody}${carac[1]}`;
 
-  body += `&token=${token}`;
-  const encodedBody = encode(body);
-  const data = `value=${carac[0]}${encodedBody}${carac[1]}`;
-
-  return await post(path, data);
+    return await post(path, data);
+  } else {
+    return { status: false, data: token.data };
+  }
 }
 
 export const downloadArchivoAndroid = async (base64, mime, name) => {

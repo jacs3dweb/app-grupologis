@@ -11,6 +11,7 @@ import {
 
 import { FontAwesome5 } from "@expo/vector-icons";
 import BillsCard from "./BillsCard";
+import ReplyMessage from "../../common/messages/ReplyMessage";
 
 const BillsList = (props) => {
   const { billsList } = props;
@@ -18,9 +19,11 @@ const BillsList = (props) => {
   return (
     <View style={styles.newsListContainer}>
       <View>
-        {billsList.map((n3, index3) => (
-          <BillsCard key={index3} {...n3} />
-        ))}
+        {billsList.length > 0 ? (
+          billsList.map((n3, index3) => <BillsCard key={index3} {...n3} />)
+        ) : (
+          <ReplyMessage message="Sin Resultados" />
+        )}
       </View>
     </View>
   );

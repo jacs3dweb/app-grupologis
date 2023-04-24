@@ -1,13 +1,22 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Modal, Pressable, StyleSheet, View } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
-import { colors } from "../../../utils";
+import {
+  colors,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
 import CardElement from "../newsView/components/CardElement";
 import ShowInfo from "./stepsForm/ShowInfo";
+import { TouchableOpacity } from "react-native";
 
 const NewEntryCard = (props) => {
   const [modal, setModal] = useState(false);
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   return (
     <View style={styles.cardContainer}>
@@ -44,8 +53,20 @@ const NewEntryCard = (props) => {
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
           <View style={styles.modalContainer}>
-            <View style={styles.modalContainer}>
-              <ShowInfo module="NovIngreso" info={props} />
+            <View style={styles.modal}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => closeModal()}
+              >
+                <Ionicons
+                  name="md-close"
+                  size={32}
+                  color={colors.placeholderColor}
+                />
+              </TouchableOpacity>
+              <View style={styles.modalContainer}>
+                <ShowInfo modul="NovIngreso" info={props} />
+              </View>
             </View>
           </View>
         </Modal>
@@ -93,8 +114,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 7,
   }),
+  modal: {
+    backgroundColor: "white",
+    width: widthPercentageToPx(100),
+    height: heightPercentageToPx(100),
+    borderRadius: 40,
+    padding: 30,
+    position: "absolute",
+    bottom: -20,
+  },
   modalContainer: {
-    justifyContent: "center",
+    flex: 1,
+    margin: 16,
+    borderRadius: 8,
+    height: 20,
     alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import {
   colors,
@@ -16,13 +16,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 import FormBillsModal from "../billView/FormBillsModal";
 import FormInicFin from "../newsView/components/FormInicFin";
+import LoaderProgContext from "../../../context/loader/LoaderProgContext";
 
 const DownloadableCard = ({ title, desc, image, id }) => {
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState("");
+  const [reload, setReload] = useState(false);
+  const { setLoaderProg } = useContext(LoaderProgContext);
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
 
   const getCerLaboral = async () => {
     // descargar certificado laboral
+    setLoaderProg(true);
+    setReload(false);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
@@ -32,30 +46,30 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     const path = "usuario/getCertificadoLaboral.php";
     const respApi = await fetchPost(path, info);
     console.log(respApi);
-    if (respApi.status) {
-      const data = respApi.data;
+    const { status, data } = respApi;
+    if (status) {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else {
-        Toast.show({
-          type: "error",
-          text1: "Error en el servidor",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error en el servidor",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
     }
   };
 
   const getIngresoRete = async () => {
     // descargar ingreso y retencion
+    setLoaderProg(true);
+    setReload(false);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
@@ -67,30 +81,30 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     console.log(info, path);
     const respApi = await fetchPost(path, info);
     console.log(respApi);
-    if (respApi.status) {
-      const data = respApi.data;
+    const { status, data } = respApi;
+    if (status) {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else {
-        Toast.show({
-          type: "error",
-          text1: "Error en el servidor",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error en el servidor",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
     }
   };
 
   const getHojaVidaLab = async () => {
     // descargar hoja de vida laboral
+    setLoaderProg(true);
+    setReload(false);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
@@ -102,37 +116,33 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
     const respApi = await fetchPost(path, info);
     console.log(respApi);
-    if (respApi.status) {
-      const data = respApi.data;
+    const { status, data } = respApi;
+    if (status) {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else if (data.trim() == "VACIO") {
-        Toast.show({
-          type: "error",
-          text1: "El documento no existe",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("El documento no existe", "error");
+        setLoaderProg(false);
       } else {
-        Toast.show({
-          type: "error",
-          text1: "Error en el servidor",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error en el servidor",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
     }
   };
 
   const getCapacitations = async () => {
     // descargar capacitaciones
+    setLoaderProg(true);
+    setReload(false);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const codEmp = infoLog.codEmp;
@@ -142,38 +152,34 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
     const respApi = await fetchPost(path, info);
     console.log(respApi);
-    if (respApi.status) {
-      const data = respApi.data;
+    const { status, data } = respApi;
+    if (status) {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else if (data.trim() == "VACIO") {
-        Toast.show({
-          type: "error",
-          text1: "El documento no existe",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("El documento no existe", "error");
+        setLoaderProg(false);
       } else {
-        Toast.show({
-          type: "error",
-          text1: "Error en el sistema",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error en el sistema",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
     }
   };
 
   const getPayrollFlyer = async (val) => {
     // descargar volante nomina
     setModal(false);
+    setLoaderProg(true);
+    setReload(false);
     const path =
       showForm === "generalPayroll"
         ? "usuario/getVolanteNominaGeneral.php"
@@ -193,25 +199,23 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     console.log(path, info);
     const respApi = await fetchPost(path, info);
     console.log("respuesta", respApi);
-    if (respApi.status) {
-      const data = respApi.data;
+    const { status, data } = respApi;
+    if (status) {
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else {
-        Toast.show({
-          type: "error",
-          text1: "Error en el servidor",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error en el servidor",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
     }
   };
 
@@ -219,6 +223,8 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     // descargar Indicador de Gestión humana
     // descargar Ausentismo
     setModal(false);
+    setLoaderProg(true);
+    setReload(false);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
@@ -236,25 +242,24 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     const respApi = await fetchPost(path, info);
     setShowForm("");
     console.log(respApi);
-    if (respApi.status) {
+    const { status, data } = respApi;
+    if (status) {
       const data = respApi.data;
       if (data.Correcto === 1) {
         dowArchivo(data);
       } else {
-        Toast.show({
-          type: "error",
-          text1: "Error en el sistema",
-          position: "bottom",
-          visibilityTime: 2000,
-        });
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error en el sistema",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
     }
   };
 
@@ -271,19 +276,11 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     }
     console.log("archDes", archDes);
     if (archDes) {
-      Toast.show({
-        type: "success",
-        text1: "Descarga Completada",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      showToast("Descarga Completada", "success");
+      setLoaderProg(false);
     } else {
-      Toast.show({
-        type: "error",
-        text1: "Error al generar el archivo",
-        position: "bottom",
-        visibilityTime: 2000,
-      });
+      showToast("Error al generar el archivo", "error");
+      setLoaderProg(false);
     }
   };
 
@@ -343,7 +340,7 @@ const DownloadableCard = ({ title, desc, image, id }) => {
         <Pressable onPress={() => setShowForm(id)}>
           <View style={styles.downloadButton}>
             <Text style={{ color: colors.light, fontFamily: "Volks-Bold" }}>
-              Descargar
+              {reload ? "Reintentar" : "Descargar"}
             </Text>
           </View>
         </Pressable>

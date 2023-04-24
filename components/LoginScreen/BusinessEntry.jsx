@@ -20,153 +20,201 @@ import { Feather } from "@expo/vector-icons";
 import authContext from "../../context/auth/authContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../../utils/functions";
+import Toast from "react-native-toast-message";
 
 import FormuBussines from "./FormBussinessEntry/FormBussinesEntry";
-
-let consulta = true;
+import LoaderItemSwitch from "../common/loaders/LoaderItemSwitch";
+import LoadFullScreen from "../../components/common/loaders/LoadFullScreen";
 
 const BusinessE = ({ navigation }) => {
   const { setBusiness } = useContext(authContext);
   const [businessOptionsNew, setBusinessOption] = useState([]);
   const pickerRef = useRef(null);
   const [selectedBusiness, setSelectedBusiness] = useState(null);
+  const [loaderComp, setLoaderComp] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [optionsHtml, setOptionsHtml] = useState("");
+  const [reintentar, setReintentar] = useState(false);
 
-  const handleSelectBusiness = async () => {
-    const type = await AsyncStorage.getItem("type");
-    console.log(type);
-    const typeCli = type === "business" ? 2 : 1;
-    const identification = await AsyncStorage.getItem("identi");
-
-    const info = `empresaId=${selectedBusiness}&identificacionId=${identification}`;
-    const path =
-      typeCli === 1
-        ? "usuario/getPerfilInfo.php"
-        : "usuario/getPerfilClienteInfo.php";
-    const respApi = await fetchPost(path, info);
-
-    if (respApi.status) {
-      const data = respApi.data;
-      if (typeof data === "object") {
-        data.codEmp = identification;
-        data.empSel = selectedBusiness;
-        data.type = type;
-        await AsyncStorage.clear();
-        const loggedIn = JSON.stringify(data);
-        await AsyncStorage.setItem("logged", loggedIn);
-        navigation.navigate("Home");
-      } else {
-        console.log(data);
-      }
-    } else {
-      console.log("Ocurrio un error en el sistema");
-    }
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
   };
 
   const returnPag = async () => {
-    consulta = true;
     await AsyncStorage.clear();
     navigation.goBack();
     // navigation.navigate("Login");
   };
 
   useEffect(() => {
-    console.log("consulta", consulta);
-    if (consulta) {
-      const addOptionsBusiness = (options) => {
-        const regex =
-          /<option[^>]*value=['"]([^'"]*)['"][^>]*>([^<]*)<\/option>/g;
-        const result = [];
+    setLoaderComp(true);
+    console.log("useEffect getOptionsBusiness");
+    const getOptionsBusiness = async () => {
+      const type = await AsyncStorage.getItem("type");
+      const typeCli = type === "business" ? 2 : 1;
+      const identification = await AsyncStorage.getItem("identi");
+      const phone = await AsyncStorage.getItem("phone");
 
-        [...options.matchAll(regex)].forEach((match, idx) => {
-          result.push({
-            label: match[2],
-            value: match[1] || null,
-          });
-        });
-        console.log("result", result);
-        setBusinessOption((businessOptionsNew) =>
-          businessOptionsNew.concat(result)
-        );
-        consulta = false;
-      };
-
-      const getOptionsBusiness = async () => {
-        const type = await AsyncStorage.getItem("type");
-        const typeCli = type === "business" ? 2 : 1;
-        const identification = await AsyncStorage.getItem("identi");
-        const phone = await AsyncStorage.getItem("phone");
-
-        const body = `tipousuarioId=${typeCli}
-          &identificacionId=${identification}
-          &contactNumeroTelefonico=${phone}`;
-        const path = "usuario/getEmpresa.php";
-        const respApi = await fetchPost(path, body);
-        console.log("respApi", respApi);
-        if (respApi.status) {
-          const data = respApi.data;
-          if (data != "falseEmpresa") {
-            addOptionsBusiness(data);
-          } else {
-            console.log("no tiene acceso al sistema");
-          }
+      let body = `tipousuarioId=${typeCli}&identificacionId=${identification}`;
+      body += `&contactNumeroTelefonico=${phone}`;
+      const path = "usuario/getEmpresa.php";
+      const respApi = await fetchPost(path, body);
+      console.log("respApi", respApi);
+      if (respApi.status) {
+        const data = respApi.data;
+        if (data != "falseEmpresa") {
+          setOptionsHtml(data);
         } else {
+          console.log("no tiene acceso al sistema");
+        }
+      } else {
+        console.log("ocurrio un error en el sistema");
+      }
+    };
+
+    getOptionsBusiness();
+  }, []);
+
+  useEffect(() => {
+    console.log("useeffect");
+    const regex = /<option[^>]*value=['"]([^'"]*)['"][^>]*>([^<]*)<\/option>/g;
+    const result = [];
+
+    [...optionsHtml.matchAll(regex)].forEach((match, idx) => {
+      result.push({
+        label: match[2],
+        value: match[1] || null,
+      });
+    });
+
+    console.log("result", result);
+    setBusinessOption((businessOptionsNew) =>
+      businessOptionsNew.concat(result)
+    );
+    setLoaderComp(false);
+  }, [optionsHtml]);
+
+  const handleSelectBusiness = async () => {
+    console.log("selectedBusiness", selectedBusiness);
+    if (selectedBusiness != null) {
+      setLoader(true);
+      setReintentar(false);
+      const type = await AsyncStorage.getItem("type");
+      console.log(type);
+      const typeCli = type === "business" ? 2 : 1;
+      const identification = await AsyncStorage.getItem("identi");
+
+      const info = `empresaId=${selectedBusiness}&identificacionId=${identification}`;
+      const path =
+        typeCli === 1
+          ? "usuario/getPerfilInfo.php"
+          : "usuario/getPerfilClienteInfo.php";
+      const respApi = await fetchPost(path, info);
+
+      const { status, data } = respApi;
+      if (status) {
+        if (typeof data === "object") {
+          data.codEmp = identification;
+          data.empSel = selectedBusiness;
+          data.type = type;
+          await AsyncStorage.clear();
+          const loggedIn = JSON.stringify(data);
+          await AsyncStorage.setItem("logged", loggedIn);
+          navigation.navigate("Home");
+        } else {
+          console.log(data);
+        }
+      } else {
+        if (data == "limitExe") {
+          setLoader(false);
+          showToast("El servicio demoro mas de lo normal", "error");
+          setReintentar(true);
+          console.log("El servicio demoro mas de lo normal");
+        } else {
+          setLoader(false);
+          showToast("ocurrio un error en el sistema", "error");
           console.log("ocurrio un error en el sistema");
         }
-      };
-      getOptionsBusiness();
+      }
+    } else {
+      showToast("Seleccione una empresa", "error");
     }
-  }, [businessOptionsNew]);
-  console.log("businessOptionsNew", businessOptionsNew);
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior="padding"
       keyboardVerticalOffset={64}
     >
-      <View style={styles.container}>
-        <Pressable onPress={() => returnPag()}>
-          <View style={styles.goBackButton}>
-            <Feather name="x" size={24} color="black" />
-          </View>
-        </Pressable>
-        <View style={styles.topContainer}>
-          <Image style={styles.logoImage} source={{ uri: images.colorLogo }} />
-          <View style={styles.title}>
-            <Text style={styles.subtitle}>Elija</Text>
-            <Text style={styles.subtitle}>la empresa.</Text>
-
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.welcomeDesc}>
-                Seleccione la empresa donde desea realizar la consulta.
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.formContent}>
-          <View style={styles.pickerContainer}>
-            <FormuBussines
-              title="Seleccione la empresa"
-              list={businessOptionsNew}
-              onOptionSel={(selected) => setSelectedBusiness(selected)}
-            />
-          </View>
-
-          <Pressable onPress={handleSelectBusiness} style={styles.pressable}>
-            <View style={styles.asBusinessButton}>
-              <Text style={{ color: colors.white }}>Ingresar</Text>
+      {!loaderComp ? (
+        <View style={styles.container}>
+          <Pressable onPress={() => returnPag()}>
+            <View style={styles.goBackButton}>
+              <Feather name="x" size={24} color="black" />
             </View>
           </Pressable>
-        </View>
+          <View style={styles.topContainer}>
+            <Image
+              style={styles.logoImage}
+              source={{ uri: images.colorLogo }}
+            />
+            <View style={styles.title}>
+              <Text style={styles.subtitle}>Elija</Text>
+              <Text style={styles.subtitle}>la empresa.</Text>
+              <View style={styles.descriptionContainer}>
+                <Text style={styles.welcomeDesc}>
+                  Seleccione la empresa donde desea realizar la consulta.
+                </Text>
+              </View>
+            </View>
+          </View>
 
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.loginBackgroundImages}
-            // source={{ uri: images.loginImage }}
-            source={images.loginImage}
-          />
+          <View style={styles.formContent}>
+            <View style={styles.pickerContainer}>
+              <FormuBussines
+                title="Seleccione la empresa"
+                list={businessOptionsNew}
+                onOptionSel={(selected) => setSelectedBusiness(selected)}
+              />
+            </View>
+
+            <Pressable
+              onPress={() => handleSelectBusiness()}
+              style={styles.pressable}
+            >
+              <View style={styles.asBusinessButton}>
+                <Text style={{ color: colors.white }}>
+                  {!loader ? (
+                    !reintentar ? (
+                      "Ingresar"
+                    ) : (
+                      "Reintentar"
+                    )
+                  ) : (
+                    <LoaderItemSwitch />
+                  )}
+                </Text>
+              </View>
+            </Pressable>
+          </View>
+
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.loginBackgroundImages}
+              // source={{ uri: images.loginImage }}
+              source={images.loginImage}
+            />
+          </View>
         </View>
-      </View>
+      ) : (
+        <LoadFullScreen />
+      )}
     </KeyboardAvoidingView>
   );
 };

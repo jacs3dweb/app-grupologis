@@ -9,10 +9,13 @@ import { heightPercentageToPx, images, widthPercentageToPx } from "../utils";
 import { fetchPost } from "../utils/functions";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
+import ReplyMessage from "../components/common/messages/ReplyMessage";
 
 const ClientsInvoiceView = ({ props }) => {
   const [modal, setModal] = useState(false);
-  const [allBillsList, setAllBillsList] = useState([]);
+  const [allBillsList, setAllBillsList] = useState([null]);
+  const [loader, setLoader] = useState(false);
 
   const message = (mess, type) => {
     Toast.show({
@@ -24,12 +27,14 @@ const ClientsInvoiceView = ({ props }) => {
   };
 
   useEffect(() => {
-    console.log("allBillsList", allBillsList);
+    console.log("useEffect");
+    setAllBillsList([null]);
   }, []);
 
   const handleSearchBill = async (val) => {
     setModal(false);
-    console.log("handling search bill", val);
+    setLoader(true);
+    console.log("handleSearchBill");
     let { month, year } = val;
     month += 1;
     let infoLog = await AsyncStorage.getItem("logged");
@@ -41,16 +46,24 @@ const ClientsInvoiceView = ({ props }) => {
     const path = "usuario/getFacturasClienteEmpresa.php";
     console.log(info, path);
     const respApi = await fetchPost(path, info);
-    console.log(respApi);
+    console.log("respApi", respApi);
     if (respApi.status) {
       const data = respApi.data;
       if (data != "ERROR") {
-        setAllBillsList(data);
+        console.log(typeof data);
+        if (typeof data == "object") {
+          setAllBillsList(data);
+          setLoader(false);
+        } else {
+          setAllBillsList([]);
+          setLoader(false);
+        }
       }
-      console.log("data", data);
     } else {
       message("Error del servidor", "error");
+      setLoader(false);
     }
+    console.log("allBillsList", allBillsList);
   };
 
   return (
@@ -72,7 +85,14 @@ const ClientsInvoiceView = ({ props }) => {
           }
           image={images.employeeNimage}
         />
-        <BillsList billsList={allBillsList} />
+
+        {loader ? (
+          <LoaderItemSwitch />
+        ) : allBillsList[0] !== null ? (
+          <BillsList billsList={allBillsList} />
+        ) : (
+          <ReplyMessage message="Genere una busqueda" />
+        )}
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>

@@ -1,7 +1,7 @@
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
 import { images } from "../utils";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmActivity from "../components/common/ConfirmActivity";
 import ClaimList from "../components/HomeScreen/claimsView/ClaimList";
 import Form from "../components/HomeScreen/claimsView/Form";
@@ -10,9 +10,41 @@ import ViewTitleCard from "../components/HomeScreen/homeView/ViewTitleCard";
 import Layout from "../components/layout/Layout.jsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../utils/functions";
+import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
+
 const Claim = (props) => {
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState(true);
+  const [claimsList, setClaimsList] = useState([]);
+  const [loader, setLoader] = useState(false);
+
+  useEffect(() => {
+    const getQuejas = async () => {
+      setLoader(true);
+      let infoLog = await AsyncStorage.getItem("logged");
+      infoLog = JSON.parse(infoLog);
+      const empSel = infoLog.empSel;
+      const codEmp = infoLog.codEmp;
+
+      const info = `Empresa=${empSel}&CodEmpleado=${codEmp}`;
+      const path = "usuario/getListadoQuejas.php";
+      const respApi = await fetchPost(path, info);
+      if (respApi.status) {
+        const data = respApi.data;
+        if (data.Correcto === 1) {
+          setClaimsList(data.Programa);
+          setLoader(false);
+        } else {
+          console.log("error en el servidor");
+          setLoader(false);
+        }
+      } else {
+        console.log("error en el servidor");
+        setLoader(false);
+      }
+    };
+    getQuejas();
+  }, []);
 
   const sendMailQueja = async (idQueja, empl, tipo) => {
     const info = `idQuejas=${idQueja}&tipousuarioId=${tipo}&IdUsuario=${empl}`;
@@ -25,6 +57,7 @@ const Claim = (props) => {
         setShowForm(false);
         setTimeout(() => {
           setModal(false);
+          // getQuejas();
         }, 3000);
       } else {
         console.log("error al enviar el correo electronico");
@@ -60,6 +93,7 @@ const Claim = (props) => {
       console.log("Error del servidor");
     }
   };
+
   return (
     <Layout props={{ ...props }}>
       <ViewTitleCard
@@ -79,7 +113,7 @@ const Claim = (props) => {
           }
           image={images.employeeNimage}
         />
-        <ClaimList />
+        {!loader ? <ClaimList claimsList={claimsList} /> : <LoaderItemSwitch />}
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>

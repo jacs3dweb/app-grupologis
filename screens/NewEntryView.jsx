@@ -13,14 +13,14 @@ import { heightPercentageToPx, widthPercentageToPx } from "../utils";
 import MultiStepForm from "../components/HomeScreen/newEntryView/MultiStepForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getSer, postSer } from "../utils/axiosInstance";
+import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
 
 const NewEntryView = (props) => {
   const { navigation } = props;
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState(true);
   const [listNoved, setListNoved] = useState([]);
-
-  useEffect(() => {}, []);
+  const [loader, setLoader] = useState(false);
 
   const selectFechaActual = () => {
     let fecha = new Date();
@@ -137,28 +137,33 @@ const NewEntryView = (props) => {
     }
   };
 
-  const getNovedadesAll = async () => {
-    let infoLog = await AsyncStorage.getItem("logged");
-    infoLog = JSON.parse(infoLog);
-    const empSel = infoLog.empSel.trim().toUpperCase();
-    const codEmp = infoLog.codEmp;
+  useEffect(() => {
+    const getNovedadesAll = async () => {
+      setLoader(true);
+      let infoLog = await AsyncStorage.getItem("logged");
+      infoLog = JSON.parse(infoLog);
+      const empSel = infoLog.empSel.trim().toUpperCase();
+      const codEmp = infoLog.codEmp;
 
-    const path = `ConsultarOrdenIngreso.php?cod_cli=${codEmp}&empresa=${empSel}`;
-    const respApi = await getSer(path);
-    if (respApi.status) {
-      const { data } = respApi;
-      if (data.orden_ingreso != null) {
-        setListNoved(data.orden_ingreso);
+      const path = `ConsultarOrdenIngreso.php?cod_cli=${codEmp}&empresa=${empSel}`;
+      const respApi = await getSer(path);
+      if (respApi.status) {
+        const { data } = respApi;
+        if (data.orden_ingreso != null) {
+          setListNoved(data.orden_ingreso);
+          setLoader(false);
+        } else {
+          setListNoved([]);
+          setLoader(false);
+        }
       } else {
-        setListNoved([]);
+        showToast("Error al buscar las novedades", "error");
+        console.log("Error al buscar las novedades", "error");
       }
-    } else {
-      showToast("Error al buscar las novedades", "error");
-      console.log("Error al buscar las novedades", "error");
-    }
-  };
+    };
 
-  getNovedadesAll();
+    getNovedadesAll();
+  }, []);
 
   return (
     <Layout props={{ ...props }}>
@@ -174,7 +179,11 @@ const NewEntryView = (props) => {
           onPressAction={() => setModal(!modal)}
           handleGoBack={() => navigation.navigate("EmployeeManagement")}
         />
-        <NewEntryList newingList={listNoved} />
+        {!loader ? (
+          <NewEntryList newingList={listNoved} />
+        ) : (
+          <LoaderItemSwitch />
+        )}
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>

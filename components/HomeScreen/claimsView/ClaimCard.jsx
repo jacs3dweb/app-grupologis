@@ -1,27 +1,61 @@
-import { AntDesign } from "@expo/vector-icons";
-import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { colors } from "../../../utils";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  colors,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
 import StatusLine from "../../common/StatusLine";
 import CardElement from "../newsView/components/CardElement";
+import ShowInfo from "../newEntryView/stepsForm/ShowInfo";
 
 const ClaimCard = (props) => {
+  const [modal, setModal] = useState(false);
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.topContent}>
         <CardElement head={"RAD."} content={props.Documento} />
         <CardElement head={"Fecha"} content={props.Fecha} />
-        <Pressable
-          onPress={() => {
-            console.log(`Visualizar: ${props}`);
-          }}
-        >
+        <Pressable onPress={() => setModal(!modal)}>
           <View style={styles.actionButton("ghost")}>
             <AntDesign name="eye" size={18} color={colors.darkGray} />
           </View>
         </Pressable>
       </View>
       <StatusLine status={props.Estado} />
+      {modal && (
+        <Modal animationType="slide" visible={modal} transparent={true}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => closeModal()}
+              >
+                <Ionicons
+                  name="md-close"
+                  size={32}
+                  color={colors.placeholderColor}
+                />
+              </TouchableOpacity>
+              <View style={styles.modalContainer}>
+                <ShowInfo modul="Quejas" info={props} />
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
     </View>
   );
 };
@@ -52,4 +86,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 7,
   }),
+  modalContainer: {
+    flex: 1,
+    margin: 16,
+    borderRadius: 8,
+    height: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modal: {
+    backgroundColor: "white",
+    width: widthPercentageToPx(100),
+    height: heightPercentageToPx(100),
+    borderRadius: 40,
+    padding: 30,
+    position: "absolute",
+    bottom: -20,
+  },
 });

@@ -30,6 +30,7 @@ import SvgPayrollFlyer from "../assets/images/home/downloadView/SvgPayrollFlyer"
 import SvgAusentism from "../assets/images/home/downloadView/SvgAusentism";
 import SvgCapacitations from "../assets/images/home/downloadView/SvgCapacitations";
 import SvgHumanResourcesIndicator from "../assets/images/home/downloadView/SvgHumanResourcesIndicator";
+import { LoaderProgContextProvider } from "../context/loader/LoaderProgContext";
 
 const displaySvg = (type) => {
   switch (type) {

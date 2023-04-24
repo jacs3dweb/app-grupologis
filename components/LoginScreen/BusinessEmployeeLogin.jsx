@@ -1,5 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 import React, { useState } from "react";
 import {
@@ -14,11 +15,23 @@ import { InputWithIcon } from "../common/form/Input";
 import { fetchPost, validatePhone } from "../../utils/functions";
 
 import CloseLogin from "../../assets/images/auth/svg/CloseLogin";
+import LoaderItemSwitch from "../common/loaders/LoaderItemSwitch";
 
 const BusinessEmployeeLogin = ({ navigation, route }) => {
   const { type } = route.params;
   const [identification, setIdentification] = useState(0);
   const [phone, setPhone] = useState(0);
+  const [loader, setLoader] = useState(false);
+  const [reintentar, setReintentar] = useState(false);
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
 
   const handleIdentificationChange = (ident) => {
     setIdentification(ident);
@@ -36,8 +49,11 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
   const submitForm = async () => {
     if (identification != 0 && phone != 0) {
       if (!validatePhone(phone)) {
-        console.log("el celular es incorrecto");
+        showToast("El celular es incorrecto", "error");
+        console.log("El celular es incorrecto");
       } else {
+        setLoader(true);
+        setReintentar(false);
         const typeCli = type === "business" ? 2 : 1;
         const body = `contactTipoClienteField=${typeCli}
             &contactIdentificacionField=${identification}
@@ -45,7 +61,9 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             &contactApp=true`;
         const path = "usuario/saveUsuarioNew.php";
         const respApi = await fetchPost(path, body);
-        if (respApi.status) {
+        const { status, data } = respApi;
+        console.log("respApi", respApi);
+        if (status) {
           const data = respApi.data;
           if (typeof data == "object") {
             await AsyncStorage.setItem("type", type);
@@ -54,14 +72,28 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
             await AsyncStorage.setItem("code", data.codigo);
             navigation.navigate("CodeAuth", { type: "business" });
           } else {
+            setLoader(false);
+            showToast("El usuario o celular no son validos", "error");
             console.log("El usuario o celular no son validos");
           }
         } else {
-          console.log("ocurrio un error en el sistema");
+          if (data == "limitExe") {
+            setLoader(false);
+            showToast("El servicio demoro mas de lo normal", "error");
+            setReintentar(true);
+            console.log("El servicio demoro mas de lo normal");
+          } else {
+            setLoader(false);
+            showToast("ocurrio un error en el sistema", "error");
+            console.log("ocurrio un error en el sistema");
+          }
         }
       }
+    } else {
+      showToast("Todos los campos son requeridos", "error");
     }
   };
+
   return (
     <View style={styles.businessBackground(type)}>
       <View style={styles.formContainer}>
@@ -109,7 +141,17 @@ const BusinessEmployeeLogin = ({ navigation, route }) => {
           ></InputWithIcon>
           <Pressable onPress={() => submitForm()}>
             <View style={styles.asIngresaButton}>
-              <Text style={{ color: colors.white }}>Ingresar</Text>
+              <Text style={{ color: colors.white }}>
+                {!loader ? (
+                  !reintentar ? (
+                    "Ingresar"
+                  ) : (
+                    "Reintentar"
+                  )
+                ) : (
+                  <LoaderItemSwitch />
+                )}
+              </Text>
             </View>
           </Pressable>
         </View>

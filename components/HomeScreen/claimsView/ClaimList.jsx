@@ -9,35 +9,8 @@ import { fetchPost } from "../../../utils/functions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ClaimCard from "./ClaimCard";
 
-const ClaimList = () => {
-  const [claimsList, setClaimsList] = useState([]);
-
-  useEffect(() => {
-    const getQuejas = async () => {
-      let infoLog = await AsyncStorage.getItem("logged");
-      infoLog = JSON.parse(infoLog);
-      const empSel = infoLog.empSel;
-      const codEmp = infoLog.codEmp;
-
-      const info = `Empresa=${empSel}&CodEmpleado=${codEmp}`;
-      const path = "usuario/getListadoQuejas.php";
-      const respApi = await fetchPost(path, info);
-      if (respApi.status) {
-        const data = respApi.data;
-        if (data.Correcto === 1) {
-          // data tiene la informacion de la api
-          // console.log(data.Programa);
-          setClaimsList(data.Programa);
-        } else {
-          console.log("error en el servidor");
-        }
-      } else {
-        console.log("error en el servidor");
-      }
-    };
-    getQuejas();
-  }, []);
-
+const ClaimList = (props) => {
+  const { claimsList } = props;
   return (
     <View style={styles.newsListContainer}>
       <View style={styles.titleContainer}>
@@ -47,10 +20,7 @@ const ClaimList = () => {
       </View>
       <View>
         {claimsList.length > 0 &&
-          claimsList.map((n2, index2) => (
-            // <Text>{JSON.stringify(n2)}</Text>
-            <ClaimCard key={index2} {...n2} />
-          ))}
+          claimsList.map((n2, index2) => <ClaimCard key={index2} {...n2} />)}
       </View>
     </View>
   );

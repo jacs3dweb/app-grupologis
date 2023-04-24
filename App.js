@@ -39,6 +39,7 @@ import ResumeState from "./context/resume/resumeState";
 
 import moment from "moment";
 import { useEffect } from "react";
+import { LoaderProgContextProvider } from "./context/loader/LoaderProgContext";
 
 async function getMediaLibraryPermission() {
   const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
@@ -149,30 +150,32 @@ export default function App() {
           <BillsState>
             <ResumeState>
               <NewingState>
-                <NavigationContainer>
-                  <StatusBar style="auto" hidden={false} />
-                  <Stack.Navigator
-                    initialRouteName="Login"
-                    // initialRouteName="Home"
-                    screenOptions={{
-                      headerShown: false,
-                    }}
-                  >
-                    <Stack.Screen name="Login" component={LoginScreen} />
-                    <Stack.Screen
-                      name="BusinessEmployeeLogin"
-                      component={BusinessEmployeeLogin}
-                    />
-                    <Stack.Screen name="CodeAuth" component={CodeAuth} />
-                    <Stack.Screen
-                      name="BusinessEntry"
-                      component={BusinessEntry}
-                    />
-                    <Stack.Screen name="Home" component={HomeScreens} />
-                  </Stack.Navigator>
+                <LoaderProgContextProvider>
+                  <NavigationContainer>
+                    <StatusBar style="auto" hidden={false} />
+                    <Stack.Navigator
+                      initialRouteName="Login"
+                      // initialRouteName="Home"
+                      screenOptions={{
+                        headerShown: false,
+                      }}
+                    >
+                      <Stack.Screen name="Login" component={LoginScreen} />
+                      <Stack.Screen
+                        name="BusinessEmployeeLogin"
+                        component={BusinessEmployeeLogin}
+                      />
+                      <Stack.Screen name="CodeAuth" component={CodeAuth} />
+                      <Stack.Screen
+                        name="BusinessEntry"
+                        component={BusinessEntry}
+                      />
+                      <Stack.Screen name="Home" component={HomeScreens} />
+                    </Stack.Navigator>
 
-                  <Toast config={toastConfig} />
-                </NavigationContainer>
+                    <Toast config={toastConfig} />
+                  </NavigationContainer>
+                </LoaderProgContextProvider>
               </NewingState>
             </ResumeState>
           </BillsState>
