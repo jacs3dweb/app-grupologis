@@ -19,12 +19,12 @@ const ResumeCard = (props) => {
     <View style={styles.cardContainer}>
       <View style={styles.leftContent}>
         <View style={styles.cardColumn}>
-          <CardElement head={"RAD."} content={props.RAD} />
-          <CardElement head={"Identificacion"} content={props.Identificacion} />
+          {/* <CardElement head={"RAD."} content={props.RAD} /> */}
+          {/* <CardElement head={"Identificacion"} content={props.Identificacion} /> */}
         </View>
         <View style={styles.cardColumn}>
-          <CardElement head={"Nombre"} content={props.nombre} />
-          <CardElement head={"Fecha"} content={props.fecha} />
+          <CardElement head={"Nombre"} content={props.NombreDocumento} />
+          {/* <CardElement head={"Fecha"} content={props.fecha} /> */}
         </View>
       </View>
 

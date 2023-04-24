@@ -1,16 +1,68 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import {
   colors,
-  notificationInfo,
   getFontStyles,
   heightPercentageToPx,
   widthPercentageToPx,
 } from "../../../utils";
 import NotCard from "./NotificationCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { get } from "../../../utils/axiosInstance";
+import Toast from "react-native-toast-message";
+// import pathImg from "../../../assets/images/components/notifications/";
 
 const NotificationForm = ({ closeM }) => {
+  const [notificationInfo, setNotificationInfo] = useState([]);
+  const pathImg = "../../../assets/images/components/notifications/";
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
+
+  useEffect(() => {
+    const getNotificaation = async () => {
+      let infoLog = await AsyncStorage.getItem("logged");
+      infoLog = JSON.parse(infoLog);
+      const empSel = infoLog.empSel;
+      const codEmp = infoLog.codEmp;
+      const type = infoLog.type === "employee" ? "1" : "2";
+
+      let path = "usuario/getNotificaciones.php";
+      path += `?empresa=${empSel}&tipUser=${type}`;
+
+      const respApi = await get(path);
+      console.log("respApi", respApi);
+      const { status, data } = respApi;
+      if (status) {
+        console.log("notificaciones", data);
+        let cantNoLeid = 0;
+        if (data.length > 0) {
+          data.forEach((noti) => {
+            noti.icono = noti.icono.replace("jpg", "png");
+            if (noti.estado == 0) {
+              cantNoLeid += 1;
+            }
+          });
+          setNotificationInfo(data);
+        } else {
+          setNotificationInfo([]);
+        }
+      } else {
+        showToast("Ocurrio un error en el servidor", "error");
+        console.log("Ocurrio un error en el servidor", "error");
+      }
+    };
+
+    getNotificaation();
+  }, []);
+
   return (
     <View styles={styles.modalnForm}>
       <Pressable onPress={closeM}>
@@ -24,10 +76,11 @@ const NotificationForm = ({ closeM }) => {
       <View styles={styles.inputContainer}>
         {notificationInfo.map((e) => (
           <NotCard
-            descNot={e.description}
-            titleNot={e.title}
+            key={e.id}
+            descNot={e.descripcion}
+            titleNot={e.titulo}
             id={e.id}
-            imageNot={e.image}
+            imageNot={pathImg + e.icono}
           />
         ))}
       </View>

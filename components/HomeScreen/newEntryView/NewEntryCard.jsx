@@ -1,20 +1,14 @@
 import { AntDesign } from "@expo/vector-icons";
-import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, Pressable, StyleSheet, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { colors } from "../../../utils";
 import CardElement from "../newsView/components/CardElement";
+import ShowInfo from "./stepsForm/ShowInfo";
 
 const NewEntryCard = (props) => {
-  const showToast = () => {
-    Toast.show({
-      type: "success",
-      text1: "Descarga Completada",
+  const [modal, setModal] = useState(false);
 
-      position: "bottom",
-      visibilityTime: 2000,
-    });
-  };
   return (
     <View style={styles.cardContainer}>
       <View style={styles.leftContent}>
@@ -36,17 +30,26 @@ const NewEntryCard = (props) => {
       </View>
 
       <View style={styles.rightContent}>
-        <Pressable onPress={showToast} style={styles.rightContent}>
+        {/* <Pressable onPress={showToast} style={styles.rightContent}>
           <View style={styles.actionButton("ghost")}>
             <AntDesign name="download" size={18} color={colors.darkGray} />
           </View>
-        </Pressable>
-        <Pressable onPress={showToast} style={styles.rightContent}>
+        </Pressable> */}
+        <Pressable onPress={() => setModal(!modal)} style={styles.rightContent}>
           <View style={styles.actionButton("ghost")}>
             <AntDesign name="eye" size={18} color={colors.darkGray} />
           </View>
         </Pressable>
       </View>
+      {modal && (
+        <Modal animationType="slide" visible={modal} transparent={true}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContainer}>
+              <ShowInfo module="NovIngreso" info={props} />
+            </View>
+          </View>
+        </Modal>
+      )}
     </View>
   );
 };
@@ -90,4 +93,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 7,
   }),
+  modalContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

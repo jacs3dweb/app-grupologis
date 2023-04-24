@@ -9,10 +9,10 @@ const vacacionesImage = require("../assets/images/home/newsView/vacacones.png");
 const retirosImage = require("../assets/images/home/newsView/retiros.png");
 const historiaLaboralImage = require("../assets/images/home/newsView/hlaboral.png");
 
-const notificationType1 = require("../assets/images/components/notifications/type-1.png");
-const notificationType2 = require("../assets/images/components/notifications/type-2.png");
-const notificationType3 = require("../assets/images/components/notifications/type-3.png");
-const notificationType4 = require("../assets/images/components/notifications/type-4.png");
+const notificationType1 = require("../assets/images/components/notifications/state-1.png");
+const notificationType2 = require("../assets/images/components/notifications/state-2.png");
+const notificationType3 = require("../assets/images/components/notifications/state-3.png");
+const notificationType4 = require("../assets/images/components/notifications/state-4.png");
 
 const noticeImg = require("../assets/noticeImg.jpg");
 

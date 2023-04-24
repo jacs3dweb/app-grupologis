@@ -1,5 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import {
   colors,
@@ -16,7 +16,10 @@ const CardEinfo = ({
   handleGoBack,
   showInput,
   showButton,
+  onInputChange,
 }) => {
+  const [identif, setIdentif] = useState("");
+
   return (
     <View style={styles.cardContainer}>
       <View
@@ -49,6 +52,11 @@ const CardEinfo = ({
         <TextInput
           style={styles.titleContainer}
           placeholder="Ingresa la identificación"
+          value={identif}
+          onChangeText={(text) => {
+            setIdentif(text);
+            onInputChange(text); // Llama a la función onInputChange con el nuevo valor del input
+          }}
         />
       ) : null}
     </View>

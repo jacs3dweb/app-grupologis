@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
 import ResumeList from "../components/HomeScreen/resumeView/ResumeList";
@@ -7,6 +7,12 @@ import { heightPercentageToPx, widthPercentageToPx } from "../utils";
 
 const ResumeView = (props) => {
   const { navigation } = props;
+  const [identif, setIdentif] = useState("");
+
+  const handleInputChange = (text) => {
+    console.log("handleInputChange", text);
+    setIdentif(text);
+  };
   return (
     <Layout props={{ ...props }}>
       <ScrollView
@@ -18,8 +24,9 @@ const ResumeView = (props) => {
           showInput={true}
           onPressAction={() => setModal(!modal)}
           handleGoBack={() => navigation.navigate("EmployeeManagement")}
+          onInputChange={handleInputChange}
         />
-        <ResumeList />
+        <ResumeList idenHoja={identif} />
       </ScrollView>
     </Layout>
   );

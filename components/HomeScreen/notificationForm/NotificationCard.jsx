@@ -6,7 +6,8 @@ const NotCard = ({ titleNot, descNot, imageNot }) => {
   return (
     <View style={styles.scrollStyle}>
       <View style={styles.imgContainer}>
-        <Image source={imageNot} style={styles.image} />
+        {/* <Text style={styles.title}>{imageNot}</Text> */}
+        <Image source={{ uri: imageNot }} style={styles.image} />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{titleNot}</Text>
