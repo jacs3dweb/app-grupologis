@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
 import Layout from "../components/layout/Layout";
@@ -37,6 +37,10 @@ const NewsDailyView = (props) => {
     });
   };
 
+  useEffect(() => {
+    getNews();
+  }, []);
+
   const getNews = async () => {
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
@@ -60,7 +64,6 @@ const NewsDailyView = (props) => {
     }
   };
 
-  getNews();
   return (
     <Layout props={{ ...props }}>
       <CardEinfo

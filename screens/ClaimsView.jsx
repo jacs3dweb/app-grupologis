@@ -1,7 +1,13 @@
-import { Modal, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Modal,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { images } from "../utils";
 
-import { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ConfirmActivity from "../components/common/ConfirmActivity";
 import ClaimList from "../components/HomeScreen/claimsView/ClaimList";
 import Form from "../components/HomeScreen/claimsView/Form";
@@ -11,40 +17,80 @@ import Layout from "../components/layout/Layout.jsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../utils/functions";
 import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
+import ReplyMessage from "../components/common/messages/ReplyMessage";
+import { useFocusEffect } from "@react-navigation/native";
+import LoaderProgContext from "../context/loader/LoaderProgContext";
+import Toast from "react-native-toast-message";
 
 const Claim = (props) => {
   const [modal, setModal] = useState(false);
   const [showForm, setShowForm] = useState(true);
   const [claimsList, setClaimsList] = useState([]);
   const [loader, setLoader] = useState(false);
+  const { setLoaderProg } = useContext(LoaderProgContext);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const getQuejas = async () => {
-      setLoader(true);
-      let infoLog = await AsyncStorage.getItem("logged");
-      infoLog = JSON.parse(infoLog);
-      const empSel = infoLog.empSel;
-      const codEmp = infoLog.codEmp;
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
 
-      const info = `Empresa=${empSel}&CodEmpleado=${codEmp}`;
-      const path = "usuario/getListadoQuejas.php";
-      const respApi = await fetchPost(path, info);
-      if (respApi.status) {
-        const data = respApi.data;
-        if (data.Correcto === 1) {
-          setClaimsList(data.Programa);
+  const comparar = (a, b) => {
+    if (parseInt(a.Documento) > parseInt(b.Documento)) {
+      return -1;
+    }
+    if (a.Documento < b.Documento) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const getQuejas = async () => {
+    setLoader(true);
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+
+    const info = `Empresa=${empSel}&CodEmpleado=${codEmp}`;
+    console.log("info", info);
+    const path = "usuario/getListadoQuejas.php";
+    const respApi = await fetchPost(path, info);
+    if (respApi.status) {
+      const data = respApi.data;
+      console.log("data", data);
+      if (data.Correcto === 1) {
+        if (data.Programa != undefined && data.Programa.length > 0) {
+          const lis = data.Programa.sort(comparar);
+          setClaimsList(lis);
           setLoader(false);
         } else {
-          console.log("error en el servidor");
+          setClaimsList([]);
           setLoader(false);
         }
       } else {
         console.log("error en el servidor");
         setLoader(false);
       }
-    };
-    getQuejas();
-  }, []);
+    } else {
+      console.log("error en el servidor");
+      setLoader(false);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("quejas focused");
+      getQuejas();
+      return () => {
+        console.log("quejas unfocused");
+      };
+    }, [])
+  );
 
   const sendMailQueja = async (idQueja, empl, tipo) => {
     const info = `idQuejas=${idQueja}&tipousuarioId=${tipo}&IdUsuario=${empl}`;
@@ -57,17 +103,25 @@ const Claim = (props) => {
         setShowForm(false);
         setTimeout(() => {
           setModal(false);
-          // getQuejas();
+          setLoaderProg(false);
+          getQuejas();
         }, 3000);
       } else {
-        console.log("error al enviar el correo electronico");
+        setModal(false);
+        console.log("Error al enviar el correo electronico");
+        showToast("Error al enviar el correo electronico", "error");
+        setLoaderProg(false);
       }
     } else {
+      setModal(false);
       console.log("error en el servidor");
+      showToast("Error al enviar el correo electronico", "error");
+      setLoaderProg(false);
     }
   };
 
   const closeAfterConfirm = async (infoPqr) => {
+    setLoaderProg(true);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
@@ -82,17 +136,34 @@ const Claim = (props) => {
       const data = respApi.data;
       if (data.Correcto === 1) {
         if (data.Msg === "Usuario no Encontrado") {
+          setModal(false);
           console.log("El usuario no existe");
+          showToast("El usuario no existe", "error");
+          setLoaderProg(false);
         } else {
           sendMailQueja(data.Id, codEmp, typeCli);
         }
       } else {
+        setModal(false);
         console.log("Error del servidor");
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
       }
     } else {
+      setModal(false);
       console.log("Error del servidor");
+      showToast("Error en el servidor", "error");
+      setLoaderProg(false);
     }
   };
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    console.log("refreshing", refreshing);
+    await getQuejas();
+    setRefreshing(false);
+    console.log("refreshing", refreshing);
+  }, []);
 
   return (
     <Layout props={{ ...props }}>
@@ -104,6 +175,9 @@ const Claim = (props) => {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <MainCardInfo
           firstTitle={"Quejas"}
@@ -113,7 +187,15 @@ const Claim = (props) => {
           }
           image={images.employeeNimage}
         />
-        {!loader ? <ClaimList claimsList={claimsList} /> : <LoaderItemSwitch />}
+        {!loader ? (
+          claimsList.length > 0 ? (
+            <ClaimList claimsList={claimsList} />
+          ) : (
+            <ReplyMessage message="Sin Resultados" />
+          )
+        ) : (
+          <LoaderItemSwitch />
+        )}
       </ScrollView>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
@@ -121,11 +203,14 @@ const Claim = (props) => {
             {showForm ? (
               <Form
                 closeModal={() => setModal(false)}
-                onConfirm={closeAfterConfirm}
+                onConfirm={() => closeAfterConfirm}
               />
             ) : (
               <ConfirmActivity
-                closeModal={() => setModal(false)}
+                closeModal={() => {
+                  setModal(false);
+                  setShowForm(true);
+                }}
                 title="Su queja o reclamo ha sido enviada"
                 description="Recuerde estar pendiente a su correo para recibir la respuesta"
                 image={images.checkImage}

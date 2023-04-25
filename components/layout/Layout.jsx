@@ -4,6 +4,7 @@ import { colors, heightPercentageToPx } from "../../utils";
 import Header from "./Header";
 import { Text } from "react-native";
 import LoaderProgContext from "../../context/loader/LoaderProgContext";
+import LoaderProgress from "../common/loaders/LoaderProgress";
 
 const Layout = ({ children, props }) => {
   const { showLoader } = useContext(LoaderProgContext);
@@ -11,7 +12,7 @@ const Layout = ({ children, props }) => {
   return (
     <View style={styles.mainContainer}>
       <Header />
-      {showLoader && <Text>Cargando</Text>}
+      {showLoader && <LoaderProgress />}
       {children}
     </View>
   );

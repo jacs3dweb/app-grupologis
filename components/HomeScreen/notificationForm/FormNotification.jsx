@@ -11,11 +11,13 @@ import NotCard from "./NotificationCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { get } from "../../../utils/axiosInstance";
 import Toast from "react-native-toast-message";
+import { useFocusEffect } from "@react-navigation/native";
+import LoaderItemSwitch from "../../common/loaders/LoaderItemSwitch";
 // import pathImg from "../../../assets/images/components/notifications/";
 
 const NotificationForm = ({ closeM }) => {
   const [notificationInfo, setNotificationInfo] = useState([]);
-  const pathImg = "../../../assets/images/components/notifications/";
+  const [loader, setLoader] = useState(false);
 
   const showToast = (smg, type) => {
     Toast.show({
@@ -26,42 +28,50 @@ const NotificationForm = ({ closeM }) => {
     });
   };
 
-  useEffect(() => {
-    const getNotificaation = async () => {
-      let infoLog = await AsyncStorage.getItem("logged");
-      infoLog = JSON.parse(infoLog);
-      const empSel = infoLog.empSel;
-      const codEmp = infoLog.codEmp;
-      const type = infoLog.type === "employee" ? "1" : "2";
+  const getNotification = async () => {
+    setLoader(true);
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+    const type = infoLog.type === "employee" ? "1" : "2";
 
-      let path = "usuario/getNotificaciones.php";
-      path += `?empresa=${empSel}&tipUser=${type}`;
+    let path = "usuario/getNotificaciones.php";
+    path += `?empresa=${empSel}&tipUser=${type}`;
 
-      const respApi = await get(path);
-      console.log("respApi", respApi);
-      const { status, data } = respApi;
-      if (status) {
-        console.log("notificaciones", data);
-        let cantNoLeid = 0;
-        if (data.length > 0) {
-          data.forEach((noti) => {
-            noti.icono = noti.icono.replace("jpg", "png");
-            if (noti.estado == 0) {
-              cantNoLeid += 1;
-            }
-          });
-          setNotificationInfo(data);
-        } else {
-          setNotificationInfo([]);
-        }
+    const respApi = await get(path);
+    console.log("respApi", respApi);
+    const { status, data } = respApi;
+    if (status) {
+      console.log("notificaciones", data);
+      let cantNoLeid = 0;
+      if (data.length > 0) {
+        data.forEach((noti) => {
+          if (noti.estado == 0) {
+            cantNoLeid += 1;
+          }
+        });
+        setNotificationInfo(data);
+        setLoader(false);
       } else {
-        showToast("Ocurrio un error en el servidor", "error");
-        console.log("Ocurrio un error en el servidor", "error");
+        setNotificationInfo([]);
+        setLoader(false);
       }
-    };
+    } else {
+      showToast("Ocurrio un error en el servidor", "error");
+      console.log("Ocurrio un error en el servidor", "error");
+      setLoader(false);
+    }
+  };
 
-    getNotificaation();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getNotification();
+      return () => {
+        console.log("notificaciones unfocused");
+      };
+    }, [])
+  );
 
   return (
     <View styles={styles.modalnForm}>
@@ -74,15 +84,23 @@ const NotificationForm = ({ closeM }) => {
         <Text style={styles.subtitle}>Notificaciones</Text>
       </View>
       <View styles={styles.inputContainer}>
-        {notificationInfo.map((e) => (
-          <NotCard
-            key={e.id}
-            descNot={e.descripcion}
-            titleNot={e.titulo}
-            id={e.id}
-            imageNot={pathImg + e.icono}
-          />
-        ))}
+        {!loader ? (
+          notificationInfo.length > 0 ? (
+            notificationInfo.map((e) => (
+              <NotCard
+                key={e.id}
+                descNot={e.descripcion}
+                titleNot={e.titulo}
+                id={e.id}
+                imageNot={e.icono}
+              />
+            ))
+          ) : (
+            <Text>Sin notificaciones</Text>
+          )
+        ) : (
+          <LoaderItemSwitch />
+        )}
       </View>
     </View>
   );

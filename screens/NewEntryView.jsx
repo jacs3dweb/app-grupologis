@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Modal, ScrollView, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  Modal,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import CardEinfo from "../components/HomeScreen/homeView/CardEinfo";
 import NewEntryList from "../components/HomeScreen/newEntryView/NewEntryList";
 import ConfirmActivity from "../components/common/ConfirmActivity";
@@ -14,6 +21,7 @@ import MultiStepForm from "../components/HomeScreen/newEntryView/MultiStepForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getSer, postSer } from "../utils/axiosInstance";
 import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NewEntryView = (props) => {
   const { navigation } = props;
@@ -21,6 +29,7 @@ const NewEntryView = (props) => {
   const [showForm, setShowForm] = useState(true);
   const [listNoved, setListNoved] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const selectFechaActual = () => {
     let fecha = new Date();
@@ -137,39 +146,59 @@ const NewEntryView = (props) => {
     }
   };
 
-  useEffect(() => {
-    const getNovedadesAll = async () => {
-      setLoader(true);
-      let infoLog = await AsyncStorage.getItem("logged");
-      infoLog = JSON.parse(infoLog);
-      const empSel = infoLog.empSel.trim().toUpperCase();
-      const codEmp = infoLog.codEmp;
+  const getNovedadesAll = async () => {
+    setLoader(true);
 
-      const path = `ConsultarOrdenIngreso.php?cod_cli=${codEmp}&empresa=${empSel}`;
-      const respApi = await getSer(path);
-      if (respApi.status) {
-        const { data } = respApi;
-        if (data.orden_ingreso != null) {
-          setListNoved(data.orden_ingreso);
-          setLoader(false);
-        } else {
-          setListNoved([]);
-          setLoader(false);
-        }
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel.trim().toUpperCase();
+    const codEmp = infoLog.codEmp;
+
+    const path = `ConsultarOrdenIngreso.php?cod_cli=${codEmp}&empresa=${empSel}`;
+    const respApi = await getSer(path);
+    if (respApi.status) {
+      const { data } = respApi;
+      if (data.orden_ingreso != null) {
+        setListNoved(data.orden_ingreso);
+        setLoader(false);
       } else {
-        showToast("Error al buscar las novedades", "error");
-        console.log("Error al buscar las novedades", "error");
+        setListNoved([]);
+        setLoader(false);
       }
-    };
+    } else {
+      showToast("Error al buscar las novedades", "error");
+      console.log("Error al buscar las novedades", "error");
+      setListNoved([]);
+      setLoader(false);
+    }
+  };
 
-    getNovedadesAll();
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    console.log("refreshing", refreshing);
+    await getNovedadesAll();
+    setRefreshing(false);
+    console.log("refreshing", refreshing);
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("novedad ingreso focused");
+      getNovedadesAll();
+      return () => {
+        console.log("novedad ingreso unfocused");
+      };
+    }, [])
+  );
 
   return (
     <Layout props={{ ...props }}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <CardEinfo
           title={"Novedades ingreso"}

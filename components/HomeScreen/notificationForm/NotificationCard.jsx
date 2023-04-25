@@ -1,13 +1,31 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Platform } from "react-native";
 import { colors, getFontStyles } from "../../../utils";
+import state1 from "../../../assets/images/components/notifications/state-1.png";
+import state2 from "../../../assets/images/components/notifications/state-2.png";
+import state3 from "../../../assets/images/components/notifications/state-3.png";
+import state4 from "../../../assets/images/components/notifications/state-4.png";
 
 const NotCard = ({ titleNot, descNot, imageNot }) => {
+  let srcImg;
+  switch (imageNot) {
+    case "state-1.jpg":
+      srcImg = state1;
+      break;
+    case "state-2.jpg":
+      srcImg = state2;
+      break;
+    case "state-3.jpg":
+      srcImg = state3;
+      break;
+    case "state-4.jpg":
+      srcImg = state4;
+      break;
+  }
   return (
     <View style={styles.scrollStyle}>
       <View style={styles.imgContainer}>
-        {/* <Text style={styles.title}>{imageNot}</Text> */}
-        <Image source={{ uri: imageNot }} style={styles.image} />
+        <Image source={srcImg} style={styles.image} />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{titleNot}</Text>

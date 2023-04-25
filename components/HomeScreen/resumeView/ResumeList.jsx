@@ -15,6 +15,8 @@ import { fetchPost } from "../../../utils/functions";
 import Toast from "react-native-toast-message";
 import { Text } from "react-native";
 import LoaderItemSwitch from "../../common/loaders/LoaderItemSwitch";
+import ReplyMessage from "../../common/messages/ReplyMessage";
+
 const showToast = (smg, type) => {
   Toast.show({
     type: type, //"success", error
@@ -35,16 +37,8 @@ const ResumeList = (props) => {
   let buscar = true;
 
   useEffect(() => {
-    console.log("********************2");
-    console.log("********************");
-    console.log("loading", loading);
-    console.log(prevIdenHoja !== idenHoja);
-    console.log(prevIdenHoja, idenHoja);
-
     if (prevIdenHoja !== idenHoja) {
       buscar = false;
-      console.log("====================");
-      console.log("entro if ident");
       // Verifica si idenHoja ha cambiado
       setPrevIdenHoja(idenHoja); // Actualiza el valor anterior
 

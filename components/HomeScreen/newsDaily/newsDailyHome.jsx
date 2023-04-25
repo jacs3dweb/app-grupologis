@@ -21,7 +21,9 @@ const newsDailyHome = ({ closeM }) => {
   const [listNotic, setListNotic] = useState([]);
   const urlImg = "https://appgrupologis.com/app/managers/usuario/";
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    getNews();
+  }, []);
 
   const showToast = (smg, type) => {
     Toast.show({
@@ -33,6 +35,7 @@ const newsDailyHome = ({ closeM }) => {
   };
 
   const getNews = async () => {
+    console.log("entro funcion noticias");
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
@@ -56,7 +59,6 @@ const newsDailyHome = ({ closeM }) => {
     }
   };
 
-  getNews();
   return (
     <View styles={styles.modalnForm}>
       <View style={styles.titlesContainer}>
