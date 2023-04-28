@@ -35,35 +35,34 @@ const DownloadableCard = ({ title, desc, image, id }) => {
 
   const getCerLaboral = async () => {
     // descargar certificado laboral
-    showToast("Error en el servidor", "error");
-    // setLoaderProg(true);
-    // setReload(false);
-    // let infoLog = await AsyncStorage.getItem("logged");
-    // infoLog = JSON.parse(infoLog);
-    // const empSel = infoLog.empSel;
-    // const codEmp = infoLog.codEmp;
-    // const info = `Empresa=${empSel}&Cedula=${codEmp}`;
-    // const path = "usuario/getCertificadoLaboral.php";
-    // const respApi = await fetchPost(path, info);
-    // console.log(respApi);
-    // const { status, data } = respApi;
-    // if (status) {
-    //   if (data.Correcto === 1) {
-    //     dowArchivo(data);
-    //   } else {
-    //     showToast("Error en el servidor", "error");
-    //     setLoaderProg(false);
-    //   }
-    // } else {
-    //   if (data == "limitExe") {
-    //     showToast("El servicio demoro mas de lo normal", "error");
-    //     setLoaderProg(false);
-    //     setReload(true);
-    //   } else {
-    //     showToast("Error en el servidor", "error");
-    //     setLoaderProg(false);
-    //   }
-    // }
+    setLoaderProg(true);
+    setReload(false);
+    let infoLog = await AsyncStorage.getItem("logged");
+    infoLog = JSON.parse(infoLog);
+    const empSel = infoLog.empSel;
+    const codEmp = infoLog.codEmp;
+    const info = `Empresa=${empSel}&Cedula=${codEmp}`;
+    const path = "usuario/getCertificadoLaboral.php";
+    const respApi = await fetchPost(path, info);
+    console.log(respApi);
+    const { status, data } = respApi;
+    if (status) {
+      if (data.Correcto === 1) {
+        dowArchivo(data);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
+    } else {
+      if (data == "limitExe") {
+        showToast("El servicio demoro mas de lo normal", "error");
+        setLoaderProg(false);
+        setReload(true);
+      } else {
+        showToast("Error en el servidor", "error");
+        setLoaderProg(false);
+      }
+    }
   };
 
   const getIngresoRete = async () => {
