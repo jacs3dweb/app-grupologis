@@ -275,10 +275,10 @@ const DownloadableCard = ({ title, desc, image, id }) => {
     }
     console.log("archDes", archDes);
     if (archDes) {
-      showToast("Descarga Completada", "success");
+      showToast("Listo", "success");
       setLoaderProg(false);
     } else {
-      showToast("Error al generar el archivo", "error");
+      showToast("No se genero un archivo", "error");
       setLoaderProg(false);
     }
   };
