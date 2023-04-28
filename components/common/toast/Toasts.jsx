@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../../../utils";
 
 import SuccessIcon from "../../../assets/images/components/toast/success-icon";
+import ErrorIcon from "../../../assets/images/components/toast/error-icon";
 
 export const SuccessToast = (props) => {
   return (
@@ -26,7 +27,7 @@ export const ErrorToast = (props) => {
           <Text style={styles.text}>{props.text1}</Text>
         </View>
 
-        {/* <ErrorIcon /> */}
+        <ErrorIcon />
       </View>
     </View>
   );
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
   error: {
     width: "90%",
-    backgroundColor: colors.green,
+    backgroundColor: colors.red,
     borderRadius: 10,
     paddingHorizontal: 15,
     paddingVertical: 10,
