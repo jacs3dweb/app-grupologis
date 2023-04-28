@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useContext } from "react";
 import authContext from "../../../context/auth/authContext";
-
+import imgEmp from "../../../assets/images/users/user-empresa.png";
+import imgFem from "../../../assets/images/users/user-female.png";
+import imgMal from "../../../assets/images/users/user-male.png";
 import {
   colors,
   getFontStyles,
@@ -27,13 +29,12 @@ const UserInfo = (props) => {
         </View>
       ) : (
         <View>
-          {userData.sexo === "M" ? (
-            <Image style={styles.userImg} source={{ uri: userData.imgmale }} />
+          {userData.type == "business" ? (
+            <Image style={styles.userImg} source={imgEmp} />
+          ) : userData.sexo === "M" ? (
+            <Image style={styles.userImg} source={imgFem} />
           ) : (
-            <Image
-              style={styles.userImg}
-              source={{ uri: userData.imgfemale }}
-            />
+            <Image style={styles.userImg} source={imgMal} />
           )}
         </View>
       )}

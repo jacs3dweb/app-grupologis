@@ -8,10 +8,14 @@ import { heightPercentageToPx, widthPercentageToPx } from "../utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../utils/functions";
 import Toast from "react-native-toast-message";
+import LoadFullScreen from "../components/common/loaders/LoadFullScreen";
+import { useFocusEffect } from "@react-navigation/native";
 
-const UserView = ({ props }) => {
+const UserView = (props) => {
+  const { navigation } = props;
   const { userData, updateUser } = useContext(authContext);
   const [dataUs, setDataUs] = useState({ ...userData });
+  const [loaderComp, setLoaderComp] = useState(false);
 
   const getUserDataFromAsyncStorage = async () => {
     try {
@@ -20,15 +24,25 @@ const UserView = ({ props }) => {
         const userData = JSON.parse(userDataJSON);
         console.log("userData", userData);
         setDataUs(userData);
+        setLoaderComp(false);
       }
     } catch (error) {
       console.log(error);
+      setLoaderComp(false);
     }
   };
 
-  useEffect(() => {
-    getUserDataFromAsyncStorage();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("entro deeesss");
+      setLoaderComp(true);
+      getUserDataFromAsyncStorage();
+      //
+      return () => {
+        console.log("user unfocused");
+      };
+    }, [])
+  );
 
   const showToast = (smg, type) => {
     Toast.show({
@@ -98,12 +112,19 @@ const UserView = ({ props }) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        <UserInfo userData={dataUs} />
-        <UserForm
-          userData={dataUs}
-          handleChange={handleChangeInput}
-          handleUpdateUser={handleUpdateUser}
-        />
+        {!loaderComp ? (
+          <>
+            <UserInfo userData={dataUs} />
+            <UserForm
+              userData={dataUs}
+              navigation={navigation}
+              handleChange={handleChangeInput}
+              handleUpdateUser={handleUpdateUser}
+            />
+          </>
+        ) : (
+          <LoadFullScreen />
+        )}
       </ScrollView>
     </Layout>
   );

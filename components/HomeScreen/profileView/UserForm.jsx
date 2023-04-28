@@ -4,8 +4,9 @@ import FormInput from "./FormInput";
 import GLButton from "../../common/buttons/GLButton";
 import { heightPercentageToPx, widthPercentageToPx } from "../../../utils";
 import FormuBussines from "../../LoginScreen/FormBussinessEntry/FormBussinesEntry";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const UserForm = ({ userData, handleChange, handleUpdateUser }) => {
+const UserForm = ({ userData, navigation, handleChange, handleUpdateUser }) => {
   console.log("userData", userData);
   // undefined;
   const estadoCiv = [
@@ -19,6 +20,21 @@ const UserForm = ({ userData, handleChange, handleUpdateUser }) => {
       { label: "OTRO", value: "6" },
     ],
   ];
+
+  const closeApp = async () => {
+    console.log("cerrar sesion");
+    try {
+      // borrar todos los datos del almacenamiento local
+      await AsyncStorage.clear();
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <View style={styles.formContainer}>
       <FormInput
@@ -87,6 +103,12 @@ const UserForm = ({ userData, handleChange, handleUpdateUser }) => {
         placeholder="Cancelar"
         width={widthPercentageToPx(70)}
         onPressAction={() => null}
+      />
+      <GLButton
+        type={"default"}
+        placeholder="Cerrar Sesión"
+        width={widthPercentageToPx(70)}
+        onPressAction={closeApp}
       />
     </View>
   );

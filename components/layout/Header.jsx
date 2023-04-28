@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, View, Pressable, Text, Modal } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -10,32 +10,55 @@ import {
 } from "../../utils";
 import authContext from "../../context/auth/authContext";
 import NotificationForm from "../HomeScreen/notificationForm/FormNotification";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import imgEmp from "../../assets/images/users/user-empresa.png";
+import imgFem from "../../assets/images/users/user-female.png";
+import imgMal from "../../assets/images/users/user-male.png";
 
 const Header = ({}) => {
   const { userData } = useContext(authContext);
+  const [dataUs, setDataUs] = useState({ userData });
   const [modal, setModal] = useState(false);
+
+  const getUserDataFromAsyncStorage = async () => {
+    try {
+      const userDataJSON = await AsyncStorage.getItem("logged");
+      if (userDataJSON !== null) {
+        const userData = JSON.parse(userDataJSON);
+        setDataUs(userData);
+        console.log("dataUs3333", dataUs);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserDataFromAsyncStorage();
+  }, []);
 
   return (
     <View style={styles.notbar}>
       <View style={styles.notbarInfoUser}>
         <View style={styles.userImgContainer}>
-          {userData.image ? (
+          {typeof dataUs.foto == "object" ? (
             <View style={styles.userImgContainer}>
-              <Image style={styles.userImg} source={{ uri: userData.image }} />
+              <Image
+                style={styles.userImg}
+                source={{
+                  uri: `data:${dataUs.foto.mimetype};base64,${dataUs.foto.file}`,
+                }}
+              />
               <View style={styles.onlineIndicator} />
             </View>
           ) : (
             <View style={styles.userImgContainer}>
-              {userData.gender === "male" ? (
-                <Image
-                  style={styles.userImg}
-                  source={{ uri: userData.imgmale }}
-                />
+              {dataUs.type == "business" ? (
+                <Image style={styles.userImg} source={imgEmp} />
+              ) : dataUs.sexo == "M" ? (
+                <Image style={styles.userImg} source={imgFem} />
               ) : (
-                <Image
-                  style={styles.userImg}
-                  source={{ uri: userData.imgfemale }}
-                />
+                <Image style={styles.userImg} source={imgMal} />
               )}
               <View style={styles.onlineIndicator} />
             </View>
@@ -43,7 +66,13 @@ const Header = ({}) => {
         </View>
         <View style={styles.infoUser}>
           <Text style={styles.hello}>Hola!</Text>
-          <Text style={styles.nameUser}>{userData.name}</Text>
+          <Text style={styles.nameUser}>
+            {dataUs.Nombre != undefined
+              ? dataUs.Nombre.length > 20
+                ? dataUs.Nombre.slice(0, 20) + "..."
+                : dataUs.Nombre
+              : dataUs.nom1_emp + " " + dataUs.ap1_emp}
+          </Text>
         </View>
       </View>
       <View>
