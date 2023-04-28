@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 
-const LoaderItemSwitch = () => {
+const LoaderItemSwitchDark = () => {
   const [animation1] = useState(new Animated.Value(0));
   const [animation2] = useState(new Animated.Value(0));
   const [animation3] = useState(new Animated.Value(0));
@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 6,
-    backgroundColor: "#FFF",
+    backgroundColor: "#999AF6",
     marginHorizontal: 5,
   },
 });
 
-export default LoaderItemSwitch;
+export default LoaderItemSwitchDark;

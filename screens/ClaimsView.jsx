@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { images } from "../utils";
+import { heightPercentageToPx, images } from "../utils";
 
 import React, { useContext, useEffect, useState } from "react";
 import ConfirmActivity from "../components/common/ConfirmActivity";
@@ -16,11 +16,11 @@ import ViewTitleCard from "../components/HomeScreen/homeView/ViewTitleCard";
 import Layout from "../components/layout/Layout.jsx";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../utils/functions";
-import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
 import ReplyMessage from "../components/common/messages/ReplyMessage";
 import { useFocusEffect } from "@react-navigation/native";
 import LoaderProgContext from "../context/loader/LoaderProgContext";
 import Toast from "react-native-toast-message";
+import LoaderItemSwitchDark from "../components/common/loaders/LoaderItemSwitchDark";
 
 const Claim = (props) => {
   const [modal, setModal] = useState(false);
@@ -194,7 +194,9 @@ const Claim = (props) => {
             <ReplyMessage message="Sin Resultados" />
           )
         ) : (
-          <LoaderItemSwitch />
+          <View style={styles.loaderContainer}>
+            <LoaderItemSwitchDark />
+          </View>
         )}
       </ScrollView>
       {modal && (
@@ -227,6 +229,11 @@ const styles = StyleSheet.create({
   modalContainer: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  loaderContainer: {
+    marginTop: heightPercentageToPx(15),
+    display: "flex",
+    alignContent: "center",
   },
 });
 

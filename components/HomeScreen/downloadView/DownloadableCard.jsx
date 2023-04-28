@@ -423,11 +423,10 @@ const styles = StyleSheet.create({
   },
   modalForm: {
     top: 45,
-    backgroundColor: colors.white,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    transform: [{ translateY: 50 }],
+    transform: [{ translateY: 0 }],
     width: widthPercentageToPx(90),
     height: heightPercentageToPx(90),
   },
