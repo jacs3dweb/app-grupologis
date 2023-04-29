@@ -17,6 +17,7 @@ import SpecialCalendar from "../../../common/form/SpecialCalendar";
 import FormStepTwo from "./formSteps/FormStepTwo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getSer } from "../../../../utils/axiosInstance";
+import { Ionicons } from "@expo/vector-icons";
 
 const StepTwo = ({ formData, onComplete, completed }) => {
   const [laborOrden, setLaborOrden] = useState("");
@@ -61,9 +62,6 @@ const StepTwo = ({ formData, onComplete, completed }) => {
               : console.log("error al traer orden ingreso");
           }
         }
-        console.log("listCont", listCont);
-        console.log("listConvenio", listConvenio);
-        console.log("listCont", listCont);
       };
       getServiciosSel();
     }
@@ -133,7 +131,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
 
   return (
     <View>
-      <SpecialCalendar
+      {/* <SpecialCalendar
         placeholder={"Fecha de Ingreso"}
         value={new Date()}
         dayAdd={3}
@@ -143,7 +141,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
         placeholder={"Fecha de Egreso"}
         value={new Date()}
         onChange={(e) => setDateEgr(e)}
-      />
+      /> */}
 
       <FormStepTwo
         lisCont={listCont}
@@ -181,6 +179,16 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#F3F3FF",
     width: "100%",
+  },
+  select: {
+    backgroundColor: colors.mainBackgroundColor,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: colors.mainBackgroundColor,
