@@ -50,7 +50,7 @@ const FormInicFin = ({ closeModal, onConfirm }) => {
           onPressAction={() => onConfirm(selectedDates)}
           type="default"
           placeholder={"Consultar"}
-          width={widthPercentageToPx(70)}
+          width={widthPercentageToPx(80)}
         />
       </View>
     </View>
@@ -79,5 +79,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 30,
     width: 30,
+    marginBottom: 30,
   },
 });
