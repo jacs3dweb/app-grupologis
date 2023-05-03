@@ -15,10 +15,13 @@ import {
 import NewsDailyHomeCard from "./newsDailyHomeCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { get } from "../../../utils/axiosInstance";
+import LoaderItemSwitch from "../../common/loaders/LoaderItemSwitch";
+import LoaderItemSwitchDark from "../../common/loaders/LoaderItemSwitchDark";
 
 const newsDailyHome = ({ closeM }) => {
   const navigation = useNavigation();
   const [listNotic, setListNotic] = useState([]);
+  const [loaderSwi, setLoaderSwi] = useState(false);
   const urlImg = "https://appgrupologis.com/app/managers/usuario/";
 
   useEffect(() => {
@@ -36,12 +39,15 @@ const newsDailyHome = ({ closeM }) => {
 
   const getNews = async () => {
     console.log("entro funcion noticias");
+    setLoaderSwi(true);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
     const codEmp = infoLog.codEmp;
+    const infoType = infoLog.type === "employee" ? 1 : 2;
     let path = "noticia/getNoticiasHabilitadas.php";
-    path += `?empresaId=${empSel}&tipousuarioId=${codEmp}`;
+    path += `?empresaId=${empSel}&tipousuarioId=${infoType}`;
+    console.log("noticias", path);
     const respApi = await get(path);
     const { status, data } = respApi;
     if (status) {
@@ -49,13 +55,16 @@ const newsDailyHome = ({ closeM }) => {
         data.shift();
         data.splice(data.length - 3, 3);
         setListNotic(data);
+        setLoaderSwi(false);
       } else {
         setListNotic([]);
+        setLoaderSwi(false);
       }
     } else {
       showToast("Error al obtener noticias", "error");
       console.log("Error al obtener noticias", "error");
       setListNotic([]);
+      setLoaderSwi(false);
     }
   };
 
@@ -65,27 +74,33 @@ const newsDailyHome = ({ closeM }) => {
         <Text style={styles.subtitle}>Noticias</Text>
       </View>
       <View styles={styles.inputContainer}>
-        {listNotic.map((e, i) => (
-          <Pressable onPress={() => navigation.navigate("NewsDailyView")}>
-            <NewsDailyHomeCard
-              key={i}
-              descNot={e.mensaje}
-              titleNot={e.titulo}
-              id={i}
-              imageNot={urlImg + e.ruta}
-            />
-          </Pressable>
-        ))}
+        {!loaderSwi ? (
+          listNotic.map((e, i) => (
+            <Pressable onPress={() => navigation.navigate("NewsDailyView")}>
+              <NewsDailyHomeCard
+                key={i}
+                descNot={e.mensaje}
+                titleNot={e.titulo}
+                id={i}
+                imageNot={urlImg + e.ruta}
+              />
+            </Pressable>
+          ))
+        ) : (
+          <LoaderItemSwitchDark />
+        )}
       </View>
-      <Pressable onPress={() => navigation.navigate("NewsDailyView")}>
-        <View style={styles.downloadButton}>
-          <Text
-            style={{ color: colors.buttonsColor, fontFamily: "Volks-Bold" }}
-          >
-            Ver más
-          </Text>
-        </View>
-      </Pressable>
+      {!loaderSwi && (
+        <Pressable onPress={() => navigation.navigate("NewsDailyView")}>
+          <View style={styles.downloadButton}>
+            <Text
+              style={{ color: colors.buttonsColor, fontFamily: "Volks-Bold" }}
+            >
+              Ver más
+            </Text>
+          </View>
+        </Pressable>
+      )}
     </View>
   );
 };

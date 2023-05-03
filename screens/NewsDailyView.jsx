@@ -22,10 +22,15 @@ import Toast from "react-native-toast-message";
 import NewsDailyCard from "../components/HomeScreen/newsDaily/newsDailyCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { get } from "../utils/axiosInstance";
+import LoaderItemSwitchDark from "../components/common/loaders/LoaderItemSwitchDark";
+import Pagination from "../components/common/pagination/Pagination";
 
 const NewsDailyView = (props) => {
   const { navigation } = props;
+  const [loaderSwi, setLoaderSwi] = useState(false);
   const [listNotic, setListNotic] = useState([]);
+  const [pagAct, setPagAct] = useState(1);
+  const [cantInfo, setCantInfo] = useState(0);
   const urlImg = "https://appgrupologis.com/app/managers/usuario/";
 
   const showToast = (smg, type) => {
@@ -38,29 +43,38 @@ const NewsDailyView = (props) => {
   };
 
   useEffect(() => {
-    getNews();
+    getNews(1);
   }, []);
 
-  const getNews = async () => {
+  const getNews = async (pag) => {
+    setLoaderSwi(true);
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel;
     const codEmp = infoLog.codEmp;
+    const infoType = infoLog.type === "employee" ? 1 : 2;
+    setPagAct(pag);
     let path = "noticia/getNoticiasHabilitadas.php";
-    path += `?empresaId=${empSel}&tipousuarioId=${codEmp}`;
+    path += `?empresaId=${empSel}&tipousuarioId=${infoType}`;
+    path += pag > 1 ? `&page=${pag}` : "";
+    console.log("path", path);
     const respApi = await get(path);
     const { status, data } = respApi;
     if (status) {
       if (data != "ERROR") {
-        const cantNews = data.shift();
+        const cant = data.shift();
+        setCantInfo(parseInt(cant.cant));
         setListNotic(data);
+        setLoaderSwi(false);
       } else {
         setListNotic([]);
+        setLoaderSwi(false);
       }
     } else {
       showToast("Error al obtener noticias", "error");
       console.log("Error al obtener noticias", "error");
       setListNotic([]);
+      setLoaderSwi(false);
     }
   };
 
@@ -72,18 +86,29 @@ const NewsDailyView = (props) => {
         showInput={false}
         handleGoBack={() => navigation.navigate("DownloadView")}
       />
-
-      <ScrollView styles={styles.inputContainer}>
-        {listNotic.map((e, i) => (
-          <NewsDailyCard
-            key={i}
-            descNot={e.mensaje}
-            titleNot={e.titulo}
-            id={i}
-            imageNot={urlImg + e.ruta}
+      {!loaderSwi ? (
+        <ScrollView styles={styles.inputContainer}>
+          {listNotic.map((e, i) => (
+            <NewsDailyCard
+              key={i}
+              descNot={e.mensaje}
+              titleNot={e.titulo}
+              dateIn={e.fhingreso}
+              link={e.link}
+              id={i}
+              imageNot={urlImg + e.ruta}
+            />
+          ))}
+          <Pagination
+            styles={styles.pagination}
+            pagAct={pagAct}
+            cantInfo={cantInfo}
+            changeOpt={(pag) => getNews(pag)}
           />
-        ))}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <LoaderItemSwitchDark />
+      )}
     </Layout>
   );
 };
@@ -131,5 +156,8 @@ const styles = StyleSheet.create({
     padding: 15,
     display: "flex",
     alignItems: "flex-start",
+  },
+  pagination: {
+    marginBottom: 60,
   },
 });

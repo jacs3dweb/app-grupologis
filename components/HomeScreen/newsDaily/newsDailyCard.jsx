@@ -1,8 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { colors, getFontStyles, widthPercentageToPx } from "../../../utils";
 
-const newsDailyCard = ({ titleNot, descNot, imageNot }) => {
+const newsDailyCard = ({ titleNot, descNot, imageNot, dateIn, link }) => {
   return (
     <View style={styles.scrollStyle}>
       <View style={styles.imgContainer}>
@@ -11,6 +18,12 @@ const newsDailyCard = ({ titleNot, descNot, imageNot }) => {
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{titleNot}</Text>
         <Text style={styles.description}>{descNot}</Text>
+        <Text style={styles.description}>{dateIn}</Text>
+        {link != "" && (
+          <TouchableOpacity onPress={() => Linking.openURL(link)}>
+            <Text>Ver Más</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

@@ -20,7 +20,7 @@ class FormStepTwo extends Component {
     selConvenio: "Convenio",
     selConvenio2: "",
     selJornada: "Tipo de jornada",
-    selCargo: "Cargo",
+    selCargo: "Cargo - Seleccione convenio",
     selCargo2: "Cargo",
     modalOptionsCargo: [null],
     showJornPer: false,
@@ -71,6 +71,8 @@ class FormStepTwo extends Component {
   };
 
   getListCargos = async (codCon) => {
+    console.log("buscando convenio");
+    this.setState({ selCargo: "Buscando convenio" });
     let infoLog = await AsyncStorage.getItem("logged");
     infoLog = JSON.parse(infoLog);
     const empSel = infoLog.empSel.toUpperCase();
@@ -80,13 +82,14 @@ class FormStepTwo extends Component {
     pathCarg += `?cod_cli=${codEmp}&empresa=${empSel}&cod_conv=${codCon}`;
 
     const respReg = await getSer(pathCarg);
-
+    console.log("respReg", respReg);
     if (respReg == "limitExe") {
       console.log("limitExe");
     } else {
       if (respReg.status) {
         const { data } = respReg;
         this.state.modalOptionsCargo = data.cargos;
+        this.setState({ selCargo: "Seleccione convenio" });
       } else {
         console.log("error al buscar listado de cargos");
       }

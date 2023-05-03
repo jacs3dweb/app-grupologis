@@ -18,6 +18,8 @@ import FormStepTwo from "./formSteps/FormStepTwo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getSer } from "../../../../utils/axiosInstance";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable } from "react-native";
+import FormDateStepTwo from "./formSteps/FormDateStepTwo";
 
 const StepTwo = ({ formData, onComplete, completed }) => {
   const [laborOrden, setLaborOrden] = useState("");
@@ -81,6 +83,11 @@ const StepTwo = ({ formData, onComplete, completed }) => {
     });
   };
 
+  const dateIngAndEgr = (infoDate) => {
+    setDateIng(infoDate.ingreso);
+    setDateEgr(infoDate.egreso);
+  };
+
   const handlePress = () => {
     console.log("retornar informacion");
     console.log("laborOrden", laborOrden);
@@ -131,17 +138,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
 
   return (
     <View>
-      {/* <SpecialCalendar
-        placeholder={"Fecha de Ingreso"}
-        value={new Date()}
-        dayAdd={3}
-        onChange={(e) => setDateIng(e)}
-      />
-      <SpecialCalendar
-        placeholder={"Fecha de Egreso"}
-        value={new Date()}
-        onChange={(e) => setDateEgr(e)}
-      /> */}
+      <FormDateStepTwo changeResultDate={dateIngAndEgr} />
 
       <FormStepTwo
         lisCont={listCont}
@@ -170,6 +167,9 @@ const StepTwo = ({ formData, onComplete, completed }) => {
         placeholder={"Siguiente"}
         width={widthPercentageToPx(70)}
       />
+
+      {/* modal  */}
+      {}
     </View>
   );
 };
@@ -189,6 +189,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 10,
+  },
+  selectText: {
+    fontSize: 16,
+    fontFamily: "Volks-Serial-Medium",
+    color: colors.placeholderColor,
   },
   input: {
     backgroundColor: colors.mainBackgroundColor,
