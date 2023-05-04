@@ -51,52 +51,55 @@ const BusinessE = ({ navigation }) => {
     // navigation.navigate("Login");
   };
 
-  useEffect(() => {
+  const getOptionsBusiness = async () => {
     setLoaderComp(true);
-    console.log("useEffect getOptionsBusiness");
-    const getOptionsBusiness = async () => {
-      const type = await AsyncStorage.getItem("type");
-      const typeCli = type === "business" ? 2 : 1;
-      const identification = await AsyncStorage.getItem("identi");
-      const phone = await AsyncStorage.getItem("phone");
+    const type = await AsyncStorage.getItem("type");
+    const typeCli = type === "business" ? 2 : 1;
+    const identification = await AsyncStorage.getItem("identi");
+    const phone = await AsyncStorage.getItem("phone");
 
-      let body = `tipousuarioId=${typeCli}&identificacionId=${identification}`;
-      body += `&contactNumeroTelefonico=${phone}`;
-      const path = "usuario/getEmpresa.php";
-      const respApi = await fetchPost(path, body);
-      console.log("respApi", respApi);
-      if (respApi.status) {
-        const data = respApi.data;
-        if (data != "falseEmpresa") {
-          setOptionsHtml(data);
-        } else {
-          console.log("no tiene acceso al sistema");
-        }
+    let body = `tipousuarioId=${typeCli}&identificacionId=${identification}`;
+    body += `&contactNumeroTelefonico=${phone}`;
+    const path = "usuario/getEmpresa.php";
+    const respApi = await fetchPost(path, body);
+    console.log("respApi", respApi);
+    if (respApi.status) {
+      const data = respApi.data;
+      if (data != "falseEmpresa") {
+        setOptionsHtml(data);
       } else {
-        console.log("ocurrio un error en el sistema");
+        console.log("no tiene acceso al sistema");
       }
-    };
+    } else {
+      console.log("ocurrio un error en el sistema");
+    }
+  };
 
+  useEffect(() => {
+    console.log("useEffect getOptionsBusiness");
     getOptionsBusiness();
   }, []);
 
   useEffect(() => {
-    console.log("useeffect");
-    const regex = /<option[^>]*value=['"]([^'"]*)['"][^>]*>([^<]*)<\/option>/g;
-    const result = [];
+    if (optionsHtml != "") {
+      setLoaderComp(true);
+      const regex =
+        /<option[^>]*value=['"]([^'"]*)['"][^>]*>([^<]*)<\/option>/g;
+      const result = [];
 
-    [...optionsHtml.matchAll(regex)].forEach((match, idx) => {
-      result.push({
-        label: match[2],
-        value: match[1] || null,
+      [...optionsHtml.matchAll(regex)].forEach((match, idx) => {
+        result.push({
+          label: match[2],
+          value: match[1] || null,
+        });
       });
-    });
 
-    console.log("result", result);
-    setBusinessOption((businessOptionsNew) =>
-      businessOptionsNew.concat(result)
-    );
-    setLoaderComp(false);
+      console.log("result", result);
+      setBusinessOption((businessOptionsNew) =>
+        businessOptionsNew.concat(result)
+      );
+      setLoaderComp(false);
+    }
   }, [optionsHtml]);
 
   const handleSelectBusiness = async () => {

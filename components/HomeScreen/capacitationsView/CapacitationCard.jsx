@@ -1,12 +1,22 @@
-import { Pressable, StyleSheet, Text } from "react-native";
-import { colors } from "../../../utils";
+import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  colors,
+  heightPercentageToPx,
+  widthPercentageToPx,
+} from "../../../utils";
 import { View } from "react-native";
 import CardElement from "../newsView/components/CardElement";
 import { useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Modal } from "react-native";
+import ShowInfo from "../newEntryView/stepsForm/ShowInfo";
 
 const CapacitationsCard = (props) => {
   const [modal, setModal] = useState(false);
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   return (
     <View style={styles.cardContainer}>
@@ -22,6 +32,25 @@ const CapacitationsCard = (props) => {
       </View>
 
       {/* modal  */}
+      <Modal animationType="slide" visible={modal} transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => closeModal()}
+            >
+              <Ionicons
+                name="md-close"
+                size={32}
+                color={colors.placeholderColor}
+              />
+            </TouchableOpacity>
+            <View style={styles.modalContainer}>
+              <ShowInfo modul="Capac" info={props} />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -53,4 +82,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 7,
   }),
+  modalContainer: {
+    flex: 1,
+    margin: 16,
+    borderRadius: 8,
+    height: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modal: {
+    backgroundColor: "white",
+    width: widthPercentageToPx(100),
+    height: heightPercentageToPx(100),
+    borderRadius: 40,
+    padding: 30,
+    position: "absolute",
+    bottom: -20,
+  },
 });

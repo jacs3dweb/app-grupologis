@@ -7,6 +7,7 @@ import LoaderItemSwitchDark from "../components/common/loaders/LoaderItemSwitchD
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPost } from "../utils/functions";
 import CapacitationsList from "../components/HomeScreen/capacitationsView/CapacitationsList";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Capacitations = (props) => {
   const { navigation } = props;
@@ -41,6 +42,16 @@ const Capacitations = (props) => {
       console.log("error en el servidor");
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("capacitacions focused");
+      getCapacitations();
+      return () => {
+        console.log("capacitacions unfocused");
+      };
+    }, [])
+  );
 
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);

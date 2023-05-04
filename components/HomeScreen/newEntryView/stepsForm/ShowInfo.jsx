@@ -89,10 +89,28 @@ const ShowInfo = ({ modul, info }) => {
           <Text>{info.Comentario.trim()}</Text>
 
           <Text>Estado</Text>
-          <Text>{info.Estado.trim()}</Text>
+          <Text>{info.Estado}</Text>
 
-          <Text>Respuesta</Text>
-          <Text>{info.Respuesta.trim()}</Text>
+          {modul == "Capac" && (
+            <>
+              <Text>Personal</Text>
+              <Text>{info.Personal.trim()}</Text>
+              <Text>Tema</Text>
+              <Text>{info.Tema.trim()}</Text>
+              {info.Tipo != null && (
+                <>
+                  <Text>Tipo</Text>
+                  <Text>{info.Tipo.trim()}</Text>
+                </>
+              )}
+            </>
+          )}
+          {modul == "Quejas" && (
+            <>
+              <Text>Respuesta</Text>
+              <Text>{info.Respuesta.trim()}</Text>{" "}
+            </>
+          )}
         </View>
       )}
     </View>
