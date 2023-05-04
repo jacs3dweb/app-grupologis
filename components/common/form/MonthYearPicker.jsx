@@ -11,6 +11,7 @@ import {
   colors,
   getFontStyles,
   validDates,
+  validDatesSup,
   widthPercentageToPx,
 } from "../../../utils";
 
@@ -24,7 +25,9 @@ const MonthYearPicker = ({
   visible,
   showYear = true,
   showMonth = true,
+  yearSup = false,
 }) => {
+  console.log("yearSup", yearSup);
   return (
     <Modal visible={visible} animationType="fade" transparent={true}>
       <View
@@ -66,15 +69,30 @@ const MonthYearPicker = ({
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
               >
-                {validDates().validYears.map((e, idx) => (
-                  <Pressable key={idx} onPress={() => changeYear(e)}>
-                    <View
-                      style={styles.dayElement(selectedMonthYear.year === e)}
-                    >
-                      <Text style={styles.dayNumber}>{e}</Text>
-                    </View>
-                  </Pressable>
-                ))}
+                {!yearSup
+                  ? validDates().validYears.map((e, idx) => (
+                      <Pressable key={idx} onPress={() => changeYear(e)}>
+                        <View
+                          style={styles.dayElement(
+                            selectedMonthYear.year === e
+                          )}
+                        >
+                          <Text style={styles.dayNumber}>{e}</Text>
+                        </View>
+                      </Pressable>
+                    ))
+                  : validDatesSup().validYears.map((e, idx) => (
+                      <Pressable key={idx} onPress={() => changeYear(e)}>
+                        <View
+                          style={styles.dayElement(
+                            selectedMonthYear.year === e
+                          )}
+                        >
+                          <Text style={styles.dayNumber}>{e}</Text>
+                        </View>
+                      </Pressable>
+                    ))}
+                {}
               </ScrollView>
             </>
           )}

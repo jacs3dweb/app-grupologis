@@ -23,6 +23,7 @@ const FormBillsModal = ({ closeModal, onConfirm }) => {
     month: now.get("M"),
     year: now.get("year"),
   });
+
   const [showYearSelector, setShowYearSelector] = useState(false);
   const [showMonthSelector, setShowMonthSelector] = useState(false);
   const [hasChangedMonth, setHasChangedMonth] = useState(false);
@@ -41,6 +42,7 @@ const FormBillsModal = ({ closeModal, onConfirm }) => {
 
     setHasChangedMonth(true);
   };
+
   const changeYear = (e) => {
     setPeriod({
       start: period.start.set("y", e),
@@ -53,6 +55,15 @@ const FormBillsModal = ({ closeModal, onConfirm }) => {
     });
 
     setHasChangedYear(true);
+  };
+
+  const validInfo = () => {
+    console.log(hasChangedYear, hasChangedMonth);
+    if (!hasChangedYear || !hasChangedMonth) {
+      console.log("Seleccione los datos");
+    } else {
+      onConfirm(values);
+    }
   };
   return (
     <View style={styles.modalForm}>
@@ -112,7 +123,7 @@ const FormBillsModal = ({ closeModal, onConfirm }) => {
           selectedMonthYear={values}
         />
         <GLButton
-          onPressAction={() => onConfirm(values)}
+          onPressAction={() => validInfo()}
           type="default"
           placeholder={"Consultar"}
           width={widthPercentageToPx(70)}

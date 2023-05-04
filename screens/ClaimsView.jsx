@@ -191,7 +191,7 @@ const Claim = (props) => {
           claimsList.length > 0 ? (
             <ClaimList claimsList={claimsList} />
           ) : (
-            <ReplyMessage message="Sin Resultados" />
+            <ReplyMessage message="SinRes" />
           )
         ) : (
           <View style={styles.loaderContainer}>

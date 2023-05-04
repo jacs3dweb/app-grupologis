@@ -186,11 +186,11 @@ export const businessDownloadables = [
     title: "Volante de nómina general",
     description: "Descarga tu volante de nómina desde la App",
   },
-  {
-    id: "capacitations",
-    title: "Capacitaciones",
-    description: "Ahora puedes descargar tus capacitaciones desde la App",
-  },
+  // {
+  //   id: "capacitations",
+  //   title: "Capacitaciones",
+  //   description: "Ahora puedes descargar tus capacitaciones desde la App",
+  // },
   {
     id: "ausentism",
     title: "Ausentismos",
@@ -249,7 +249,40 @@ export const employeeManagement = [
     description: "Ahora puedes descargar tu certificado de maestro empleado",
     // 2Enseguida pues en el avión por ahí abiertaimage: svg.
   },
+  {
+    id: "capacit",
+    title: "Capacitaciones",
+    description: "Consulta las capacitaciones disponibles y sus estados.",
+    // 2Enseguida pues en el avión por ahí abiertaimage: svg.
+  },
 ];
+
+export const validDatesSup = () => {
+  let actualDate = new Date();
+  let currentYear = actualDate.getFullYear();
+  let validYears = [];
+
+  for (let i = currentYear; i <= currentYear + 10; i++) {
+    validYears.push(i);
+  }
+  return {
+    validYears,
+    validMonths: [
+      "Ene.",
+      "Feb.",
+      "Mar.",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Sept.",
+      "Oct.",
+      "Nov.",
+      "Dic.",
+    ],
+  };
+};
 
 export const validDates = () => {
   let actualDate = new Date();

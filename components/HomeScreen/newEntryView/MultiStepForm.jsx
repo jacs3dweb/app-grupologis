@@ -23,16 +23,28 @@ import Toast from "react-native-toast-message";
 
 import CircleProgressBar from "./stepsForm/formSteps/CircleProgressBar";
 import StepIdent from "./stepsForm/StepIdent";
+import { useFocusEffect } from "@react-navigation/native";
+import LoaderItemSwitch from "../../common/loaders/LoaderItemSwitch";
 
 const MultiStepForm = ({ onConfirm, closeModal }) => {
   const [formData, setFormData] = useState({});
   const [currentStep, setCurrentStep] = useState(0);
+  const [loader, setLoader] = useState(false);
 
   const handleStepComplete = (data) => {
     console.log("llego handleStepComplete", data);
     setFormData({ ...formData, ...data });
     handleNextStep();
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        console.log("novedad ingreso stepone unfocused");
+        setLoader(false);
+      };
+    }, [])
+  );
 
   const steps = [
     {
@@ -117,9 +129,12 @@ const MultiStepForm = ({ onConfirm, closeModal }) => {
           )}
           {currentStep === steps.length - 1 && (
             <GLButton
-              onPressAction={() => onConfirm(formData)}
+              onPressAction={() => {
+                setLoader(true);
+                onConfirm(formData);
+              }}
               type="default"
-              placeholder={"Enviar"}
+              placeholder={!loader ? "Enviar" : <LoaderItemSwitch />}
               width={widthPercentageToPx(70)}
             />
           )}

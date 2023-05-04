@@ -10,10 +10,12 @@ import {
 import CardElement from "../newsView/components/CardElement";
 import ShowInfo from "./stepsForm/ShowInfo";
 import { TouchableOpacity } from "react-native";
+import DeleteNovIng from "./stepsForm/DeleteNovIng";
 
 const NewEntryCard = (props) => {
   const [modal, setModal] = useState(false);
-
+  const [SerCons, setSerCons] = useState("");
+  const [infoDel, setInfoDel] = useState({});
   const closeModal = () => {
     setModal(false);
   };
@@ -44,11 +46,37 @@ const NewEntryCard = (props) => {
             <AntDesign name="download" size={18} color={colors.darkGray} />
           </View>
         </Pressable> */}
-        <Pressable onPress={() => setModal(!modal)} style={styles.rightContent}>
+        <Pressable
+          onPress={() => {
+            setSerCons("info");
+            setModal(!modal);
+          }}
+          style={styles.rightContent}
+        >
           <View style={styles.actionButton("ghost")}>
             <AntDesign name="eye" size={18} color={colors.darkGray} />
           </View>
         </Pressable>
+
+        {/* cambiar por una X  */}
+        {props.estado == "PENDIENTE" && (
+          <Pressable
+            onPress={() => {
+              setInfoDel({
+                id: props.ID_oi,
+                emp: props.empresa_grupo,
+                est: props.estado,
+              });
+              setSerCons("delete");
+              setModal(true);
+            }}
+            style={styles.rightContent}
+          >
+            <View style={styles.actionButton("ghost")}>
+              <AntDesign name="eye" size={18} color={colors.darkGray} />
+            </View>
+          </Pressable>
+        )}
       </View>
       {modal && (
         <Modal animationType="slide" visible={modal} transparent={true}>
@@ -65,7 +93,14 @@ const NewEntryCard = (props) => {
                 />
               </TouchableOpacity>
               <View style={styles.modalContainer}>
-                <ShowInfo modul="NovIngreso" info={props} />
+                {SerCons == "info" ? (
+                  <ShowInfo modul="NovIngreso" info={props} />
+                ) : (
+                  <DeleteNovIng
+                    infoDel={infoDel}
+                    showModal={(c) => c && closeModal()}
+                  />
+                )}
               </View>
             </View>
           </View>

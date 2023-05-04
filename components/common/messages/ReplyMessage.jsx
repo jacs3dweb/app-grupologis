@@ -9,7 +9,11 @@ const ReplyMessage = (props) => {
   return (
     <View style={styles.container}>
       {/* <Text>{message}</Text> */}
-      <RealizarBusqueda />
+      {message == "reaBusq" ? (
+        <RealizarBusqueda />
+      ) : (
+        <Text>Sin Resultados</Text>
+      )}
     </View>
   );
 };

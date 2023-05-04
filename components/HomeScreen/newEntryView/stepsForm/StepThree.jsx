@@ -7,12 +7,15 @@ import FormDotacion from "./formSteps/FormDotacion";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getSer } from "../../../../utils/axiosInstance";
 import Toast from "react-native-toast-message";
+import LoaderItemSwitch from "../../../common/loaders/LoaderItemSwitch";
+import { useFocusEffect } from "@react-navigation/native";
 
 const StepThree = ({ formData, onComplete, completed }) => {
   const [value, setValue] = React.useState();
   const [dotacion, setDotacion] = useState(false);
   const [listCenCost, setListCenCost] = useState([]);
   const [listAuxBon, setListAuxBon] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   const toggleDotacion = () => setDotacion((previousState) => !previousState);
 
@@ -54,6 +57,15 @@ const StepThree = ({ formData, onComplete, completed }) => {
       getServiciosSel();
     }
   }, [completed]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        console.log("novedad ingreso stepone unfocused");
+        setLoader(false);
+      };
+    }, [])
+  );
 
   const setSeleccForm = (selec) => {
     console.log("selecciones formulario step 3", selec);
@@ -112,6 +124,7 @@ const StepThree = ({ formData, onComplete, completed }) => {
         console.log("Por favor, rellene todos los campos", "error");
       } else {
         console.log("enviar todo");
+        setLoader(true);
         onComplete({
           stepThreeData: {
             select: value,
@@ -150,7 +163,7 @@ const StepThree = ({ formData, onComplete, completed }) => {
       <GLButton
         onPressAction={handlePress}
         type="default"
-        placeholder={"Siguiente"}
+        placeholder={!loader ? "Siguiente" : <LoaderItemSwitch />}
         width={widthPercentageToPx(70)}
       />
     </View>

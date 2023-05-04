@@ -20,6 +20,8 @@ import { getSer } from "../../../../utils/axiosInstance";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import FormDateStepTwo from "./formSteps/FormDateStepTwo";
+import { useFocusEffect } from "@react-navigation/native";
+import LoaderItemSwitch from "../../../common/loaders/LoaderItemSwitch";
 
 const StepTwo = ({ formData, onComplete, completed }) => {
   const [laborOrden, setLaborOrden] = useState("");
@@ -30,6 +32,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
   const [isDay31, setIsDay31] = useState(false);
   const [infoForm, setInfoForm] = useState({});
   const toggleSwitchDay = () => setIsDay31((previousState) => !previousState);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     if (completed) {
@@ -124,6 +127,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
       console.log("Por favor, rellene todos los campos", "error");
     } else {
       console.log("enviar todo");
+      setLoader(true);
       onComplete({
         stepTwoData: {
           select: infoForm,
@@ -135,6 +139,15 @@ const StepTwo = ({ formData, onComplete, completed }) => {
       });
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        console.log("novedad ingreso steptwo unfocused");
+        setLoader(false);
+      };
+    }, [])
+  );
 
   return (
     <View>
@@ -164,7 +177,7 @@ const StepTwo = ({ formData, onComplete, completed }) => {
       <GLButton
         onPressAction={handlePress}
         type="default"
-        placeholder={"Siguiente"}
+        placeholder={!loader ? "Siguiente" : <LoaderItemSwitch />}
         width={widthPercentageToPx(70)}
       />
 

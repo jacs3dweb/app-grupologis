@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal, ScrollView, StyleSheet, View } from "react-native";
 import BillsList from "../components/HomeScreen/billView/BillsList";
 import FormBillsModal from "../components/HomeScreen/billView/FormBillsModal";
@@ -11,11 +11,12 @@ import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoaderItemSwitch from "../components/common/loaders/LoaderItemSwitch";
 import ReplyMessage from "../components/common/messages/ReplyMessage";
+import LoaderProgContext from "../context/loader/LoaderProgContext";
 
 const ClientsInvoiceView = ({ props }) => {
   const [modal, setModal] = useState(false);
   const [allBillsList, setAllBillsList] = useState([null]);
-  const [loader, setLoader] = useState(false);
+  const { setLoaderProg } = useContext(LoaderProgContext);
 
   const message = (mess, type) => {
     Toast.show({
@@ -33,7 +34,7 @@ const ClientsInvoiceView = ({ props }) => {
 
   const handleSearchBill = async (val) => {
     setModal(false);
-    setLoader(true);
+    setLoaderProg(true);
     console.log("handleSearchBill");
     let { month, year } = val;
     month += 1;
@@ -53,15 +54,15 @@ const ClientsInvoiceView = ({ props }) => {
         console.log(typeof data);
         if (typeof data == "object") {
           setAllBillsList(data);
-          setLoader(false);
+          setLoaderProg(false);
         } else {
           setAllBillsList([]);
-          setLoader(false);
+          setLoaderProg(false);
         }
       }
     } else {
       message("Error del servidor", "error");
-      setLoader(false);
+      setLoaderProg(false);
     }
     console.log("allBillsList", allBillsList);
   };
@@ -86,12 +87,10 @@ const ClientsInvoiceView = ({ props }) => {
           image={images.employeeNimage}
         />
 
-        {loader ? (
-          <LoaderItemSwitch />
-        ) : allBillsList[0] !== null ? (
+        {allBillsList[0] !== null ? (
           <BillsList billsList={allBillsList} />
         ) : (
-          <ReplyMessage message="Genere una busqueda" />
+          <ReplyMessage message="reaBusq" />
         )}
       </ScrollView>
       {modal && (

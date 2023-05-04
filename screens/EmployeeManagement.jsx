@@ -22,6 +22,8 @@ const displaySvg = (type) => {
       return <SvgNovedaI />;
     case "maestroe":
       return <SvgMaestroE />;
+    case "capacit":
+      return <SvgMaestroE />;
     default:
       return null;
   }
@@ -42,6 +44,8 @@ const EmployeeManagement = (props) => {
         break;
       case "maestroe":
         navigation.navigate("MasterEmployee");
+      case "capacit":
+        navigation.navigate("Capacitations");
         break;
       default:
         break;

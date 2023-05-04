@@ -7,6 +7,8 @@ import { getSer } from "../../../../utils/axiosInstance";
 import listMun from "../../../../utils/json/municip.json";
 import GLButton from "../../../common/buttons/GLButton";
 import Toast from "react-native-toast-message";
+import LoaderItemSwitch from "../../../common/loaders/LoaderItemSwitch";
+import { useFocusEffect } from "@react-navigation/native";
 
 const StepOne = ({ formData, onComplete }) => {
   // const [completed, setCompleted] = useState(false);
@@ -19,6 +21,7 @@ const StepOne = ({ formData, onComplete }) => {
   const [tel, setTel] = useState("");
   const [depar, setDepar] = useState("");
   const [munic, setMunic] = useState("");
+  const [loader, setLoader] = useState(false);
 
   const showToast = (smg, type) => {
     Toast.show({
@@ -44,6 +47,7 @@ const StepOne = ({ formData, onComplete }) => {
       showToast("Por favor, rellene todos los campos", "error");
       return;
     }
+    setLoader(true);
     onComplete({
       stepOneData: {
         identificacion: id,
@@ -68,6 +72,15 @@ const StepOne = ({ formData, onComplete }) => {
     }
     // }
   }, [id]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        console.log("novedad ingreso stepone unfocused");
+        setLoader(false);
+      };
+    }, [])
+  );
 
   const getMunicipio = (idMun) => {
     let addDep = "";
@@ -170,9 +183,19 @@ const StepOne = ({ formData, onComplete }) => {
       <GLButton
         onPressAction={handlePress}
         type="default"
-        placeholder={"Siguiente"}
+        placeholder={!loader ? "Siguiente" : <LoaderItemSwitch />}
         width={widthPercentageToPx(70)}
       />
+      {/* {!loader ? (
+        <GLButton
+          onPressAction={handlePress}
+          type="default"
+          placeholder={"Siguiente"}
+          width={widthPercentageToPx(70)}
+        />
+      ) : (
+        <LoaderItemSwitch />
+      )} */}
     </View>
   );
 };

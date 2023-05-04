@@ -105,7 +105,7 @@ const ResumeList = (props) => {
           resumeList.length > 0 ? (
             resumeList.map((n4, index4) => <ResumeCard key={index4} {...n4} />)
           ) : (
-            <ReplyMessage message="Sin Información" />
+            <ReplyMessage message="SinRes" />
           )
         ) : (
           <LoaderItemSwitch />

@@ -40,6 +40,7 @@ import ResumeState from "./context/resume/resumeState";
 import moment from "moment";
 import { useEffect } from "react";
 import { LoaderProgContextProvider } from "./context/loader/LoaderProgContext";
+import Capacitations from "./screens/Capacitations";
 
 async function getMediaLibraryPermission() {
   const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
@@ -115,6 +116,7 @@ const HomeScreens = () => {
         }}
       />
       <Tab.Screen name="MasterEmployee" component={MasterEmployee} />
+      <Tab.Screen name="Capacitations" component={Capacitations} />
     </Tab.Navigator>
   );
 };

@@ -22,7 +22,7 @@ const BillsList = (props) => {
         {billsList.length > 0 ? (
           billsList.map((n3, index3) => <BillsCard key={index3} {...n3} />)
         ) : (
-          <ReplyMessage message="Sin Resultados" />
+          <ReplyMessage message="SinRes" />
         )}
       </View>
     </View>

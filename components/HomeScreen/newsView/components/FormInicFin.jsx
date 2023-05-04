@@ -10,13 +10,35 @@ import {
   widthPercentageToPx,
 } from "../../../../utils";
 import GLButton from "../../../common/buttons/GLButton";
+import Toast from "react-native-toast-message";
 
 const FormInicFin = ({ closeModal, onConfirm }) => {
   //   const { changeFormField } = useContext(newsContext);
   const [selectedDates, setSelectedDates] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: "",
+    endDate: "",
   });
+
+  const showToast = (smg, type) => {
+    Toast.show({
+      type: type, //"success", error
+      text1: smg,
+      position: "bottom",
+      visibilityTime: 2000,
+    });
+  };
+
+  const validateFech = () => {
+    console.log("selectedDates", selectedDates);
+    if (selectedDates.startDate == "" || selectedDates.endDate == "") {
+      console.log("llene la fecha inicial y la fecha final");
+      showToast("Seleccione todos los campos", "error");
+      return false;
+    } else {
+      console.log("informacion llena");
+      onConfirm(selectedDates);
+    }
+  };
   const changeFormField = (e) => {
     setSelectedDates({
       ...selectedDates,
@@ -47,7 +69,7 @@ const FormInicFin = ({ closeModal, onConfirm }) => {
           }
         />
         <GLButton
-          onPressAction={() => onConfirm(selectedDates)}
+          onPressAction={() => validateFech()}
           type="default"
           placeholder={"Consultar"}
           width={widthPercentageToPx(80)}
