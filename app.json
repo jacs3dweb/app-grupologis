@@ -25,7 +25,7 @@
         "NSFileProviderServiceName": "com.myappglogis.fileprovider",
         "NSFileProtection": "CompleteUnlessOpen",
         "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
-        "NSPhotoLibraryUsageDescription": "La aplicación necesita acceder a la biblioteca de medios para guardar los archivos descargados"
+        "NSPhotoLibraryUsageDescription": "La aplicación necesita acceder a la biblioteca de medios para guardar los archivos descargados..."
       }
     },
     "android": {
